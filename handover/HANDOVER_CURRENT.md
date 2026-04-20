@@ -1,6 +1,6 @@
 # HANDOVER CURRENT
 
-Última consolidação: 2026-04-20 (revI repo fully synced for revD and revE)
+Última consolidação: 2026-04-20 (revJ F16_pareto_80 started)
 
 ## 1) Âmbito
 Projeto de geração universal de T-SQL para SQL Server, com foco em:
@@ -100,10 +100,30 @@ Subpadrões fechados:
 - `lost_list`
 - `lost_list_by_dimension`
 
+### Pareto 80 (revJ em progresso)
+Subconjunto benchmark identificado:
+- Q203
+- Q204
+- Q205
+
+Factos verificados:
+- os três SQL oráculo são equivalentes
+- os três usam filtro simplista `PercentagemAcumulada <= 80`
+- a regra documental canónica do projeto exige fronteira antes/depois
+- na `f_invoice_sample`, quando se restringe a contribuições positivas, a regra simplista seleciona 10 entidades e a regra canónica seleciona 11
+
+Estado revJ:
+- especificação canónica inicial fechada
+- `generators/pareto_generator.py` criado
+- `validation/revJ/pareto_benchmark_subset.csv` criado
+- `validation/revJ/pareto_benchmark_notes.md` criado
+- falta ainda validação executável da família e casos novos fora do benchmark
+
 ## 6) Estado do repositório canónico
 ### Já sincronizado no repositório
 - `generators/temporal_generator.py`
 - `generators/lifecycle_generator.py`
+- `generators/pareto_generator.py`
 - `validation/revD/tsql_emulator_benchmark_exec.csv`
 - `validation/revD/temporal_benchmark_validation.csv`
 - `validation/revD/temporal_generalization_eval.csv`
@@ -111,6 +131,8 @@ Subpadrões fechados:
 - `validation/revE/lifecycle_benchmark_validation.csv`
 - `validation/revE/lifecycle_generalization_eval.csv`
 - `validation/revE/lifecycle_generalization_cases.md`
+- `validation/revJ/pareto_benchmark_subset.csv`
+- `validation/revJ/pareto_benchmark_notes.md`
 - documentação canónica em `handover/` e `repo_structure/`
 
 ## 7) Método obrigatório para cada nova família
@@ -126,9 +148,9 @@ Subpadrões fechados:
 10. atualizar `HANDOVER_CURRENT.md`, `CHANGELOG.md`, `ARTEFACTS_INDEX.md` e `RETOMA_CHECKLIST.md`
 
 ## 8) Prioridade atual
-1. `F16_pareto_80`
-2. `F12_rank_within_partition`
-3. `F18_multi_metric_topn`
+1. fechar `F16_pareto_80`
+2. depois `F12_rank_within_partition`
+3. depois `F18_multi_metric_topn`
 
 ## 9) Regras de higiene documental
 No repositório deve existir:
@@ -141,6 +163,7 @@ No repositório deve existir:
 As revisões (`revD`, `revE`, etc.) devem viver sobretudo em:
 - `validation/revD/`
 - `validation/revE/`
+- `validation/revJ/`
 - `generators/`
 
 Não manter no repositório:
