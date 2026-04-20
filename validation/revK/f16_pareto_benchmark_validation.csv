@@ -1,0 +1,4 @@
+qid,question,legacy_benchmark_rows,legacy_generator_rows,legacy_compat_pass,legacy_last_percentagem_acumulada,canonical_no_guard_rows,canonical_no_guard_last_percentagem_acumulada,canonical_rows,canonical_last_percentagem_acumulada,positive_guard_impact_rows_removed
+203,"Que clientes representam os primeiros 80% da faturação dos últimos 12 meses?",92,92,PASS,-13.479517,93,100.0,10,82.736945,83
+204,"Mostra a análise de Pareto de clientes até atingir 80% da faturação no último ano móvel.",92,92,PASS,-13.479517,93,100.0,10,82.736945,83
+205,"Quais são os clientes que acumulam 80% do valor faturado nos últimos 12 meses?",92,92,PASS,-13.479517,93,100.0,10,82.736945,83
