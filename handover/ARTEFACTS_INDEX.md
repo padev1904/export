@@ -25,8 +25,11 @@ Mapear os artefactos técnicos e documentais relevantes e indicar o respetivo es
 - `validation/revE/lifecycle_benchmark_validation.csv`
 - `validation/revE/lifecycle_generalization_eval.csv`
 - `validation/revE/lifecycle_generalization_cases.md`
-- `validation/revJ/pareto_benchmark_subset.csv`
-- `validation/revJ/pareto_benchmark_notes.md`
+- `validation/revK/f16_pareto_benchmark_validation.csv`
+- `validation/revK/f16_pareto_family_regression.csv`
+- `validation/revK/f16_pareto_generalization_eval.csv`
+- `validation/revK/f16_pareto_generalization_cases.md`
+- `validation/revK/f16_pareto_notes.md`
 
 ## Mapeamento de origem local para destino canónico
 ### Temporal (revD)
@@ -63,22 +66,26 @@ Destino canónico no repositório:
 Estado:
 - sincronizado
 
-### Pareto 80 (revJ)
+### Pareto 80 (revK)
 Origem local existente nesta sessão:
-- `pareto_revJ_2026-04-20/F16_pareto_80_SPEC_revJ.md`
-- `pareto_revJ_2026-04-20/pareto_generator_revJ.py`
-- `pareto_revJ_2026-04-20/pareto_benchmark_subset_revJ.csv`
-- `pareto_revJ_2026-04-20/pareto_benchmark_oracle_notes_revJ.md`
-- `pareto_revJ_2026-04-20/handover_delta_revJ_F16_start.md`
+- `revk_artifacts_2026-04-20/pareto_generator_repo_revK.py`
+- `revk_artifacts_2026-04-20/f16_pareto_benchmark_validation_revK.csv`
+- `revk_artifacts_2026-04-20/f16_pareto_family_regression_revK.csv`
+- `revk_artifacts_2026-04-20/f16_pareto_generalization_eval_revK.csv`
+- `revk_artifacts_2026-04-20/f16_pareto_generalization_cases_revK.md`
+- `revk_artifacts_2026-04-20/f16_pareto_notes_revK.md`
 
 Destino canónico no repositório:
 - `generators/pareto_generator.py`
-- `validation/revJ/pareto_benchmark_subset.csv`
-- `validation/revJ/pareto_benchmark_notes.md`
+- `validation/revK/f16_pareto_benchmark_validation.csv`
+- `validation/revK/f16_pareto_family_regression.csv`
+- `validation/revK/f16_pareto_generalization_eval.csv`
+- `validation/revK/f16_pareto_generalization_cases.md`
+- `validation/revK/f16_pareto_notes.md`
 
 Estado:
-- sincronizado parcialmente
-- falta ainda adicionar validação executável da família e casos de generalização fora do benchmark
+- sincronizado
+- `revJ` deixa de ser a referência canónica desta família
 
 ## O que não deve continuar a crescer no repositório
 - handovers por revisão fora da árvore `handover/`
@@ -86,3 +93,4 @@ Estado:
 - ZIPs de handover
 - cópias redundantes do mesmo estado em múltiplos caminhos
 - qualquer ficheiro bruto derivado diretamente do ZIP original
+- artefactos intermédios supersedidos quando já existir a versão canónica sincronizada
