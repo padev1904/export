@@ -26,18 +26,20 @@ Podem ser carregados:
 2. `handover/CHANGELOG.md`
 3. `handover/SAFE_SOURCE_MANIFEST.md`
 4. `handover/RETOMA_CHECKLIST.md`
-5. `repo_structure/REPO_STRUCTURE_CANONICAL.md`
+5. `handover/ARTEFACTS_INDEX.md`
+6. `repo_structure/REPO_STRUCTURE_CANONICAL.md`
 
 ## Convenção recomendada
 - um único handover corrente
 - um único changelog
 - um único manifesto de fontes
+- um único índice de artefactos
 - geradores canónicos por família em `generators/`
 - validações por revisão em `validation/revX/`
 
 ## Estado atual resumido
 - benchmark: 268 perguntas
 - emulador parcial T-SQL orientado ao benchmark validado com 268/268 SQL de referência executados
-- gerador temporal validado em `revD`
-- gerador lifecycle validado em `revE`
-- próxima prioridade: `F16_pareto_80`, depois `F12_rank_within_partition`, depois `F18_multi_metric_topn`
+- `revD` técnico sincronizado no repositório em `generators/` e `validation/revD/`
+- `revE` está documentado, mas a sincronização técnica permanece pendente nesta sessão
+- próxima prioridade operacional: sincronizar `revE`, depois `F16_pareto_80`, depois `F12_rank_within_partition`, depois `F18_multi_metric_topn`
