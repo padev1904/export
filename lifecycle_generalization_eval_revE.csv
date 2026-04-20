@@ -1,0 +1,9 @@
+case_id,question,operation,entity,dimension,recent_days,inactivity_days,moving_months,manual_rows,generator_rows,status,detail
+G01,Quais os produtos reativados nos últimos 30 dias após 180 dias sem vendas?,reactivated_list,product,,30,180,,47,47,PASS,ok
+G02,Quais os clientes perdidos nos últimos 90 dias por organização de vendas?,lost_list_by_dimension,customer,sales_organization,90,,,52,52,PASS,ok
+G03,Quantos clientes perdidos existem nos últimos 60 dias?,lost_count,customer,,60,,,1,1,PASS,ok
+G04,Mostra o número mensal de produtos com primeira venda no último ano móvel.,first_purchase_monthly_count,product,,,,12,12,12,PASS,ok
+G05,Quantos produtos foram reativados no último mês após 120 dias sem vendas?,reactivated_count,product,,30,120,,1,1,PASS,ok
+G06,Quais os clientes reativados nos últimos 45 dias após 120 dias sem compras?,reactivated_list,customer,,45,120,,13,13,PASS,ok
+G07,Quantos clientes foram reativados nos últimos 30 dias após 180 dias sem compras por organização de vendas?,reactivated_count,customer,sales_organization,30,180,,1,1,PASS,ok
+G08,Quais os produtos perdidos nos últimos 75 dias?,lost_list,product,,75,,,204,204,PASS,ok
