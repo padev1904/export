@@ -16,19 +16,14 @@ Mapear os artefactos técnicos e documentais relevantes e indicar o respetivo es
 
 #### Camada técnica
 - `generators/temporal_generator.py`
+- `generators/lifecycle_generator.py`
 - `validation/revD/tsql_emulator_benchmark_exec.csv`
 - `validation/revD/temporal_benchmark_validation.csv`
 - `validation/revD/temporal_generalization_eval.csv`
 - `validation/revD/temporal_generalization_cases.md`
-
-### Ainda pendente de sincronização técnica
-- `generators/lifecycle_generator.py`
 - `validation/revE/lifecycle_benchmark_validation.csv`
 - `validation/revE/lifecycle_generalization_eval.csv`
 - `validation/revE/lifecycle_generalization_cases.md`
-
-Nota:
-- nesta sessão foi criado `validation/revE/PENDING_SYNC_NOTE.md` para manter a lacuna explícita e evitar falsa sensação de completude
 
 ## Mapeamento de origem local para destino canónico
 ### Temporal (revD)
@@ -50,7 +45,7 @@ Estado:
 - sincronizado
 
 ### Lifecycle (revE)
-Origem local esperada:
+Origem local existente:
 - `lifecycle_generator_revE.py`
 - `lifecycle_benchmark_validation_revE.csv`
 - `lifecycle_generalization_eval_revE.csv`
@@ -63,7 +58,7 @@ Destino canónico no repositório:
 - `validation/revE/lifecycle_generalization_cases.md`
 
 Estado:
-- pendente de sincronização nesta sessão
+- sincronizado
 
 ## O que não deve continuar a crescer no repositório
 - handovers por revisão fora da árvore `handover/`
