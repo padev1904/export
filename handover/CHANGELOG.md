@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 2026-04-20 — revI lifecycle sync completion
+- sincronização técnica de `revE` a partir do ficheiro `handover_pack_2026-04-20_revE.zip` fornecido pelo utilizador
+- criação de `generators/lifecycle_generator.py`
+- criação de `validation/revE/lifecycle_benchmark_validation.csv`
+- criação de `validation/revE/lifecycle_generalization_eval.csv`
+- criação de `validation/revE/lifecycle_generalization_cases.md` em formato canónico resumido
+- remoção de `validation/revE/PENDING_SYNC_NOTE.md`
+- atualização de `README.md`, `HANDOVER_CURRENT.md`, `RETOMA_CHECKLIST.md` e `ARTEFACTS_INDEX.md`
+- o repositório fica sincronizado, à data, para `revD` e `revE`
+
 ## 2026-04-20 — revH handover consolidation
 - atualização de `HANDOVER_CURRENT.md` para refletir o estado canónico real do repositório
 - atualização de `README.md` com distinção entre `revD` sincronizado e `revE` ainda pendente de sincronização técnica nesta sessão
