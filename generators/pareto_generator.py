@@ -1,112 +1,255 @@
-"""
-Canonical Pareto 80 generator — revJ
-Initial universal generator for F16_pareto_80.
+from __future__ import annotations
 
-Scope of this revision:
-- global pareto by entity
-- optional partitioned pareto
-- threshold default 80
-- canonical boundary logic with PercentagemAnterior
-- optional positive-contribution guardrail
-"""
+import re
+from dataclasses import dataclass
+from datetime import date
+from typing import Optional
 
-from dataclasses import dataclass, field
-from typing import List
+CURRENT_DATE = date(2026, 4, 20)
+
+
+def yyyymmdd(d: date) -> int:
+    return int(d.strftime('%Y%m%d'))
+
+
+def month_start(year: int, month: int) -> date:
+    return date(year, month, 1)
+
+
+def add_months(d: date, months: int) -> date:
+    year = d.year + (d.month - 1 + months) // 12
+    month = (d.month - 1 + months) % 12 + 1
+    return date(year, month, 1)
+
+
+def moving_window_start(months: int) -> int:
+    start = add_months(month_start(CURRENT_DATE.year, CURRENT_DATE.month), -(months - 1))
+    return yyyymmdd(start)
+
+
+ENTITY_SPECS = {
+    'customer': {
+        'label_expr': 'd.TCustomer',
+        'alias': 'Cliente',
+        'joins_sqlserver': ['JOIN dbo.D_Customer d ON f.NIDPayerParty = d.NIDCustomer'],
+        'joins_sqlite': ['JOIN D_Customer d ON f.NIDPayerParty = d.NIDCustomer'],
+    },
+    'product': {
+        'label_expr': 'd.TProduct',
+        'alias': 'Produto',
+        'joins_sqlserver': ['JOIN dbo.D_Product d ON f.NIDProduct = d.NIDProduct'],
+        'joins_sqlite': ['JOIN D_Product d ON f.NIDProduct = d.NIDProduct'],
+    },
+    'brand': {
+        'label_expr': 'd.TProductBrand',
+        'alias': 'MarcaProduto',
+        'joins_sqlserver': [
+            'JOIN dbo.D_Product p ON f.NIDProduct = p.NIDProduct',
+            'JOIN dbo.D_ProductBrand d ON p.NIDProductBrand = d.NIDProductBrand',
+        ],
+        'joins_sqlite': [
+            'JOIN D_Product p ON f.NIDProduct = p.NIDProduct',
+            'JOIN D_ProductBrand d ON p.NIDProductBrand = d.NIDProductBrand',
+        ],
+    },
+    'family': {
+        'label_expr': 'd.TProductFamily',
+        'alias': 'FamiliaProduto',
+        'joins_sqlserver': [
+            'JOIN dbo.D_Product p ON f.NIDProduct = p.NIDProduct',
+            'JOIN dbo.D_ProductFamily d ON p.NIDProductFamily = d.NIDProductFamily',
+        ],
+        'joins_sqlite': [
+            'JOIN D_Product p ON f.NIDProduct = p.NIDProduct',
+            'JOIN D_ProductFamily d ON p.NIDProductFamily = d.NIDProductFamily',
+        ],
+    },
+    'country': {
+        'label_expr': 'd.TCountry',
+        'alias': 'Pais',
+        'joins_sqlserver': ['JOIN dbo.D_Country d ON f.NIDCountry = d.NIDCountry'],
+        'joins_sqlite': ['JOIN D_Country d ON f.NIDCountry = d.NIDCountry'],
+    },
+    'channel': {
+        'label_expr': 'd.TDistributionChannel',
+        'alias': 'CanalDistribuicao',
+        'joins_sqlserver': ['JOIN dbo.D_DistributionChannel d ON f.NIDDistributionChannel = d.NIDDistributionChannel'],
+        'joins_sqlite': ['JOIN D_DistributionChannel d ON f.NIDDistributionChannel = d.NIDDistributionChannel'],
+    },
+}
+
+MEASURE_SPECS = {
+    'net_amount': {
+        'expr': 'f.NetAmount',
+        'alias': 'ValorLiquidoFaturado',
+        'requires_additional': False,
+    },
+    'billing_quantity': {
+        'expr': 'f.BillingQuantity',
+        'alias': 'QuantidadeFaturada',
+        'requires_additional': False,
+    },
+    'gross_margin': {
+        'expr': 'f.GrossMargin',
+        'alias': 'MargemBruta',
+        'requires_additional': True,
+    },
+    'promo_total': {
+        'expr': '(f.ZDPRPromotional + f.ZCPRPromotionalCampaign + f.REA1PromotionalDiscount)',
+        'alias': 'DescontoPromocionalTotal',
+        'requires_additional': False,
+    },
+}
 
 
 @dataclass
-class ParetoSlots:
-    entity_label_expr: str
-    entity_group_expr: str
-    measure_expr: str
-    from_and_joins_sql: str
-    where_clauses: List[str]
-    partition_exprs: List[str] = field(default_factory=list)
-    threshold_percent: float = 80.0
-    positive_contribution_only: bool = False
-    include_individual_percent: bool = True
-    include_cumulative_percent: bool = True
+class ParetoSpec:
+    entity: str
+    measure: str
+    start_date_int: int
+    requires_additional: bool = False
+    threshold: float = 80.0
+    original_question: Optional[str] = None
 
 
-def build_pareto_sql(slots: ParetoSlots) -> str:
-    partition_cols = ", ".join(slots.partition_exprs)
-    partition_group = (partition_cols + ", ") if partition_cols else ""
-    partition_select = (partition_cols + ",\n        ") if partition_cols else ""
-    partition_by = f"PARTITION BY {partition_cols} " if partition_cols else ""
-    where_sql = "\n      AND ".join(slots.where_clauses) if slots.where_clauses else "1=1"
+def normalize(text: str) -> str:
+    x = text.lower().strip()
+    repl = {
+        'á': 'a', 'à': 'a', 'â': 'a', 'ã': 'a',
+        'é': 'e', 'ê': 'e',
+        'í': 'i',
+        'ó': 'o', 'ô': 'o', 'õ': 'o',
+        'ú': 'u', 'ç': 'c',
+    }
+    for a, b in repl.items():
+        x = x.replace(a, b)
+    return re.sub(r'\s+', ' ', x)
 
-    positive_filter = ""
-    if slots.positive_contribution_only:
-        positive_filter = "\n    WHERE Valor > 0"
 
-    select_cols = []
-    if partition_cols:
-        select_cols.append(partition_cols)
-    select_cols.append("Entidade")
-    select_cols.append("Valor")
-    if slots.include_individual_percent:
-        select_cols.append("PercentagemIndividual")
-    if slots.include_cumulative_percent:
-        select_cols.append("PercentagemAcumulada")
-    select_sql = ",\n    ".join(select_cols)
+def parse_pareto_question(question: str) -> ParetoSpec:
+    q = normalize(question)
+    if 'marca' in q or 'marcas' in q:
+        entity = 'brand'
+    elif 'familia de produto' in q or 'familias de produto' in q or 'familia' in q or 'familias' in q:
+        entity = 'family'
+    elif 'canal de distribuicao' in q or 'canais' in q or 'canal' in q:
+        entity = 'channel'
+    elif 'paises' in q or 'pais' in q:
+        entity = 'country'
+    elif 'produtos' in q or 'produto' in q:
+        entity = 'product'
+    elif 'clientes' in q or 'cliente' in q:
+        entity = 'customer'
+    else:
+        entity = 'customer'
 
-    order_prefix = (partition_cols + ", ") if partition_cols else ""
+    if 'desconto promocional' in q:
+        measure = 'promo_total'
+    elif 'margem bruta' in q:
+        measure = 'gross_margin'
+    elif 'quantidade' in q:
+        measure = 'billing_quantity'
+    else:
+        measure = 'net_amount'
 
-    sql = f"""
-WITH entity_sales AS (
+    if 'ultimo ano movel' in q or 'ultimos 12 meses' in q:
+        start_date_int = moving_window_start(12)
+    elif 'ultimos 6 meses' in q:
+        start_date_int = moving_window_start(6)
+    elif 'em 2026' in q or 'de 2026' in q:
+        start_date_int = 20260101
+    else:
+        start_date_int = moving_window_start(12)
+
+    return ParetoSpec(
+        entity=entity,
+        measure=measure,
+        start_date_int=start_date_int,
+        requires_additional=MEASURE_SPECS[measure]['requires_additional'],
+        original_question=question,
+    )
+
+
+class ParetoGenerator:
+    def _build_sql(self, spec: ParetoSpec, dialect: str = 'sqlserver', mode: str = 'canonical') -> str:
+        entity = ENTITY_SPECS[spec.entity]
+        measure = MEASURE_SPECS[spec.measure]
+        label = entity['label_expr']
+        alias = entity['alias']
+        joins = '\n    '.join(entity['joins_sqlserver' if dialect == 'sqlserver' else 'joins_sqlite'])
+        table_name = 'dbo.F_Invoice' if dialect == 'sqlserver' else 'F_Invoice'
+        metric_alias = measure['alias']
+        where = [
+            f'f.BillingDocumentDate >= {spec.start_date_int}',
+            'f.BillingDocumentIsCancelled = 0',
+        ]
+        if spec.start_date_int == 20260101:
+            where.append('f.BillingDocumentDate <= 20261231')
+        if spec.requires_additional:
+            where.append('f.IsItAnAdditionalCalculatedRecord = 1')
+        where_sql = '\n      AND '.join(where)
+
+        if mode == 'legacy_benchmark':
+            positive_guard = ''
+            final_filter = f'WHERE PercentagemAcumulada <= {spec.threshold}'
+            before_col = ''
+        elif mode == 'canonical_no_positive_guard':
+            positive_guard = ''
+            final_filter = f'WHERE PercentagemAcumulada <= {spec.threshold} OR PercentagemAntes < {spec.threshold}'
+            before_col = ',\n    PercentagemAntes'
+        elif mode == 'canonical':
+            positive_guard = f'\n    WHERE {metric_alias} > 0'
+            final_filter = f'WHERE PercentagemAcumulada <= {spec.threshold} OR PercentagemAntes < {spec.threshold}'
+            before_col = ',\n    PercentagemAntes'
+        else:
+            raise ValueError(mode)
+
+        return f"""
+WITH sales_by_entity AS (
     SELECT
-        {partition_select}{slots.entity_label_expr} AS Entidade,
-        {slots.measure_expr} AS Valor
-    {slots.from_and_joins_sql}
+        {label} AS {alias},
+        SUM({measure['expr']}) AS {metric_alias}
+    FROM {table_name} f
+    {joins}
     WHERE {where_sql}
-    GROUP BY {partition_group}{slots.entity_group_expr}
+    GROUP BY {label}
 ),
-entity_sales_filtered AS (
+filtered AS (
     SELECT *
-    FROM entity_sales{positive_filter}
+    FROM sales_by_entity{positive_guard}
 ),
 ranked AS (
     SELECT
-        {partition_select}Entidade,
-        Valor,
-        SUM(Valor) OVER (
-            {partition_by}ORDER BY Valor DESC, Entidade
+        {alias},
+        {metric_alias},
+        SUM({metric_alias}) OVER (
+            ORDER BY {metric_alias} DESC, {alias}
             ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
         ) AS ValorAcumulado,
-        SUM(Valor) OVER ({partition_by.rstrip()}) AS ValorTotal
-    FROM entity_sales_filtered
+        SUM({metric_alias}) OVER () AS ValorTotal
+    FROM filtered
 ),
 scored AS (
     SELECT
-        {partition_select}Entidade,
-        Valor,
-        Valor * 100.0 / NULLIF(ValorTotal, 0) AS PercentagemIndividual,
-        ValorAcumulado * 100.0 / NULLIF(ValorTotal, 0) AS PercentagemAcumulada,
-        (ValorAcumulado - Valor) * 100.0 / NULLIF(ValorTotal, 0) AS PercentagemAnterior
+        {alias},
+        {metric_alias},
+        ({metric_alias} * 100.0) / NULLIF(ValorTotal, 0) AS PercentagemIndividual,
+        (ValorAcumulado * 100.0) / NULLIF(ValorTotal, 0) AS PercentagemAcumulada,
+        ((ValorAcumulado - {metric_alias}) * 100.0) / NULLIF(ValorTotal, 0) AS PercentagemAntes
     FROM ranked
 )
 SELECT
-    {select_sql}
+    {alias},
+    {metric_alias},
+    PercentagemIndividual,
+    PercentagemAcumulada{before_col}
 FROM scored
-WHERE PercentagemAcumulada <= {slots.threshold_percent}
-   OR PercentagemAnterior < {slots.threshold_percent}
-ORDER BY {order_prefix}Valor DESC, Entidade;
+{final_filter}
+ORDER BY {metric_alias} DESC, {alias};
 """.strip()
-    return sql
 
+    def build_sqlserver_sql(self, spec: ParetoSpec, mode: str = 'canonical') -> str:
+        return self._build_sql(spec=spec, dialect='sqlserver', mode=mode)
 
-def build_customer_last_12m_pareto_sql() -> str:
-    slots = ParetoSlots(
-        entity_label_expr="c.TCustomer",
-        entity_group_expr="c.TCustomer",
-        measure_expr="SUM(f.NetAmount)",
-        from_and_joins_sql="FROM dbo.F_Invoice f\n    JOIN dbo.D_Customer c ON f.NIDPayerParty = c.NIDCustomer",
-        where_clauses=[
-            "f.BillingDocumentIsCancelled = 0",
-            "f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, 1, EOMONTH(GETDATE(), -12)), 112))",
-        ],
-        partition_exprs=[],
-        threshold_percent=80.0,
-        positive_contribution_only=False,
-    )
-    return build_pareto_sql(slots)
+    def build_sqlite_sql(self, spec: ParetoSpec, mode: str = 'canonical') -> str:
+        return self._build_sql(spec=spec, dialect='sqlite', mode=mode)
