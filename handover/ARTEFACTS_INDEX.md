@@ -18,6 +18,7 @@ Mapear os artefactos técnicos e documentais relevantes e indicar o respetivo es
 - `generators/temporal_generator.py`
 - `generators/lifecycle_generator.py`
 - `generators/pareto_generator.py`
+- `generators/rank_partition_generator.py`
 - `validation/revD/tsql_emulator_benchmark_exec.csv`
 - `validation/revD/temporal_benchmark_validation.csv`
 - `validation/revD/temporal_generalization_eval.csv`
@@ -30,17 +31,15 @@ Mapear os artefactos técnicos e documentais relevantes e indicar o respetivo es
 - `validation/revK/f16_pareto_generalization_eval.csv`
 - `validation/revK/f16_pareto_generalization_cases.md`
 - `validation/revK/f16_pareto_notes.md`
+- `validation/revL/f12_rank_partition_benchmark_validation.csv`
+- `validation/revL/f12_rank_partition_family_regression.csv`
+- `validation/revL/f12_rank_partition_generalization_eval.csv`
+- `validation/revL/f12_rank_partition_generalization_cases.md`
+- `validation/revL/f12_rank_partition_notes.md`
 
 ## Mapeamento de origem local para destino canónico
 ### Temporal (revD)
-Origem local existente:
-- `revd_artifacts_2026-04-20/temporal_generator_revD.py`
-- `revd_artifacts_2026-04-20/tsql_emulator_benchmark_exec_revD.csv`
-- `revd_artifacts_2026-04-20/temporal_generator_revD_benchmark_validation.csv`
-- `revd_artifacts_2026-04-20/temporal_generator_revD_generalization_eval.csv`
-- `revd_artifacts_2026-04-20/temporal_generator_revD_generalization_cases.md`
-
-Destino canónico no repositório:
+Destino canónico:
 - `generators/temporal_generator.py`
 - `validation/revD/tsql_emulator_benchmark_exec.csv`
 - `validation/revD/temporal_benchmark_validation.csv`
@@ -51,13 +50,7 @@ Estado:
 - sincronizado
 
 ### Lifecycle (revE)
-Origem local existente:
-- `lifecycle_generator_revE.py`
-- `lifecycle_benchmark_validation_revE.csv`
-- `lifecycle_generalization_eval_revE.csv`
-- `lifecycle_generalization_cases_revE.md`
-
-Destino canónico no repositório:
+Destino canónico:
 - `generators/lifecycle_generator.py`
 - `validation/revE/lifecycle_benchmark_validation.csv`
 - `validation/revE/lifecycle_generalization_eval.csv`
@@ -67,15 +60,7 @@ Estado:
 - sincronizado
 
 ### Pareto 80 (revK)
-Origem local existente nesta sessão:
-- `revk_artifacts_2026-04-20/pareto_generator_repo_revK.py`
-- `revk_artifacts_2026-04-20/f16_pareto_benchmark_validation_revK.csv`
-- `revk_artifacts_2026-04-20/f16_pareto_family_regression_revK.csv`
-- `revk_artifacts_2026-04-20/f16_pareto_generalization_eval_revK.csv`
-- `revk_artifacts_2026-04-20/f16_pareto_generalization_cases_revK.md`
-- `revk_artifacts_2026-04-20/f16_pareto_notes_revK.md`
-
-Destino canónico no repositório:
+Destino canónico:
 - `generators/pareto_generator.py`
 - `validation/revK/f16_pareto_benchmark_validation.csv`
 - `validation/revK/f16_pareto_family_regression.csv`
@@ -85,7 +70,18 @@ Destino canónico no repositório:
 
 Estado:
 - sincronizado
-- `revJ` deixa de ser a referência canónica desta família
+
+### Rank within partition (revL)
+Destino canónico:
+- `generators/rank_partition_generator.py`
+- `validation/revL/f12_rank_partition_benchmark_validation.csv`
+- `validation/revL/f12_rank_partition_family_regression.csv`
+- `validation/revL/f12_rank_partition_generalization_eval.csv`
+- `validation/revL/f12_rank_partition_generalization_cases.md`
+- `validation/revL/f12_rank_partition_notes.md`
+
+Estado:
+- sincronizado
 
 ## O que não deve continuar a crescer no repositório
 - handovers por revisão fora da árvore `handover/`
