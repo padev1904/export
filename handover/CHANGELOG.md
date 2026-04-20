@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 2026-04-20 — revG technical sync
+- sincronização da camada técnica canónica disponível nesta sessão
+- criação de `generators/temporal_generator.py`
+- criação de `validation/revD/tsql_emulator_benchmark_exec.csv`
+- criação de `validation/revD/temporal_benchmark_validation.csv`
+- criação de `validation/revD/temporal_generalization_eval.csv`
+- criação de `validation/revD/temporal_generalization_cases.md`
+- criação de `validation/revE/PENDING_SYNC_NOTE.md`
+- `revE` continua documentado, mas pendente de sincronização técnica nesta sessão por ausência dos ficheiros locais correspondentes
+
 ## 2026-04-20 — revF documental
 - consolidação da estrutura documental canónica
 - eliminação de redundâncias entre README, state reconstructed e handovers por revisão
