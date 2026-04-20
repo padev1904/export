@@ -1,0 +1,9 @@
+case_id,question,metric,partition_keys,entity_key,status,strict_equal,semantic_equal
+G01,Quais são os 2 clientes com maior valor líquido faturado dentro de cada organização de vendas em 2026?,net_amount,OrganizacaoVendas,Cliente,PASS,True,True
+G02,Quais são as 2 marcas com maior valor líquido faturado dentro de cada canal de distribuição em 2026?,net_amount,CanalDistribuicao,MarcaProduto,PASS,True,True
+G03,Quais são os 3 produtos com maior diferença entre preço de lista e valor líquido faturado dentro de cada mês em 2026?,list_minus_net,Mes,Produto,PASS,True,True
+G04,Quais são os 2 países com maior crescimento absoluto de quantidade faturada dentro de cada canal de distribuição entre 2025 e 2026?,growth_billing_quantity,CanalDistribuicao,Pais,PASS,True,True
+G05,Quais são as 2 famílias de produto com maior preço médio líquido por unidade dentro de cada canal de distribuição em 2026?,avg_net_price_per_unit,CanalDistribuicao,FamiliaProduto,PASS,True,True
+G06,Quais são os 2 grupos de preço de cliente com maior valor líquido faturado dentro de cada país em 2026?,net_amount,Pais,GrupoPrecoCliente,PASS,True,True
+G07,Quais são os 2 pontos de expedição com maior desconto promocional total dentro de cada mês em 2026?,promo_discount_total,Mes,PontoExpedicao,PASS,True,True
+G08,Quais são as 2 organizações de vendas com maior valor líquido faturado dentro de cada país em 2026?,net_amount,Pais,OrganizacaoVendas,PASS,True,True
