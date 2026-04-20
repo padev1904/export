@@ -42,4 +42,5 @@ Podem ser carregados:
 - emulador parcial T-SQL orientado ao benchmark validado com 268/268 SQL de referência executados
 - `revD` técnico sincronizado no repositório em `generators/` e `validation/revD/`
 - `revE` técnico sincronizado no repositório em `generators/` e `validation/revE/`
-- próxima prioridade operacional: `F16_pareto_80`, depois `F12_rank_within_partition`, depois `F18_multi_metric_topn`
+- `revK` técnico sincronizado no repositório para `F16_pareto_80` em `generators/` e `validation/revK/`
+- próxima prioridade operacional: `F12_rank_within_partition`, depois `F18_multi_metric_topn`
