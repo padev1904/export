@@ -1,4 +1,0 @@
-qid,question,family,benchmark_pattern,oracle_uses_boundary_logic,canonical_boundary_logic,notes
-203,"Que clientes representam os primeiros 80% da faturação dos últimos 12 meses?",F16_pareto_80,global_customer_pareto_last_12_months,no,yes,"SQL oráculo igual a Q204/Q205"
-204,"Mostra a análise de Pareto de clientes até atingir 80% da faturação no último ano móvel.",F16_pareto_80,global_customer_pareto_last_12_months,no,yes,"SQL oráculo igual a Q203/Q205"
-205,"Quais são os clientes que acumulam 80% do valor faturado nos últimos 12 meses?",F16_pareto_80,global_customer_pareto_last_12_months,no,yes,"SQL oráculo igual a Q203/Q204"
