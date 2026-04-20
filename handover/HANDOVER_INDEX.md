@@ -9,11 +9,12 @@ Este repositório é o ponto de retoma do projeto universal de Text-to-SQL para 
 - Manter apenas documentação derivada, artefactos textuais seguros, backlog, matrizes e perguntas de teste sem dados sensíveis.
 
 ## Ler primeiro numa nova sessão
-1. `handover/STATE_RECONSTRUCTED_2026-04-20.md`
-2. `handover/KNOWN_DISCREPANCIES.md`
-3. `handover/FACTS_VERIFIED_FROM_ZIP.md`
-4. `handover/BACKLOG_AND_PRIORITY.md`
-5. `handover/RESTART_PLAYBOOK.md`
+1. `README.md`
+2. `handover/STATE_RECONSTRUCTED_2026-04-20.md`
+3. `handover/SAFE_SOURCE_MANIFEST.md`
+4. `handover/VERIFIED_RULES_FROM_SOURCE_2026-04-20.md`
+5. `handover_atualizado_2026-04-20_revD.md`
+6. `checklist_retoma_sessao_2026-04-20_revD.md`
 
 ## Artefactos estruturados preservados
 - `source_artifacts/tsql_pass_matrix_q1_q60_v2.csv`
@@ -26,9 +27,10 @@ Este repositório é o ponto de retoma do projeto universal de Text-to-SQL para 
 
 ## Estado operacional resumido
 - Benchmark: 268 perguntas em `examples.sql`.
-- Ambiente local descrito como executável para os 268 SQL oráculo.
-- Q61-Q150 já mapeado por famílias.
-- Prioridade operacional: `rank_within_partition`, `percentage_share`, `cancellation`, `period_compare`.
+- A divergência Q1–Q60 continua explícita: matriz factual aponta 58 PASS e 2 NO_GENERATOR até reconciliação.
+- O bloco Q61–Q150 está mapeado por famílias.
+- A referência executável atual para o bloco temporal é a revisão `revD`.
+- Próximas famílias prioritárias: `F17_lifecycle`, `F16_pareto_80`, `F12_rank_within_partition`, `F18_multi_metric_topn`.
 
 ## Regra de ouro
 Em caso de conflito entre resumo narrativo e matriz factual, prevalece a matriz factual até reconciliação explícita.
