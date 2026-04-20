@@ -41,5 +41,5 @@ Podem ser carregados:
 - benchmark: 268 perguntas
 - emulador parcial T-SQL orientado ao benchmark validado com 268/268 SQL de referência executados
 - `revD` técnico sincronizado no repositório em `generators/` e `validation/revD/`
-- `revE` está documentado, mas a sincronização técnica permanece pendente nesta sessão
-- próxima prioridade operacional: sincronizar `revE`, depois `F16_pareto_80`, depois `F12_rank_within_partition`, depois `F18_multi_metric_topn`
+- `revE` técnico sincronizado no repositório em `generators/` e `validation/revE/`
+- próxima prioridade operacional: `F16_pareto_80`, depois `F12_rank_within_partition`, depois `F18_multi_metric_topn`
