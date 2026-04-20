@@ -1,0 +1,15 @@
+case_id,question,mode,status,rows
+Q203,"Que clientes representam os primeiros 80% da faturação dos últimos 12 meses?",legacy_benchmark,PASS,92
+Q203,"Que clientes representam os primeiros 80% da faturação dos últimos 12 meses?",canonical,PASS,10
+Q204,"Mostra a análise de Pareto de clientes até atingir 80% da faturação no último ano móvel.",legacy_benchmark,PASS,92
+Q204,"Mostra a análise de Pareto de clientes até atingir 80% da faturação no último ano móvel.",canonical,PASS,10
+Q205,"Quais são os clientes que acumulam 80% do valor faturado nos últimos 12 meses?",legacy_benchmark,PASS,92
+Q205,"Quais são os clientes que acumulam 80% do valor faturado nos últimos 12 meses?",canonical,PASS,10
+P01,"Quais são os produtos que representam os primeiros 80% da faturação em 2026?",canonical_generalization,PASS,66
+P02,"Quais são as marcas que representam os primeiros 80% da faturação nos últimos 6 meses?",canonical_generalization,PASS,4
+P03,"Quais são os países que representam os primeiros 80% da faturação em 2026?",canonical_generalization,PASS,1
+P04,"Quais são as famílias de produto que representam os primeiros 80% da quantidade faturada em 2026?",canonical_generalization,PASS,1
+P05,"Quais são os canais que representam os primeiros 80% do desconto promocional total em 2026?",canonical_generalization,PASS,0
+P06,"Quais são os clientes que representam os primeiros 80% da margem bruta em 2026 considerando apenas registos adicionais calculados?",canonical_generalization,PASS,0
+P07,"Quais são as marcas que representam os primeiros 80% da margem bruta em 2026 considerando apenas registos adicionais calculados?",canonical_generalization,PASS,0
+P08,"Quais são os produtos que representam os primeiros 80% da quantidade faturada nos últimos 12 meses?",canonical_generalization,PASS,84
