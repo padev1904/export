@@ -4,8 +4,9 @@
 1. ler `README.md`
 2. ler `handover/HANDOVER_CURRENT.md`
 3. ler `handover/CHANGELOG.md`
-4. confirmar `handover/SAFE_SOURCE_MANIFEST.md`
-5. confirmar backlog atual em `HANDOVER_CURRENT.md`
+4. ler `handover/ARTEFACTS_INDEX.md`
+5. confirmar `handover/SAFE_SOURCE_MANIFEST.md`
+6. confirmar backlog atual em `HANDOVER_CURRENT.md`
 
 ## Antes de trabalhar nova família
 1. identificar subconjunto do benchmark da família
@@ -13,6 +14,7 @@
 3. definir slots
 4. definir defaults e guardrails
 5. confirmar se já existe gerador canónico anterior
+6. confirmar se existe alguma sincronização técnica pendente que deva ser resolvida primeiro
 
 ## Durante a implementação
 1. não hardcode de perguntas do benchmark
@@ -20,6 +22,7 @@
 3. usar SQL manual independente nos casos novos
 4. medir equivalência de resultado, não elegância
 5. reexecutar tudo o que já tinha passado nessa família
+6. manter o repositório canónico consistente com o estado real do trabalho
 
 ## Antes de fechar a revisão
 1. produzir gerador canónico da família
@@ -28,9 +31,11 @@
 4. produzir casos de generalização documentados
 5. atualizar `HANDOVER_CURRENT.md`
 6. acrescentar delta a `CHANGELOG.md`
-7. rever se foi criada nova redundância documental
+7. atualizar `ARTEFACTS_INDEX.md`
+8. rever se foi criada nova redundância documental
 
 ## Próximo alvo atualmente acordado
-1. `F16_pareto_80`
-2. `F12_rank_within_partition`
-3. `F18_multi_metric_topn`
+1. sincronizar `revE` técnico a partir dos ficheiros já guardados pelo utilizador
+2. `F16_pareto_80`
+3. `F12_rank_within_partition`
+4. `F18_multi_metric_topn`
