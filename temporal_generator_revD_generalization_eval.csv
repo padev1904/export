@@ -1,0 +1,9 @@
+test_id,question,family,operation,status,manual_rows,generator_rows
+G01,Como evoluiu mensalmente a faturação por marca nos últimos 6 meses?,F15_window_trend,monthly_trend,PASS,61,61
+G02,Como evoluiu mensalmente a margem bruta por família de produto nos últimos 6 meses?,F15_window_trend,monthly_trend,PASS,20,20
+G03,Qual é a média móvel de 3 meses da faturação por canal?,F15_window_trend,rolling_avg_3m,PASS,36,36
+G04,Qual é a variação percentual mensal da quantidade faturada por região nos últimos 6 meses?,F15_window_trend,mom_pct_change,PASS,104,104
+G05,Qual é o peso do desconto promocional total sobre a faturação por mês e por canal nos últimos 6 meses?,F11_percentage_share,monthly_ratio_to_billing,PASS,27,27
+G06,Qual é o crescimento da faturação por país no mês atual face ao mesmo mês do ano anterior?,F13_period_compare,yoy_same_month_by_dimension,PASS,3,3
+G07,Qual foi a quantidade faturada do mês atual versus o mês anterior?,F13_period_compare,current_vs_previous_month,PASS,2,2
+G08,Qual é o acumulado YTD da margem bruta por canal no ano corrente?,F15_window_trend,ytd,PASS,9,9
