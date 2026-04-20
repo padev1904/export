@@ -1,0 +1,28 @@
+qid,question,status,strict_equal,semantic_equal
+68,Quais são as 3 regiões com maior valor líquido faturado dentro de cada país em 2026?,PASS,True,True
+69,Quais são os 3 produtos com maior valor líquido faturado em cada organização de vendas em 2026?,PASS,True,True
+94,Quais são as 3 marcas com maior valor líquido faturado dentro de cada família de produto em 2026?,PASS,True,True
+99,Quais são os 3 clientes com maior valor líquido faturado dentro de cada canal de distribuição em 2026?,PASS,True,True
+101,"Quais são as 3 regiões com maior valor líquido faturado dentro de cada país em 2026, usando a região da linha de faturação?",PASS,True,True
+102,Quais são as 2 famílias de produto com maior valor líquido faturado dentro de cada organização de vendas em 2026?,PASS,True,True
+103,Quais são os 3 clientes com maior crescimento absoluto de valor líquido faturado dentro de cada canal de distribuição entre 2025 e 2026?,PASS,True,True
+105,Quais são os 3 tipos de lista de preços com maior diferença entre preço de lista e valor líquido faturado em cada mês de 2026?,PASS,True,True
+107,Quais são os 2 países com maior valor líquido faturado dentro de cada canal de distribuição em 2026?,PASS,True,True
+108,Quais são os 3 clientes com maior diferença entre preço de lista e valor líquido faturado dentro de cada organização de vendas em 2026?,PASS,False,True
+111,Quais são as 2 marcas com maior preço médio líquido por unidade dentro de cada família de produto em 2026?,PASS,True,True
+112,Quais são os 3 clientes com maior valor líquido faturado dentro de cada país em 2026?,PASS,True,True
+115,Quais são os 3 grupos de cliente com maior desconto de quantidade dentro de cada mês de 2026?,PASS,True,True
+117,Quais são os 2 pontos de expedição com maior valor líquido faturado dentro de cada organização de vendas em 2026?,PASS,True,True
+119,Quais são as 2 organizações de vendas com maior variação percentual de valor líquido faturado dentro de cada canal de distribuição entre 2025 e 2026?,PASS,True,True
+120,Quais são as 3 famílias de produto com maior diferença entre preço de lista e valor líquido faturado dentro de cada organização de vendas em 2026?,PASS,True,True
+121,Quais são os 3 grupos de preço de cliente com maior valor líquido faturado dentro de cada organização de vendas em 2026?,PASS,True,True
+123,"Quais são os 3 clientes com maior valor líquido faturado dentro de cada país em 2026, usando o país da linha de faturação?",PASS,True,True
+125,Quais são as 2 organizações de vendas com maior taxa de cancelamento de documentos dentro de cada mês em 2026?,PASS,True,True
+126,Quais são os 3 documentos de faturação com maior valor líquido absoluto dentro de cada mês em 2026 entre os que têm simultaneamente linhas positivas e negativas?,PASS,True,True
+128,Quais são as 2 marcas com maior diferença entre preço de lista e valor líquido faturado dentro de cada família de produto e por mês em 2026?,PASS,True,True
+130,Quais são os 3 clientes com maior crescimento absoluto de valor líquido faturado dentro de cada país entre 2025 e 2026?,PASS,True,True
+132,Quais são os 2 grupos de cliente com maior desconto promocional total dentro de cada marca em 2026?,PASS,True,True
+139,Quais são as 3 marcas de produto com maior valor líquido faturado dentro de cada organização de vendas em 2026?,PASS,True,True
+145,Quais são os 3 países com maior valor líquido faturado dentro de cada organização de vendas em 2026?,PASS,True,True
+148,Quais são os 2 clientes com maior crescimento absoluto de quantidade faturada dentro de cada país entre 2025 e 2026?,PASS,True,True
+150,Quais são os 3 produtos com maior valor líquido faturado dentro de cada mês de 2026?,PASS,True,True
