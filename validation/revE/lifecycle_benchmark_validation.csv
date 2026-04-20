@@ -1,0 +1,4 @@
+qid,question,operation,entity,status,reference_rows,generator_rows,detail
+207,Mostra o número mensal de clientes com primeira compra no último ano móvel.,first_purchase_monthly_count,customer,PASS,12,12,ok
+209,Quantos clientes foram reativados nos últimos 30 dias após pelo menos 180 dias sem compras?,reactivated_count,customer,PASS,1,1,ok
+210,"Mostra o número de clientes reativados no último mês, considerando 180 dias de inatividade anterior.",reactivated_count,customer,PASS,1,1,ok
