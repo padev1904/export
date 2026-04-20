@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2026-04-20 — revJ pareto start
+- início canónico da família `F16_pareto_80`
+- criação de `generators/pareto_generator.py`
+- criação de `validation/revJ/pareto_benchmark_subset.csv`
+- criação de `validation/revJ/pareto_benchmark_notes.md`
+- atualização de `HANDOVER_CURRENT.md` para refletir `revJ` em progresso
+- formalização explícita da divergência entre benchmark Pareto legado e semântica canónica de fronteira
+
 ## 2026-04-20 — revI lifecycle sync completion
 - sincronização técnica de `revE` a partir do ficheiro `handover_pack_2026-04-20_revE.zip` fornecido pelo utilizador
 - criação de `generators/lifecycle_generator.py`
