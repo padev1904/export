@@ -1,6 +1,6 @@
 # HANDOVER CURRENT
 
-Última consolidação: 2026-04-20 (revH sync canónico)
+Última consolidação: 2026-04-20 (revI repo fully synced for revD and revE)
 
 ## 1) Âmbito
 Projeto de geração universal de T-SQL para SQL Server, com foco em:
@@ -82,7 +82,7 @@ Subconjunto explícito do benchmark:
 - Q209
 - Q210
 
-Estado documental conhecido:
+Estado validado:
 - benchmark da família: 3/3 PASS
 - generalização fora do benchmark: 8/8 PASS
 - regressão final da família em revE: 11/11 PASS
@@ -100,22 +100,18 @@ Subpadrões fechados:
 - `lost_list`
 - `lost_list_by_dimension`
 
-**Importante:** nesta sessão, os ficheiros técnicos canónicos de `revE` não estavam disponíveis no filesystem local. O repositório contém nota explícita de sincronização pendente em `validation/revE/PENDING_SYNC_NOTE.md`.
-
 ## 6) Estado do repositório canónico
 ### Já sincronizado no repositório
 - `generators/temporal_generator.py`
+- `generators/lifecycle_generator.py`
 - `validation/revD/tsql_emulator_benchmark_exec.csv`
 - `validation/revD/temporal_benchmark_validation.csv`
 - `validation/revD/temporal_generalization_eval.csv`
 - `validation/revD/temporal_generalization_cases.md`
-- documentação canónica em `handover/` e `repo_structure/`
-
-### Ainda pendente de sincronização técnica
-- `generators/lifecycle_generator.py`
 - `validation/revE/lifecycle_benchmark_validation.csv`
 - `validation/revE/lifecycle_generalization_eval.csv`
 - `validation/revE/lifecycle_generalization_cases.md`
+- documentação canónica em `handover/` e `repo_structure/`
 
 ## 7) Método obrigatório para cada nova família
 1. formalizar a semântica da família
@@ -130,10 +126,9 @@ Subpadrões fechados:
 10. atualizar `HANDOVER_CURRENT.md`, `CHANGELOG.md`, `ARTEFACTS_INDEX.md` e `RETOMA_CHECKLIST.md`
 
 ## 8) Prioridade atual
-1. sincronizar a camada técnica de `revE` a partir dos ficheiros locais já guardados pelo utilizador
-2. `F16_pareto_80`
-3. `F12_rank_within_partition`
-4. `F18_multi_metric_topn`
+1. `F16_pareto_80`
+2. `F12_rank_within_partition`
+3. `F18_multi_metric_topn`
 
 ## 9) Regras de higiene documental
 No repositório deve existir:
