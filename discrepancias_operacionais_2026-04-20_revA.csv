@@ -1,0 +1,3 @@
+topic;claim_source;claim;evidence_source;evidence;status;recommended_treatment
+Q1_Q60_closure;Handover/project_state_log;Q1-Q60 fechado em 60/60;tsql_pass_matrix_q1_q60_v2.csv;58 PASS + 2 NO_GENERATOR (Q32,Q34);OPEN;Seguir matriz factual até reconciliação por execução
+training_data_document_count;Earlier narrative in conversation;Documentação e dimensões descritas de forma variável em mensagens anteriores;ZIP structure inspected locally;8 docs markdown + 45 dimension json + f_invoice_sample.csv + examples.sql;RESOLVED;Usar inventário estrutural do ZIP como fonte factual
