@@ -35,6 +35,6 @@
 8. rever se foi criada nova redundância documental
 
 ## Próximo alvo atualmente acordado
-1. `F16_pareto_80`
-2. `F12_rank_within_partition`
-3. `F18_multi_metric_topn`
+1. `F12_rank_within_partition`
+2. `F18_multi_metric_topn`
+3. reconciliação explícita de `Q32/Q34` e backlog residual não fechado
