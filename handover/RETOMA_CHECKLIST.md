@@ -14,7 +14,7 @@
 3. definir slots
 4. definir defaults e guardrails
 5. confirmar se já existe gerador canónico anterior
-6. confirmar se existe alguma sincronização técnica pendente que deva ser resolvida primeiro
+6. confirmar se o repositório já está sincronizado com o estado técnico mais recente
 
 ## Durante a implementação
 1. não hardcode de perguntas do benchmark
@@ -35,7 +35,6 @@
 8. rever se foi criada nova redundância documental
 
 ## Próximo alvo atualmente acordado
-1. sincronizar `revE` técnico a partir dos ficheiros já guardados pelo utilizador
-2. `F16_pareto_80`
-3. `F12_rank_within_partition`
-4. `F18_multi_metric_topn`
+1. `F16_pareto_80`
+2. `F12_rank_within_partition`
+3. `F18_multi_metric_topn`
