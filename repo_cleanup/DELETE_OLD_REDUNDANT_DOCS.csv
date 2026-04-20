@@ -1,0 +1,17 @@
+action,path,note
+replace,README.md,canonical README
+replace,handover/SAFE_SOURCE_MANIFEST.md,canonical safe source manifest
+delete,handover/STATE_RECONSTRUCTED_2026-04-20.md,replaced by HANDOVER_CURRENT
+delete,handover_atualizado_2026-04-20_revA.md,obsolete handover
+delete,handover_atualizado_2026-04-20_revC.md,obsolete handover
+delete,handover_atualizado_2026-04-20_revD.md,obsolete handover
+delete,handover_atualizado_2026-04-20_revE.md,obsolete handover
+delete,checklist_retoma_sessao_2026-04-20_revA.md,obsolete checklist
+delete,checklist_retoma_sessao_2026-04-20_revC.md,obsolete checklist
+delete,checklist_retoma_sessao_2026-04-20_revD.md,obsolete checklist
+delete,checklist_retoma_2026-04-20_revE.md,obsolete checklist
+delete,manifesto_fontes_seguro_2026-04-20_revA.md,obsolete manifest
+skip,handover_pack_2026-04-20_revA.zip,keep outside repo
+skip,handover_pack_2026-04-20_revC.zip,keep outside repo
+skip,handover_pack_2026-04-20_revD.zip,keep outside repo
+skip,handover_pack_2026-04-20_revE.zip,keep outside repo
