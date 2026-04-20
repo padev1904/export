@@ -1,0 +1,9 @@
+test_id,question,status,generator_rows,manual_rows
+P01,"Quais são os produtos que representam os primeiros 80% da faturação em 2026?",PASS,66,66
+P02,"Quais são as marcas que representam os primeiros 80% da faturação nos últimos 6 meses?",PASS,4,4
+P03,"Quais são os países que representam os primeiros 80% da faturação em 2026?",PASS,1,1
+P04,"Quais são as famílias de produto que representam os primeiros 80% da quantidade faturada em 2026?",PASS,1,1
+P05,"Quais são os canais que representam os primeiros 80% do desconto promocional total em 2026?",PASS,0,0
+P06,"Quais são os clientes que representam os primeiros 80% da margem bruta em 2026 considerando apenas registos adicionais calculados?",PASS,0,0
+P07,"Quais são as marcas que representam os primeiros 80% da margem bruta em 2026 considerando apenas registos adicionais calculados?",PASS,0,0
+P08,"Quais são os produtos que representam os primeiros 80% da quantidade faturada nos últimos 12 meses?",PASS,84,84
