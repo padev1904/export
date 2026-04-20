@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2026-04-20 — revK pareto closure
+- fechamento canónico da família `F16_pareto_80`
+- promoção de `generators/pareto_generator.py` para a versão canónica `revK`
+- validação executável do subset benchmark `Q203/Q204/Q205`
+- compatibilidade com benchmark legado: `3/3 PASS`
+- medição explícita do impacto da fronteira antes/depois e do guardrail de contributos positivos
+- criação de `validation/revK/f16_pareto_benchmark_validation.csv`
+- criação de `validation/revK/f16_pareto_family_regression.csv`
+- criação de `validation/revK/f16_pareto_generalization_eval.csv`
+- criação de `validation/revK/f16_pareto_generalization_cases.md`
+- criação de `validation/revK/f16_pareto_notes.md`
+- generalização fora do benchmark com SQL manual independente: `8/8 PASS`
+- regressão integral da família em `revK`: `14/14 PASS`
+- atualização de `HANDOVER_CURRENT.md`, `CHANGELOG.md`, `ARTEFACTS_INDEX.md`, `RETOMA_CHECKLIST.md` e `README.md`
+- `validation/revJ/` deixa de ser a referência canónica de Pareto e é removido para evitar redundância
+
 ## 2026-04-20 — revJ pareto start
 - início canónico da família `F16_pareto_80`
 - criação de `generators/pareto_generator.py`
