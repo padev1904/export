@@ -1,0 +1,7 @@
+test_id,question,family,operation,status,detail,rows_generated,rows_manual_sql
+G01,Qual é a evolução mensal da faturação por família de produto nos últimos 6 meses?,F15_window_trend,monthly_trend,PASS,ok,46,46
+G02,Como evoluiu mensalmente a margem bruta por canal de distribuição no último semestre móvel?,F15_window_trend,monthly_trend,PASS,ok,15,15
+G03,Qual a rolling average de 3 meses da faturação por marca?,F15_window_trend,rolling_avg_3m,PASS,ok,81,81
+G04,Qual é o acumulado mensal YTD da faturação por canal no ano atual?,F15_window_trend,ytd,PASS,ok,17,17
+G05,Qual é o crescimento da faturação por marca no mês atual face ao mesmo mês do ano anterior?,F13_period_compare,yoy_same_month_by_dimension,PASS,ok,11,11
+G06,Qual é o peso do desconto promocional total sobre a faturação por canal de distribuição por mês nos últimos 6 meses?,F11_percentage_share,monthly_ratio_to_billing,PASS,ok,27,27
