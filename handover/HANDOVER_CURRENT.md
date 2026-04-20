@@ -1,6 +1,6 @@
 # HANDOVER CURRENT
 
-Última consolidação: 2026-04-20 (revJ F16_pareto_80 started)
+Última consolidação: 2026-04-20 (revK F16_pareto_80 closed)
 
 ## 1) Âmbito
 Projeto de geração universal de T-SQL para SQL Server, com foco em:
@@ -100,24 +100,30 @@ Subpadrões fechados:
 - `lost_list`
 - `lost_list_by_dimension`
 
-### Pareto 80 (revJ em progresso)
-Subconjunto benchmark identificado:
+### Pareto 80 (revK)
+Subconjunto benchmark validado:
 - Q203
 - Q204
 - Q205
 
 Factos verificados:
-- os três SQL oráculo são equivalentes
+- os três SQL oráculo são equivalentes entre si
 - os três usam filtro simplista `PercentagemAcumulada <= 80`
 - a regra documental canónica do projeto exige fronteira antes/depois
-- na `f_invoice_sample`, quando se restringe a contribuições positivas, a regra simplista seleciona 10 entidades e a regra canónica seleciona 11
+- na `f_invoice_sample`, o modo legado devolve 92 linhas e fecha em `PercentagemAcumulada = -13.479517`
+- na mesma amostra, a semântica canónica sem guardrail positivo devolve 93 linhas e fecha em `PercentagemAcumulada = 100.0`
+- com guardrail de contributos positivos, a semântica canónica devolve 10 linhas e fecha em `PercentagemAcumulada = 82.736945`
+- impacto medido do guardrail positivo no subset benchmark: remoção de 83 linhas face ao modo canónico sem guardrail
 
-Estado revJ:
-- especificação canónica inicial fechada
-- `generators/pareto_generator.py` criado
-- `validation/revJ/pareto_benchmark_subset.csv` criado
-- `validation/revJ/pareto_benchmark_notes.md` criado
-- falta ainda validação executável da família e casos novos fora do benchmark
+Estado validado:
+- compatibilidade executável com benchmark legado: 3/3 PASS
+- generalização fora do benchmark com SQL manual independente: 8/8 PASS
+- regressão integral da família nesta revisão: 14/14 PASS
+
+Semântica operacional fechada:
+- usar fronteira antes/depois: `PercentagemAcumulada <= 80 OR PercentagemAntes < 80`
+- aplicar guardrail de contributos positivos antes do ranking: excluir entidades com métrica agregada `<= 0`
+- manter um modo separado de compatibilidade com benchmark legado apenas para comparação histórica
 
 ## 6) Estado do repositório canónico
 ### Já sincronizado no repositório
@@ -131,8 +137,11 @@ Estado revJ:
 - `validation/revE/lifecycle_benchmark_validation.csv`
 - `validation/revE/lifecycle_generalization_eval.csv`
 - `validation/revE/lifecycle_generalization_cases.md`
-- `validation/revJ/pareto_benchmark_subset.csv`
-- `validation/revJ/pareto_benchmark_notes.md`
+- `validation/revK/f16_pareto_benchmark_validation.csv`
+- `validation/revK/f16_pareto_family_regression.csv`
+- `validation/revK/f16_pareto_generalization_eval.csv`
+- `validation/revK/f16_pareto_generalization_cases.md`
+- `validation/revK/f16_pareto_notes.md`
 - documentação canónica em `handover/` e `repo_structure/`
 
 ## 7) Método obrigatório para cada nova família
@@ -148,9 +157,9 @@ Estado revJ:
 10. atualizar `HANDOVER_CURRENT.md`, `CHANGELOG.md`, `ARTEFACTS_INDEX.md` e `RETOMA_CHECKLIST.md`
 
 ## 8) Prioridade atual
-1. fechar `F16_pareto_80`
-2. depois `F12_rank_within_partition`
-3. depois `F18_multi_metric_topn`
+1. fechar `F12_rank_within_partition`
+2. depois `F18_multi_metric_topn`
+3. depois reconciliar explicitamente Q32/Q34 e backlog residual não fechado
 
 ## 9) Regras de higiene documental
 No repositório deve existir:
@@ -160,13 +169,15 @@ No repositório deve existir:
 - um único `RETOMA_CHECKLIST.md`
 - um único `ARTEFACTS_INDEX.md`
 
-As revisões (`revD`, `revE`, etc.) devem viver sobretudo em:
+As revisões (`revD`, `revE`, `revK`) devem viver sobretudo em:
 - `validation/revD/`
 - `validation/revE/`
-- `validation/revJ/`
+- `validation/revK/`
 - `generators/`
 
 Não manter no repositório:
 - ZIPs de handover
 - handovers por revisão fora da árvore canónica
 - cópias redundantes do mesmo estado em múltiplos caminhos
+- ficheiros intermédios supersedidos quando já exista a versão canónica sincronizada
+- qualquer ficheiro bruto derivado diretamente do ZIP original
