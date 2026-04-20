@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2026-04-20 — revH handover consolidation
+- atualização de `HANDOVER_CURRENT.md` para refletir o estado canónico real do repositório
+- atualização de `README.md` com distinção entre `revD` sincronizado e `revE` ainda pendente de sincronização técnica nesta sessão
+- atualização de `RETOMA_CHECKLIST.md` para priorizar a sincronização técnica de `revE` antes de novas famílias
+- manutenção explícita da divergência factual Q1-Q60 (Q32/Q34) no handover corrente
+- reforço das regras de higiene documental e de não retenção de ZIPs/handovers redundantes
+
 ## 2026-04-20 — revG technical sync
 - sincronização da camada técnica canónica disponível nesta sessão
 - criação de `generators/temporal_generator.py`
