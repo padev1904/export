@@ -1,6 +1,6 @@
 # HANDOVER CURRENT
 
-Última consolidação: 2026-04-20 (revK F16_pareto_80 closed)
+Última consolidação: 2026-04-20 (revL F12_rank_within_partition closed)
 
 ## 1) Âmbito
 Projeto de geração universal de T-SQL para SQL Server, com foco em:
@@ -106,15 +106,6 @@ Subconjunto benchmark validado:
 - Q204
 - Q205
 
-Factos verificados:
-- os três SQL oráculo são equivalentes entre si
-- os três usam filtro simplista `PercentagemAcumulada <= 80`
-- a regra documental canónica do projeto exige fronteira antes/depois
-- na `f_invoice_sample`, o modo legado devolve 92 linhas e fecha em `PercentagemAcumulada = -13.479517`
-- na mesma amostra, a semântica canónica sem guardrail positivo devolve 93 linhas e fecha em `PercentagemAcumulada = 100.0`
-- com guardrail de contributos positivos, a semântica canónica devolve 10 linhas e fecha em `PercentagemAcumulada = 82.736945`
-- impacto medido do guardrail positivo no subset benchmark: remoção de 83 linhas face ao modo canónico sem guardrail
-
 Estado validado:
 - compatibilidade executável com benchmark legado: 3/3 PASS
 - generalização fora do benchmark com SQL manual independente: 8/8 PASS
@@ -125,11 +116,44 @@ Semântica operacional fechada:
 - aplicar guardrail de contributos positivos antes do ranking: excluir entidades com métrica agregada `<= 0`
 - manter um modo separado de compatibilidade com benchmark legado apenas para comparação histórica
 
+### Rank within partition (revL)
+Subconjunto benchmark validado:
+- 27 perguntas classificadas como `rank_within_partition` em `Q61-Q150`
+
+Estado validado:
+- benchmark da família: 27/27 PASS por equivalência semântica
+- equivalência estrita de grelha: 26/27
+- regressão integral da família nesta revisão: 27/27 PASS
+- generalização fora do benchmark com SQL manual independente: 8/8 PASS
+
+Semântica operacional fechada:
+- agregar primeiro por `(partição, entidade)`
+- só depois aplicar `ROW_NUMBER() OVER (PARTITION BY ... ORDER BY métrica DESC, entidade)`
+- desempate estável por entidade
+- quando a métrica é rácio, calcular o rácio agregado antes do ranking
+- em cancelamentos, granularizar primeiro ao nível `BillingDocument`
+
+Subpadrões fechados:
+- `net_amount` por partição simples
+- `net_amount` por partição composta
+- `growth_net_amount`
+- `growth_billing_quantity`
+- `pct_change_net_amount`
+- `list_minus_net`
+- `avg_net_price_per_unit`
+- `cancellation_rate`
+- `abs_document_net_amount_mixed_sign`
+
+Divergência estrutural remanescente:
+- Q108 difere apenas no alias da métrica (`DiferencaPrecoListaValorLiquido` vs `DiferencaPrecoListaVsLiquido`)
+- equivalência semântica preservada
+
 ## 6) Estado do repositório canónico
 ### Já sincronizado no repositório
 - `generators/temporal_generator.py`
 - `generators/lifecycle_generator.py`
 - `generators/pareto_generator.py`
+- `generators/rank_partition_generator.py`
 - `validation/revD/tsql_emulator_benchmark_exec.csv`
 - `validation/revD/temporal_benchmark_validation.csv`
 - `validation/revD/temporal_generalization_eval.csv`
@@ -142,6 +166,11 @@ Semântica operacional fechada:
 - `validation/revK/f16_pareto_generalization_eval.csv`
 - `validation/revK/f16_pareto_generalization_cases.md`
 - `validation/revK/f16_pareto_notes.md`
+- `validation/revL/f12_rank_partition_benchmark_validation.csv`
+- `validation/revL/f12_rank_partition_family_regression.csv`
+- `validation/revL/f12_rank_partition_generalization_eval.csv`
+- `validation/revL/f12_rank_partition_generalization_cases.md`
+- `validation/revL/f12_rank_partition_notes.md`
 - documentação canónica em `handover/` e `repo_structure/`
 
 ## 7) Método obrigatório para cada nova família
@@ -157,9 +186,9 @@ Semântica operacional fechada:
 10. atualizar `HANDOVER_CURRENT.md`, `CHANGELOG.md`, `ARTEFACTS_INDEX.md` e `RETOMA_CHECKLIST.md`
 
 ## 8) Prioridade atual
-1. fechar `F12_rank_within_partition`
-2. depois `F18_multi_metric_topn`
-3. depois reconciliar explicitamente Q32/Q34 e backlog residual não fechado
+1. fechar `F18_multi_metric_topn`
+2. depois reconciliar explicitamente Q32/Q34
+3. depois backlog residual não fechado e consolidação final do benchmark
 
 ## 9) Regras de higiene documental
 No repositório deve existir:
@@ -169,10 +198,11 @@ No repositório deve existir:
 - um único `RETOMA_CHECKLIST.md`
 - um único `ARTEFACTS_INDEX.md`
 
-As revisões (`revD`, `revE`, `revK`) devem viver sobretudo em:
+As revisões devem viver sobretudo em:
 - `validation/revD/`
 - `validation/revE/`
 - `validation/revK/`
+- `validation/revL/`
 - `generators/`
 
 Não manter no repositório:
