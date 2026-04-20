@@ -1,6 +1,6 @@
 # HANDOVER CURRENT
 
-Última consolidação documental: 2026-04-20 (revF documental)
+Última consolidação: 2026-04-20 (revH sync canónico)
 
 ## 1) Âmbito
 Projeto de geração universal de T-SQL para SQL Server, com foco em:
@@ -10,6 +10,7 @@ Projeto de geração universal de T-SQL para SQL Server, com foco em:
 - geração de SQL por família
 - validação por equivalência de resultado
 - controlo de generalização fora do benchmark
+- sincronização canónica de artefactos seguros no repositório
 
 ## 2) Fontes confirmadas
 O conjunto-base local contém:
@@ -81,7 +82,7 @@ Subconjunto explícito do benchmark:
 - Q209
 - Q210
 
-Estado validado:
+Estado documental conhecido:
 - benchmark da família: 3/3 PASS
 - generalização fora do benchmark: 8/8 PASS
 - regressão final da família em revE: 11/11 PASS
@@ -99,7 +100,24 @@ Subpadrões fechados:
 - `lost_list`
 - `lost_list_by_dimension`
 
-## 6) Método obrigatório para cada nova família
+**Importante:** nesta sessão, os ficheiros técnicos canónicos de `revE` não estavam disponíveis no filesystem local. O repositório contém nota explícita de sincronização pendente em `validation/revE/PENDING_SYNC_NOTE.md`.
+
+## 6) Estado do repositório canónico
+### Já sincronizado no repositório
+- `generators/temporal_generator.py`
+- `validation/revD/tsql_emulator_benchmark_exec.csv`
+- `validation/revD/temporal_benchmark_validation.csv`
+- `validation/revD/temporal_generalization_eval.csv`
+- `validation/revD/temporal_generalization_cases.md`
+- documentação canónica em `handover/` e `repo_structure/`
+
+### Ainda pendente de sincronização técnica
+- `generators/lifecycle_generator.py`
+- `validation/revE/lifecycle_benchmark_validation.csv`
+- `validation/revE/lifecycle_generalization_eval.csv`
+- `validation/revE/lifecycle_generalization_cases.md`
+
+## 7) Método obrigatório para cada nova família
 1. formalizar a semântica da família
 2. definir slots obrigatórios e opcionais
 3. fixar guardrails e defaults
@@ -109,35 +127,28 @@ Subpadrões fechados:
 7. criar novas perguntas fora do benchmark
 8. escrever SQL manual independente para essas perguntas
 9. comparar resultado do SQL manual com o SQL do gerador na `f_invoice_sample`
-10. atualizar handover, changelog e índice de artefactos
+10. atualizar `HANDOVER_CURRENT.md`, `CHANGELOG.md`, `ARTEFACTS_INDEX.md` e `RETOMA_CHECKLIST.md`
 
-## 7) Prioridade atual
-1. `F16_pareto_80`
-2. `F12_rank_within_partition`
-3. `F18_multi_metric_topn`
+## 8) Prioridade atual
+1. sincronizar a camada técnica de `revE` a partir dos ficheiros locais já guardados pelo utilizador
+2. `F16_pareto_80`
+3. `F12_rank_within_partition`
+4. `F18_multi_metric_topn`
 
-## 8) Artefactos de trabalho já gerados fora do repositório
-### revD
-- `temporal_generator_revD.py`
-- `tsql_emulator_benchmark_exec_revD.csv`
-- `temporal_generator_revD_benchmark_validation.csv`
-- `temporal_generator_revD_generalization_eval.csv`
-- `temporal_generator_revD_generalization_cases.md`
-
-### revE
-- `lifecycle_generator_revE.py`
-- `lifecycle_benchmark_validation_revE.csv`
-- `lifecycle_generalization_eval_revE.csv`
-- `lifecycle_generalization_cases_revE.md`
-
-## 9) Regra de higiene documental
+## 9) Regras de higiene documental
 No repositório deve existir:
 - um único `HANDOVER_CURRENT.md`
 - um único `CHANGELOG.md`
 - um único `SAFE_SOURCE_MANIFEST.md`
 - um único `RETOMA_CHECKLIST.md`
+- um único `ARTEFACTS_INDEX.md`
 
 As revisões (`revD`, `revE`, etc.) devem viver sobretudo em:
 - `validation/revD/`
 - `validation/revE/`
 - `generators/`
+
+Não manter no repositório:
+- ZIPs de handover
+- handovers por revisão fora da árvore canónica
+- cópias redundantes do mesmo estado em múltiplos caminhos
