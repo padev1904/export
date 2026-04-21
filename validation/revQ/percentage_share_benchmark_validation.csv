@@ -1,0 +1,21 @@
+qid,status,question,detail
+60,PASS,Qual a percentagem de margem bruta por marca em 2026 considerando apenas registos adicionais calculados?,ok
+80,PASS,Quais são os produtos com maior peso líquido médio por unidade faturada em 2026?,ok
+87,PASS,"Qual o preço médio líquido por unidade faturada por produto em 2026, excluindo divisões por zero?",ok
+91,PASS,"Quais são os produtos com maior peso líquido médio por unidade faturada em 2026, calculado com ItemNetWeight e BillingQuantity?",ok
+98,PASS,Qual o preço médio líquido por unidade faturada por marca em 2026?,ok
+106,PASS,Qual a quota de valor líquido faturado de cada organização de vendas em cada mês de 2026?,ok
+113,PASS,Qual a quota de valor líquido faturado de cada marca dentro da sua família de produto em 2026?,ok
+124,PASS,Qual a quota de valor líquido faturado de cada marca dentro da sua família de produto e por mês em 2026?,ok
+129,PASS,"Qual o preço médio líquido por unidade faturada por família de produto e por marca em 2026, excluindo quantidades totais zero?",ok
+133,PASS,Qual a quota de vendas comerciais líquidas de cada marca dentro da organização de vendas em 2026 considerando apenas registos adicionais calculados?,ok
+140,PASS,Qual a quota de quantidade faturada de cada família de produto em 2026?,ok
+146,PASS,Qual a quota de margem bruta de cada marca dentro da sua família de produto em 2026 considerando apenas registos adicionais calculados?,ok
+197,PASS,Que percentagem da faturação total de 2026 pertence a cada marca?,ok
+198,PASS,Que percentagem da faturação total de 2026 pertence a cada família de produto?,ok
+199,PASS,Que percentagem da faturação total de 2026 pertence a cada país?,ok
+200,PASS,Que percentagem da faturação total de 2026 pertence a cada região?,ok
+201,PASS,Que percentagem da faturação total de 2026 pertence a cada organização de vendas?,ok
+202,PASS,Que percentagem da faturação total de 2026 pertence a cada canal de distribuição?,ok
+245,PASS,Qual é o peso de cada canal de distribuição na faturação do mês atual?,ok
+246,PASS,Qual é a percentagem da faturação dos últimos 12 meses por região?,ok
