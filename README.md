@@ -5,6 +5,11 @@ Repositório de continuidade do projeto de geração universal de T-SQL para SQL
 ## Objetivo
 Preservar contexto, decisões, estado validado, backlog e artefactos seguros do projeto, sem publicar dados de negócio brutos.
 
+## Prompt de arranque
+A prompt de arranque é fixa.
+A versão canónica vive em:
+- `handover/STARTUP_PROMPT_FIXED.md`
+
 ## Entrada recomendada em caso de fork de sessão
 Ler sempre por esta ordem:
 1. `handover/FORK_RECOVERY_PROTOCOL.md`
