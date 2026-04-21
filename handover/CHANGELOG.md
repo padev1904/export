@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 2026-04-22 — revV distinct_count closure
+- fechamento canónico da família distinct_count
+- benchmark da família: 4/4 PASS por equivalência de resultado
+- benchmark da família: 4/4 PASS em igualdade estrita de grelha
+- generalização fora do benchmark: 6/6 PASS
+- criação de generators/distinct_count_generator.py
+- criação de validation/revV/distinct_count_benchmark_validation.csv
+- criação de validation/revV/distinct_count_generalization_eval.csv
+- criação de validation/revV/distinct_count_generalization_cases.md
+- criação de validation/revV/distinct_count_notes.md
+- criação de validation/revV/global_counts_after_revV.csv
+- atualização factual da contagem global para 257/268 fechadas e 11/268 abertas
+- próxima prioridade factual: period_compare
+
 ## 2026-04-21 — revU rank_within_partition closure
 - fechamento canónico da família rank_within_partition
 - benchmark da família: 27/27 PASS por equivalência de resultado
