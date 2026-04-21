@@ -1,0 +1,7 @@
+test_id,question,status_semantic,manual_rows,generated_rows,archetype
+TN01,Quais são os documentos de faturação com mais de 10 linhas no ano atual?,PASS,20,20,document_more_than_n_lines
+TN02,Quais são as 10 combinações cliente-produto com maior faturação no ano atual?,PASS,10,10,customer_product_combo_net_amount
+TN03,Quais são os 7 clientes com maior crescimento absoluto de valor líquido faturado de 2025 para 2026?,PASS,7,7,customer_growth_absolute
+TN04,Quais são os 8 clientes com maior crescimento absoluto de quantidade faturada de 2025 para 2026?,PASS,8,8,customer_growth_absolute
+TN05,Que documentos de faturação têm simultaneamente linhas positivas e negativas no ano atual?,PASS,50,50,mixed_sign_documents
+TN06,Quais são os 12 documentos de faturação com maior valor líquido absoluto em 2026 entre os que têm simultaneamente linhas positivas e negativas?,PASS,12,12,mixed_sign_documents_abs_total
