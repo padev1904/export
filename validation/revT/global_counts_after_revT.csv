@@ -1,0 +1,11 @@
+metric,value
+benchmark_total,268
+benchmark_closed_before_revT,218
+benchmark_closed_now,226
+benchmark_open_now,42
+q1_q60_closed_now,60
+q61_q150_closed_now,70
+q151_q268_closed_now,96
+revT_cancellation_family_total,8
+revT_cancellation_family_pass,8
+revT_cancellation_generalization_pass,6
