@@ -41,8 +41,9 @@ Podem ser carregados:
 - benchmark: 268 perguntas
 - emulador parcial T-SQL orientado ao benchmark validado com 268/268 SQL de referência executados
 - `revD` técnico sincronizado no repositório em `generators/` e `validation/revD/`
-- `revE` técnico sincronizado no repositório em `generators/` e `validation/revE/`
+- `revE` técnico sincronizado no repositório para `F17_lifecycle` em `generators/` e `validation/revE/`
 - `revK` técnico sincronizado no repositório para `F16_pareto_80` em `generators/` e `validation/revK/`
 - `revL` técnico sincronizado no repositório para `F12_rank_within_partition` em `generators/` e `validation/revL/`
 - `revM` técnico sincronizado no repositório para `F18_multi_metric_topn` em `generators/` e `validation/revM/`
-- próxima prioridade operacional: reconciliação explícita de `Q32/Q34`, depois backlog residual não fechado
+- `revN` técnico sincronizado no repositório para reconciliação explícita de `Q32/Q34` em `generators/` e `validation/revN/`
+- próxima prioridade operacional: calcular backlog residual real pós-`Q32/Q34` e consolidar a contagem global final do benchmark
