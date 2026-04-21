@@ -5,6 +5,14 @@ Repositório de continuidade do projeto de geração universal de T-SQL para SQL
 ## Objetivo
 Preservar contexto, decisões, estado validado, backlog e artefactos seguros do projeto, sem publicar dados de negócio brutos.
 
+## Entrada recomendada em caso de fork de sessão
+Ler sempre por esta ordem:
+1. `handover/FORK_RECOVERY_PROTOCOL.md`
+2. `handover/HANDOVER_CURRENT.md`
+3. `handover/RETOMA_CHECKLIST.md`
+4. `handover/ARTEFACTS_INDEX.md`
+5. `handover/CHANGELOG.md`
+
 ## Estado atual resumido
 - benchmark: 268 perguntas
 - revD, revE, revK, revL, revM, revN e revO sincronizados
