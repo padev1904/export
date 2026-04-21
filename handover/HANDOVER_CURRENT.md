@@ -1,48 +1,50 @@
 # HANDOVER CURRENT
 
 ## RETOMA RÁPIDA
-- última revisão fechada: revV
-- última família fechada: distinct_count
-- benchmark fechado: 257/268
-- backlog aberto: 11/268
-- próxima prioridade: period_compare
+- última revisão fechada: revW
+- última família fechada: period_compare
+- benchmark fechado: 261/268
+- backlog aberto: 7/268
+- próxima prioridade: reconciliar inventário residual factual pós-revW
 - próximos passos:
-  1. fechar period_compare
-  2. correr regressão da família
-  3. criar perguntas novas fora do benchmark
-  4. comparar SQL manual independente com SQL do gerador universal por equivalência de resultado
-  5. recalcular a contagem global
-  6. reconciliar contagens por bloco se necessário
-  7. atualizar repositório canónico
+  1. identificar exatamente as 7 perguntas ainda abertas no benchmark
+  2. reconciliar o inventário residual real por `qid`
+  3. mapear cada pergunta à família correta
+  4. preparar a próxima revisão (`revX`)
+  5. fechar a próxima família universal sem overfit
+  6. criar perguntas novas fora do benchmark
+  7. comparar SQL manual independente com SQL do gerador universal por equivalência de resultado
+  8. atualizar repositório canónico no fim da revisão
 
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-22 (revV distinct_count closed)
+Última consolidação: 2026-04-22 (revW period_compare closed; handover sync after repo audit)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
-- benchmark fechado com evidência canónica sincronizada: 257/268
-- backlog residual atual: 11/268
+- benchmark fechado com evidência canónica sincronizada: 261/268
+- backlog residual atual: 7/268
 
-## Fecho desta revisão
-- família fechada: distinct_count
+## Fecho da última revisão técnica
+- família fechada: period_compare
 - benchmark da família: 4/4 PASS por equivalência de resultado
 - benchmark da família: 4/4 PASS em igualdade estrita de grelha
 - generalização fora do benchmark: 6/6 PASS
 
 ## Evidência canónica relevante
-- generators/distinct_count_generator.py
-- validation/revV/distinct_count_benchmark_validation.csv
-- validation/revV/distinct_count_generalization_eval.csv
-- validation/revV/distinct_count_generalization_cases.md
-- validation/revV/distinct_count_notes.md
-- validation/revV/global_counts_after_revV.csv
+- generators/period_compare_generator.py
+- validation/revW/period_compare_benchmark_validation.csv
+- validation/revW/period_compare_generalization_eval.csv
+- validation/revW/period_compare_notes.md
+- validation/revW/global_counts_after_revW.csv
+- validation/revW/backlog_reconciliation_status.md
 
 ## Nota de reconciliação
-As contagens por bloco herdadas de revisões anteriores devem continuar a ser tratadas como legado até reconciliação factual completa do inventário residual.
+Os artefactos técnicos de revW estão sincronizados no repositório.
+A enumeração exata dos 7 `qid` ainda abertos continua a exigir reconciliação benchmark-wide porque o repositório não tinha, até esta atualização, um inventário residual pós-revW explicitamente enumerado por pergunta.
 
 ## Próxima prioridade
-1. period_compare
-2. recalcular inventário residual factual após a próxima revisão
-3. reconciliar subtotais por bloco, se necessário
+1. reconciliar inventário residual factual pós-revW
+2. identificar exatamente os 7 `qid` ainda abertos
+3. preparar `revX` com foco na próxima família universal realmente residual
