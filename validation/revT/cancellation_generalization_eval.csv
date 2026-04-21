@@ -1,0 +1,197 @@
+test_id,question,operation,status,manual_rows,generated_rows,manual_sql,generated_sql
+C01,Qual a taxa de cancelamento de documentos por organização de vendas em 2026?,rate_by_dimension,PASS,2,2,"WITH docs AS (
+SELECT f.BillingDocument, f.NIDSalesOrganization, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+FROM dbo.F_Invoice f
+WHERE f.BillingDocumentDate / 10000 = 2026
+GROUP BY f.BillingDocument, f.NIDSalesOrganization
+)
+SELECT so.TSalesOrganization AS OrganizacaoVendas, COUNT(*) AS TotalDocumentos, SUM(d.DocumentoCancelado) AS DocumentosCancelados,
+100.0 * SUM(d.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+FROM docs d JOIN dbo.D_SalesOrganization so ON d.NIDSalesOrganization = so.NIDSalesOrganization
+GROUP BY so.TSalesOrganization
+ORDER BY TaxaCancelamento DESC, TotalDocumentos DESC, OrganizacaoVendas;","WITH docs AS (
+    SELECT
+        f.BillingDocument, f.NIDSalesOrganization, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+    FROM dbo.F_Invoice f
+    WHERE f.BillingDocumentDate / 10000 = 2026
+    GROUP BY f.BillingDocument, f.NIDSalesOrganization
+)
+SELECT
+    d.TSalesOrganization AS OrganizacaoVendas,
+    COUNT(*) AS TotalDocumentos,
+    SUM(x.DocumentoCancelado) AS DocumentosCancelados,
+    100.0 * SUM(x.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+FROM docs x
+JOIN dbo.D_SalesOrganization d ON d.NIDSalesOrganization = x.NIDSalesOrganization
+GROUP BY d.TSalesOrganization
+ORDER BY TaxaCancelamento DESC, TotalDocumentos DESC, OrganizacaoVendas;"
+C02,Qual a taxa de cancelamento de documentos por país em 2026?,rate_by_dimension,PASS,7,7,"WITH docs AS (
+SELECT f.BillingDocument, f.NIDCountry, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+FROM dbo.F_Invoice f
+WHERE f.BillingDocumentDate / 10000 = 2026
+GROUP BY f.BillingDocument, f.NIDCountry
+)
+SELECT c.TCountry AS Pais, COUNT(*) AS TotalDocumentos, SUM(d.DocumentoCancelado) AS DocumentosCancelados,
+100.0 * SUM(d.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+FROM docs d JOIN dbo.D_Country c ON d.NIDCountry = c.NIDCountry
+GROUP BY c.TCountry
+ORDER BY TaxaCancelamento DESC, TotalDocumentos DESC, Pais;","WITH docs AS (
+    SELECT
+        f.BillingDocument, f.NIDCountry, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+    FROM dbo.F_Invoice f
+    WHERE f.BillingDocumentDate / 10000 = 2026
+    GROUP BY f.BillingDocument, f.NIDCountry
+)
+SELECT
+    d.TCountry AS Pais,
+    COUNT(*) AS TotalDocumentos,
+    SUM(x.DocumentoCancelado) AS DocumentosCancelados,
+    100.0 * SUM(x.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+FROM docs x
+JOIN dbo.D_Country d ON d.NIDCountry = x.NIDCountry
+GROUP BY d.TCountry
+ORDER BY TaxaCancelamento DESC, TotalDocumentos DESC, Pais;"
+C03,Qual a taxa de cancelamento de documentos por canal de distribuição e por mês em 2026?,rate_by_month_and_dimension,PASS,19,19,"WITH docs AS (
+SELECT (f.BillingDocumentDate / 100) % 100 AS Mes, f.BillingDocument, f.NIDDistributionChannel, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+FROM dbo.F_Invoice f
+WHERE f.BillingDocumentDate / 10000 = 2026
+GROUP BY (f.BillingDocumentDate / 100) % 100, f.BillingDocument, f.NIDDistributionChannel
+)
+SELECT d.Mes, dc.TDistributionChannel AS CanalDistribuicao, COUNT(*) AS TotalDocumentos, SUM(d.DocumentoCancelado) AS DocumentosCancelados,
+100.0 * SUM(d.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+FROM docs d JOIN dbo.D_DistributionChannel dc ON d.NIDDistributionChannel = dc.NIDDistributionChannel
+GROUP BY d.Mes, dc.TDistributionChannel
+ORDER BY d.Mes, TaxaCancelamento DESC, TotalDocumentos DESC, CanalDistribuicao;","WITH docs AS (
+    SELECT
+        (f.BillingDocumentDate / 100) % 100 AS Mes, f.BillingDocument, f.NIDDistributionChannel, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+    FROM dbo.F_Invoice f
+    WHERE f.BillingDocumentDate / 10000 = 2026
+    GROUP BY (f.BillingDocumentDate / 100) % 100, f.BillingDocument, f.NIDDistributionChannel
+)
+SELECT
+    x.Mes,
+    d.TDistributionChannel AS CanalDistribuicao,
+    COUNT(*) AS TotalDocumentos,
+    SUM(x.DocumentoCancelado) AS DocumentosCancelados,
+    100.0 * SUM(x.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+FROM docs x
+JOIN dbo.D_DistributionChannel d ON d.NIDDistributionChannel = x.NIDDistributionChannel
+GROUP BY x.Mes, d.TDistributionChannel
+ORDER BY x.Mes, TaxaCancelamento DESC, TotalDocumentos DESC, CanalDistribuicao;"
+C04,Quais são os 3 tipos de documento de faturação com maior taxa de cancelamento de documentos em 2026?,top_rate_global,PASS,3,3,"WITH docs AS (
+SELECT f.BillingDocument, f.NIDBillingDocumentType, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+FROM dbo.F_Invoice f
+WHERE f.BillingDocumentDate / 10000 = 2026
+GROUP BY f.BillingDocument, f.NIDBillingDocumentType
+), rates AS (
+SELECT bdt.TBillingDocumentType AS TipoDocumentoFaturacao, COUNT(*) AS TotalDocumentos, SUM(d.DocumentoCancelado) AS DocumentosCancelados,
+100.0 * SUM(d.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+FROM docs d JOIN dbo.D_BillingDocumentType bdt ON d.NIDBillingDocumentType = bdt.NIDBillingDocumentType
+GROUP BY bdt.TBillingDocumentType
+)
+SELECT TipoDocumentoFaturacao, TotalDocumentos, DocumentosCancelados, TaxaCancelamento
+FROM rates
+ORDER BY TaxaCancelamento DESC, TotalDocumentos DESC, TipoDocumentoFaturacao
+LIMIT 3;","WITH docs AS (
+    SELECT
+        f.BillingDocument, f.NIDBillingDocumentType, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+    FROM dbo.F_Invoice f
+    WHERE f.BillingDocumentDate / 10000 = 2026
+    GROUP BY f.BillingDocument, f.NIDBillingDocumentType
+), rates AS (
+    SELECT
+        d.TBillingDocumentType AS TipoDocumentoFaturacao,
+        COUNT(*) AS TotalDocumentos,
+        SUM(x.DocumentoCancelado) AS DocumentosCancelados,
+        100.0 * SUM(x.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+    FROM docs x
+    JOIN dbo.D_BillingDocumentType d ON d.NIDBillingDocumentType = x.NIDBillingDocumentType
+    GROUP BY d.TBillingDocumentType
+)
+SELECT TOP (3)
+    TipoDocumentoFaturacao,
+    TotalDocumentos,
+    DocumentosCancelados,
+    TaxaCancelamento
+FROM rates
+ORDER BY TaxaCancelamento DESC, TotalDocumentos DESC, TipoDocumentoFaturacao;"
+C05,Quais são os 2 canais de distribuição com maior taxa de cancelamento de documentos dentro de cada mês em 2026?,top_rate_within_month,PASS,8,8,"WITH docs AS (
+SELECT (f.BillingDocumentDate / 100) % 100 AS Mes, f.BillingDocument, f.NIDDistributionChannel, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+FROM dbo.F_Invoice f
+WHERE f.BillingDocumentDate / 10000 = 2026
+GROUP BY (f.BillingDocumentDate / 100) % 100, f.BillingDocument, f.NIDDistributionChannel
+), rates AS (
+SELECT d.Mes, dc.TDistributionChannel AS CanalDistribuicao, COUNT(*) AS TotalDocumentos, SUM(d.DocumentoCancelado) AS DocumentosCancelados,
+100.0 * SUM(d.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+FROM docs d JOIN dbo.D_DistributionChannel dc ON d.NIDDistributionChannel = dc.NIDDistributionChannel
+GROUP BY d.Mes, dc.TDistributionChannel
+), ranked AS (
+SELECT r.*, ROW_NUMBER() OVER (PARTITION BY r.Mes ORDER BY r.TaxaCancelamento DESC, r.TotalDocumentos DESC, r.CanalDistribuicao) AS rn
+FROM rates r
+)
+SELECT Mes, CanalDistribuicao, TotalDocumentos, DocumentosCancelados, TaxaCancelamento
+FROM ranked
+WHERE rn <= 2
+ORDER BY Mes, TaxaCancelamento DESC, TotalDocumentos DESC, CanalDistribuicao;","WITH docs AS (
+    SELECT
+        (f.BillingDocumentDate / 100) % 100 AS Mes, f.BillingDocument, f.NIDDistributionChannel, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+    FROM dbo.F_Invoice f
+    WHERE f.BillingDocumentDate / 10000 = 2026
+    GROUP BY (f.BillingDocumentDate / 100) % 100, f.BillingDocument, f.NIDDistributionChannel
+), rates AS (
+    SELECT
+        x.Mes,
+        d.TDistributionChannel AS CanalDistribuicao,
+        COUNT(*) AS TotalDocumentos,
+        SUM(x.DocumentoCancelado) AS DocumentosCancelados,
+        100.0 * SUM(x.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+    FROM docs x
+    JOIN dbo.D_DistributionChannel d ON d.NIDDistributionChannel = x.NIDDistributionChannel
+    GROUP BY x.Mes, d.TDistributionChannel
+), ranked AS (
+    SELECT
+        r.*,
+        ROW_NUMBER() OVER (
+            PARTITION BY r.Mes
+            ORDER BY r.TaxaCancelamento DESC, r.TotalDocumentos DESC, r.CanalDistribuicao
+        ) AS rn
+    FROM rates r
+)
+SELECT
+    rk.Mes,
+    rk.CanalDistribuicao,
+    rk.TotalDocumentos,
+    rk.DocumentosCancelados,
+    rk.TaxaCancelamento
+FROM ranked rk
+WHERE rk.rn <= 2
+ORDER BY rk.Mes, rk.TaxaCancelamento DESC, rk.TotalDocumentos DESC, rk.CanalDistribuicao;"
+C06,Qual a taxa de cancelamento de documentos por organização de vendas e por canal de distribuição em 2026?,rate_by_two_dimensions,PASS,9,9,"WITH docs AS (
+SELECT f.BillingDocument, f.NIDSalesOrganization, f.NIDDistributionChannel, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+FROM dbo.F_Invoice f
+WHERE f.BillingDocumentDate / 10000 = 2026
+GROUP BY f.BillingDocument, f.NIDSalesOrganization, f.NIDDistributionChannel
+)
+SELECT so.TSalesOrganization AS OrganizacaoVendas, dc.TDistributionChannel AS CanalDistribuicao, COUNT(*) AS TotalDocumentos, SUM(d.DocumentoCancelado) AS DocumentosCancelados,
+100.0 * SUM(d.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+FROM docs d JOIN dbo.D_SalesOrganization so ON d.NIDSalesOrganization = so.NIDSalesOrganization
+JOIN dbo.D_DistributionChannel dc ON d.NIDDistributionChannel = dc.NIDDistributionChannel
+GROUP BY so.TSalesOrganization, dc.TDistributionChannel
+ORDER BY TaxaCancelamento DESC, TotalDocumentos DESC, OrganizacaoVendas, CanalDistribuicao;","WITH docs AS (
+    SELECT
+        f.BillingDocument, f.NIDSalesOrganization, f.NIDDistributionChannel, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+    FROM dbo.F_Invoice f
+    WHERE f.BillingDocumentDate / 10000 = 2026
+    GROUP BY f.BillingDocument, f.NIDSalesOrganization, f.NIDDistributionChannel
+)
+SELECT
+    d1.TSalesOrganization AS OrganizacaoVendas,
+    d2.TDistributionChannel AS CanalDistribuicao,
+    COUNT(*) AS TotalDocumentos,
+    SUM(x.DocumentoCancelado) AS DocumentosCancelados,
+    100.0 * SUM(x.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
+FROM docs x
+JOIN dbo.D_SalesOrganization d1 ON d1.NIDSalesOrganization = x.NIDSalesOrganization
+JOIN dbo.D_DistributionChannel d2 ON d2.NIDDistributionChannel = x.NIDDistributionChannel
+GROUP BY d1.TSalesOrganization, d2.TDistributionChannel
+ORDER BY TaxaCancelamento DESC, TotalDocumentos DESC, OrganizacaoVendas, CanalDistribuicao;"
