@@ -1,20 +1,19 @@
+
 from __future__ import annotations
 from dataclasses import dataclass
 import re
-
 
 def normalize_q(q: str) -> str:
     x = q.lower().strip()
     rep = str.maketrans('áàâãéêíóôõúç', 'aaaaeeiooouc')
     return x.translate(rep)
 
-
 PARTITIONS = {
     'pais': ('co.TCountry', ['JOIN D_Country co ON f.NIDCountry = co.NIDCountry'], 'Pais'),
     'organizacao de vendas': ('so.TSalesOrganization', ['JOIN D_SalesOrganization so ON f.NIDSalesOrganization = so.NIDSalesOrganization'], 'OrganizacaoVendas'),
     'familia de produto': ('pf.TProductFamily', ['JOIN D_Product p ON f.NIDProduct = p.NIDProduct', 'JOIN D_ProductFamily pf ON p.NIDProductFamily = pf.NIDProductFamily'], 'FamiliaProduto'),
     'canal de distribuicao': ('dc.TDistributionChannel', ['JOIN D_DistributionChannel dc ON f.NIDDistributionChannel = dc.NIDDistributionChannel'], 'CanalDistribuicao'),
-    'mes': ('((f.BillingDocumentDate / 100) % 100)', [], 'Mes'),
+    'mes': ('CAST((f.BillingDocumentDate / 100) % 100 AS INT)', [], 'Mes'),
     'marca': ('pb.TProductBrand', ['JOIN D_Product p ON f.NIDProduct = p.NIDProduct', 'JOIN D_ProductBrand pb ON p.NIDProductBrand = pb.NIDProductBrand'], 'MarcaProduto'),
 }
 
@@ -33,7 +32,6 @@ ENTITIES = {
     'paises': ('co.TCountry', ['JOIN D_Country co ON f.NIDCountry = co.NIDCountry'], 'Pais'),
 }
 
-
 @dataclass
 class Spec:
     family: str = 'F12_rank_within_partition'
@@ -44,11 +42,11 @@ class Spec:
     years: tuple = (2026,)
     needs_valid_filter: bool = True
 
-
 def detect_n(qn: str) -> int:
     m = re.search(r'quais sao os (\d+)|quais sao as (\d+)', qn)
+    if not m:
+        raise ValueError(f'N not detected: {qn}')
     return int(next(g for g in m.groups() if g))
-
 
 def alias_to_sql(alias: str):
     for expr, joins, al in PARTITIONS.values():
@@ -59,16 +57,12 @@ def alias_to_sql(alias: str):
             return expr, joins
     raise KeyError(alias)
 
-
-def dedupe(seq: list[str]) -> list[str]:
-    out = []
-    seen = set()
+def dedupe(seq):
+    out=[]; seen=set()
     for x in seq:
         if x not in seen:
-            out.append(x)
-            seen.add(x)
+            out.append(x); seen.add(x)
     return out
-
 
 def classify(question: str) -> Spec:
     qn = normalize_q(question)
@@ -139,7 +133,6 @@ def classify(question: str) -> Spec:
         raise ValueError(f'Metric not detected: {question}')
     return spec
 
-
 def build_sql(spec: Spec) -> str:
     part_exprs = []
     joins = []
@@ -151,7 +144,7 @@ def build_sql(spec: Spec) -> str:
     joins.extend(ent_joins)
     joins = dedupe(joins)
 
-    year_filter = 'f.BillingDocumentDate / 10000 = 2026' if spec.years == (2026,) else 'f.BillingDocumentDate / 10000 IN (2025, 2026)'
+    year_filter = 'CAST(f.BillingDocumentDate / 10000 AS INT) = 2026' if spec.years == (2026,) else 'CAST(f.BillingDocumentDate / 10000 AS INT) IN (2025, 2026)'
     filters = [year_filter]
     if spec.needs_valid_filter:
         filters.append('f.BillingDocumentIsCancelled = 0')
@@ -231,8 +224,8 @@ ORDER BY {order_partition}, r.PrecoMedioLiquidoPorUnidade DESC, r.{spec.entity_k
     SELECT
         {part_select},
         {ent_expr} AS {spec.entity_key},
-        SUM(CASE WHEN f.BillingDocumentDate / 10000 = 2026 THEN {base_expr} ELSE 0 END)
-        - SUM(CASE WHEN f.BillingDocumentDate / 10000 = 2025 THEN {base_expr} ELSE 0 END) AS {metric_alias}
+        SUM(CASE WHEN CAST(f.BillingDocumentDate / 10000 AS INT) = 2026 THEN {base_expr} ELSE 0 END)
+        - SUM(CASE WHEN CAST(f.BillingDocumentDate / 10000 AS INT) = 2025 THEN {base_expr} ELSE 0 END) AS {metric_alias}
     FROM F_Invoice f
     {' '.join(joins)}
     WHERE {where}
@@ -256,8 +249,8 @@ ORDER BY {order_partition}, r.{metric_alias} DESC, r.{spec.entity_key};"""
     SELECT
         {part_select},
         {ent_expr} AS {spec.entity_key},
-        SUM(CASE WHEN f.BillingDocumentDate / 10000 = 2025 THEN f.NetAmount ELSE 0 END) AS Valor2025,
-        SUM(CASE WHEN f.BillingDocumentDate / 10000 = 2026 THEN f.NetAmount ELSE 0 END) AS Valor2026
+        SUM(CASE WHEN CAST(f.BillingDocumentDate / 10000 AS INT) = 2025 THEN f.NetAmount ELSE 0 END) AS Valor2025,
+        SUM(CASE WHEN CAST(f.BillingDocumentDate / 10000 AS INT) = 2026 THEN f.NetAmount ELSE 0 END) AS Valor2026
     FROM F_Invoice f
     {' '.join(joins)}
     WHERE {where}
@@ -283,13 +276,13 @@ ORDER BY {order_partition}, r.VariacaoPercentual DESC, r.{spec.entity_key};"""
     if spec.metric == 'cancellation_rate':
         return f"""WITH docs AS (
     SELECT
-        ((f.BillingDocumentDate / 100) % 100) AS Mes,
+        CAST((f.BillingDocumentDate / 100) % 100 AS INT) AS Mes,
         f.BillingDocument,
         f.NIDSalesOrganization,
         MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
     FROM F_Invoice f
-    WHERE f.BillingDocumentDate / 10000 = 2026
-    GROUP BY ((f.BillingDocumentDate / 100) % 100), f.BillingDocument, f.NIDSalesOrganization
+    WHERE CAST(f.BillingDocumentDate / 10000 AS INT) = 2026
+    GROUP BY CAST((f.BillingDocumentDate / 100) % 100 AS INT), f.BillingDocument, f.NIDSalesOrganization
 ), rates AS (
     SELECT
         d.Mes,
@@ -315,15 +308,15 @@ ORDER BY r.Mes, r.TaxaCancelamento DESC, r.TotalDocumentos DESC, r.OrganizacaoVe
     if spec.metric == 'abs_document_net_amount_mixed_sign':
         return f"""WITH docs AS (
     SELECT
-        ((f.BillingDocumentDate / 100) % 100) AS Mes,
+        CAST((f.BillingDocumentDate / 100) % 100 AS INT) AS Mes,
         f.BillingDocument,
         ABS(SUM(f.NetAmount)) AS ValorLiquidoTotal,
         MIN(f.NetAmount) AS ValorMinimoLinha,
         MAX(f.NetAmount) AS ValorMaximoLinha
     FROM F_Invoice f
-    WHERE f.BillingDocumentDate / 10000 = 2026
+    WHERE CAST(f.BillingDocumentDate / 10000 AS INT) = 2026
       AND f.BillingDocumentIsCancelled = 0
-    GROUP BY ((f.BillingDocumentDate / 100) % 100), f.BillingDocument
+    GROUP BY CAST((f.BillingDocumentDate / 100) % 100 AS INT), f.BillingDocument
     HAVING MIN(f.NetAmount) < 0 AND MAX(f.NetAmount) > 0
 ), ranked AS (
     SELECT
