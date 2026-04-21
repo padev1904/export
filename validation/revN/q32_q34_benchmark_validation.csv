@@ -1,0 +1,51 @@
+qid,question,oracle_rows,generated_rows,semantic_pass,oracle_sql,generated_sql
+32,Quais são os produtos com mais valor líquido faturado em 2026 para o cliente Cliente Exemplo?,0,0,PASS,"SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND c.TCustomer = 'Cliente Exemplo'
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY p.TProduct
+ORDER BY ValorLiquidoFaturado DESC;","SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND c.TCustomer = 'Cliente Exemplo'
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY p.TProduct
+ORDER BY ValorLiquidoFaturado DESC;"
+34,Quais são os clientes com mais valor líquido faturado em 2026 para o produto Produto Exemplo?,0,0,PASS,"SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND p.TProduct = 'Produto Exemplo'
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY c.TCustomer
+ORDER BY ValorLiquidoFaturado DESC;","SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND p.TProduct = 'Produto Exemplo'
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY c.TCustomer
+ORDER BY ValorLiquidoFaturado DESC;"
