@@ -23,6 +23,7 @@
 - generators/topn_global_generator.py
 - generators/topn_generator.py
 - generators/cancellation_generator.py
+- generators/distinct_count_generator.py
 - validation/revD/
 - validation/revE/
 - validation/revK/
@@ -59,6 +60,11 @@
 - validation/revU/rank_partition_generalization_cases.md
 - validation/revU/rank_partition_notes.md
 - validation/revU/global_counts_after_revU.csv
+- validation/revV/distinct_count_benchmark_validation.csv
+- validation/revV/distinct_count_generalization_eval.csv
+- validation/revV/distinct_count_generalization_cases.md
+- validation/revV/distinct_count_notes.md
+- validation/revV/global_counts_after_revV.csv
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
