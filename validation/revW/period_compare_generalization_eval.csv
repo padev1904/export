@@ -1,0 +1,7 @@
+test_id,strict_pass,semantic_pass,generated_rows,manual_rows,note
+PCG01,1,1,2,2,variacao percentual da quantidade por organizacao de vendas
+PCG02,1,1,7,7,variacao absoluta da quantidade por canal de distribuicao
+PCG03,1,1,7,7,variacao percentual do valor liquido por pais
+PCG04,1,1,30,30,variacao absoluta do valor liquido por marca
+PCG05,1,1,5,5,variacao percentual de NetCommercialSales por familia com regra de registos adicionais
+PCG06,1,1,12,12,comparacao mensal 2025 vs 2026 para quantidade faturada
