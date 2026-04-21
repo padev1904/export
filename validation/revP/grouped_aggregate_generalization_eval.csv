@@ -1,0 +1,7 @@
+test_id,question,manual_rows,generated_rows,semantic_pass
+GA01,Qual o valor líquido faturado por marca de produto no ano atual?,85,85,PASS
+GA02,Qual é a faturação por tipo de lista de preços em 2026?,17,17,PASS
+GA03,Como se distribui a faturação do ano corrente por categoria de documento de faturação?,7,7,PASS
+GA04,Qual o valor líquido faturado por zona de transporte do cliente no ano atual?,3,3,PASS
+GA05,Qual a diferença entre o preço de lista e o valor líquido faturado por família de produto no ano atual?,79,79,PASS
+GA06,Qual o peso líquido total faturado por marca no ano atual?,85,85,PASS
