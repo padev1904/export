@@ -1,6 +1,6 @@
 # HANDOVER CURRENT
 
-Última consolidação: 2026-04-21 (revM F18_multi_metric_topn closed)
+Última consolidação: 2026-04-21 (revN Q32/Q34 reconciled)
 
 ## 1) Âmbito
 Projeto de geração universal de T-SQL para SQL Server, com foco em:
@@ -50,15 +50,14 @@ O conjunto-base local contém:
 
 ## 4) Divergências abertas
 ### Q1-Q60
-Existe divergência factual entre:
-- resumo narrativo antigo: 60/60
-- matriz factual anexada: 58 PASS + 2 NO_GENERATOR
+A divergência factual antiga fica agora reconciliada por execução real:
+- `Q32`: PASS
+- `Q34`: PASS
 
-Perguntas remanescentes na matriz factual:
-- Q32
-- Q34
-
-Até reconciliação por execução real, a verdade operacional deve seguir a matriz factual.
+Observação importante:
+- os oráculos de benchmark de `Q32/Q34` usam labels de exemplo inexistentes nas dimensões reais (`Cliente Exemplo`, `Produto Exemplo`)
+- por isso, o resultado esperado é conjunto vazio
+- a equivalência foi validada por execução real de oráculo e gerador
 
 ## 5) Estado validado por família
 ### Temporal / comparações / janela (revD)
@@ -133,21 +132,6 @@ Semântica operacional fechada:
 - quando a métrica é rácio, calcular o rácio agregado antes do ranking
 - em cancelamentos, granularizar primeiro ao nível `BillingDocument`
 
-Subpadrões fechados:
-- `net_amount` por partição simples
-- `net_amount` por partição composta
-- `growth_net_amount`
-- `growth_billing_quantity`
-- `pct_change_net_amount`
-- `list_minus_net`
-- `avg_net_price_per_unit`
-- `cancellation_rate`
-- `abs_document_net_amount_mixed_sign`
-
-Divergência estrutural remanescente:
-- Q108 difere apenas no alias da métrica (`DiferencaPrecoListaValorLiquido` vs `DiferencaPrecoListaVsLiquido`)
-- equivalência semântica preservada
-
 ### Multi metric top-N (revM)
 Subconjunto benchmark validado:
 - Q58
@@ -178,6 +162,22 @@ Semântica operacional fechada:
 - suportar time scopes `year_2026`, `current_year`, `last_12_months`
 - usar defaults semânticos de `top_n` por arquétipo quando a pergunta não explicita N
 
+### Top-N com filtro cruzado (revN)
+Subconjunto benchmark validado:
+- Q32
+- Q34
+
+Estado validado:
+- benchmark da família: 2/2 PASS por equivalência de resultado
+- generalização fora do benchmark com SQL manual independente: 6/6 PASS
+
+Semântica operacional fechada:
+- `produtos ... para o cliente X` -> agrupar por produto, filtrar cliente
+- `clientes ... para o produto Y` -> agrupar por cliente, filtrar produto
+- suporte a filtro por `label` e por `código`
+- resolver slots: entidade alvo, entidade filtro, modo do filtro, valor do filtro, ano, top_n
+- aplicar sempre `BillingDocumentIsCancelled = 0`
+
 ## 6) Estado do repositório canónico
 ### Já sincronizado no repositório
 - `generators/temporal_generator.py`
@@ -185,6 +185,7 @@ Semântica operacional fechada:
 - `generators/pareto_generator.py`
 - `generators/rank_partition_generator.py`
 - `generators/f18_multi_metric_topn_generator.py`
+- `generators/topn_cross_filter_generator.py`
 - `validation/revD/tsql_emulator_benchmark_exec.csv`
 - `validation/revD/temporal_benchmark_validation.csv`
 - `validation/revD/temporal_generalization_eval.csv`
@@ -205,6 +206,11 @@ Semântica operacional fechada:
 - `validation/revM/f18_multi_metric_topn_benchmark_validation.csv`
 - `validation/revM/f18_multi_metric_topn_generalization_cases.md`
 - `validation/revM/f18_multi_metric_topn_notes.md`
+- `validation/revN/q32_q34_benchmark_validation.csv`
+- `validation/revN/q32_q34_regression_slice.csv`
+- `validation/revN/q32_q34_generalization_eval.csv`
+- `validation/revN/q32_q34_generalization_cases.md`
+- `validation/revN/q32_q34_notes.md`
 - documentação canónica em `handover/` e `repo_structure/`
 
 ## 7) Método obrigatório para cada nova família
@@ -220,9 +226,10 @@ Semântica operacional fechada:
 10. atualizar `HANDOVER_CURRENT.md`, `CHANGELOG.md`, `ARTEFACTS_INDEX.md` e `RETOMA_CHECKLIST.md`
 
 ## 8) Prioridade atual
-1. reconciliar explicitamente Q32/Q34
-2. fechar backlog residual não fechado
-3. consolidar benchmark final e documentação canónica única
+1. calcular backlog residual real pós-`Q32/Q34`
+2. consolidar a contagem global real do benchmark já fechado
+3. fechar os agrupamentos residuais por família/problema
+4. limpeza final de redundâncias documentais, mantendo apenas a árvore canónica
 
 ## 9) Regras de higiene documental
 No repositório deve existir:
@@ -238,6 +245,7 @@ As revisões devem viver sobretudo em:
 - `validation/revK/`
 - `validation/revL/`
 - `validation/revM/`
+- `validation/revN/`
 - `generators/`
 
 Não manter no repositório:
