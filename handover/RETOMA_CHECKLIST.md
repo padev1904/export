@@ -5,8 +5,9 @@
 2. ler `handover/HANDOVER_CURRENT.md`
 3. ler `handover/CHANGELOG.md`
 4. ler `handover/ARTEFACTS_INDEX.md`
-5. confirmar `handover/SAFE_SOURCE_MANIFEST.md`
-6. confirmar backlog atual em `HANDOVER_CURRENT.md`
+5. confirmar `validation/revO/global_benchmark_counts.csv`
+6. confirmar `validation/revO/global_benchmark_residual_summary.csv`
+7. confirmar `validation/revO/backlog_residual_real.md`
 
 ## Antes de trabalhar nova família
 1. identificar subconjunto do benchmark da família
@@ -22,20 +23,12 @@
 3. usar SQL manual independente nos casos novos
 4. medir equivalência de resultado, não elegância
 5. reexecutar tudo o que já tinha passado nessa família
-6. manter o repositório canónico consistente com o estado real do trabalho
-
-## Antes de fechar a revisão
-1. produzir gerador canónico da família
-2. produzir matriz benchmark da família
-3. produzir matriz de generalização
-4. produzir casos de generalização documentados
-5. atualizar `HANDOVER_CURRENT.md`
-6. acrescentar delta a `CHANGELOG.md`
-7. atualizar `ARTEFACTS_INDEX.md`
-8. rever se foi criada nova redundância documental
+6. recalcular a contagem global real após fechar a família
+7. manter o repositório canónico consistente com o estado real do trabalho
 
 ## Próximo alvo atualmente acordado
-1. calcular backlog residual real pós-`Q32/Q34`
-2. consolidar a contagem global real do benchmark
-3. fechar agrupamentos residuais por família/problema
-4. limpeza final de redundâncias documentais, mantendo apenas a árvore canónica
+1. fechar `grouped_aggregate`
+2. fechar `percentage_share`
+3. fechar `top_n_global`
+4. fechar `top_n`
+5. atualizar a contagem global real após cada revisão
