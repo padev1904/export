@@ -21,6 +21,8 @@
 - generators/grouped_aggregate_generator.py
 - generators/percentage_share_generator.py
 - generators/topn_global_generator.py
+- generators/topn_generator.py
+- generators/cancellation_generator.py
 - validation/revD/
 - validation/revE/
 - validation/revK/
@@ -43,6 +45,15 @@
 - validation/revR/topn_global_generalization_cases.md
 - validation/revR/topn_global_notes.md
 - validation/revR/global_counts_after_revR.csv
+- validation/revS/topn_benchmark_validation.csv
+- validation/revS/topn_generalization_eval.csv
+- validation/revS/topn_notes.md
+- validation/revS/global_counts_after_revS.csv
+- validation/revT/cancellation_benchmark_validation.csv
+- validation/revT/cancellation_generalization_eval.csv
+- validation/revT/cancellation_generalization_cases.md
+- validation/revT/cancellation_notes.md
+- validation/revT/global_counts_after_revT.csv
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
