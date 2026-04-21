@@ -1,0 +1,7 @@
+test_id,status,question,detail
+PS01,PASS,Que percentagem da faturação do mês atual pertence a cada canal de distribuição?,ok
+PS02,PASS,Mostra a quota da faturação dos últimos 12 meses por região.,ok
+PS03,PASS,"Qual o preço médio líquido por unidade faturada por marca em 2026, ignorando marcas com quantidade total zero?",ok
+PS04,PASS,Qual a percentagem de margem bruta por marca em 2026 usando só registos adicionais calculados?,ok
+PS05,PASS,Qual a quota de faturação de cada país dentro de cada organização de vendas em 2026?,ok
+PS06,PASS,Qual a percentagem do desconto promocional total sobre a faturação por mês nos últimos 6 meses?,ok
