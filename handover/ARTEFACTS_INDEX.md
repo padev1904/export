@@ -20,6 +20,7 @@ Mapear os artefactos técnicos e documentais relevantes e indicar o respetivo es
 - `generators/pareto_generator.py`
 - `generators/rank_partition_generator.py`
 - `generators/f18_multi_metric_topn_generator.py`
+- `generators/topn_cross_filter_generator.py`
 - `validation/revD/tsql_emulator_benchmark_exec.csv`
 - `validation/revD/temporal_benchmark_validation.csv`
 - `validation/revD/temporal_generalization_eval.csv`
@@ -40,6 +41,11 @@ Mapear os artefactos técnicos e documentais relevantes e indicar o respetivo es
 - `validation/revM/f18_multi_metric_topn_benchmark_validation.csv`
 - `validation/revM/f18_multi_metric_topn_generalization_cases.md`
 - `validation/revM/f18_multi_metric_topn_notes.md`
+- `validation/revN/q32_q34_benchmark_validation.csv`
+- `validation/revN/q32_q34_regression_slice.csv`
+- `validation/revN/q32_q34_generalization_eval.csv`
+- `validation/revN/q32_q34_generalization_cases.md`
+- `validation/revN/q32_q34_notes.md`
 
 ## Mapeamento de origem local para destino canónico
 ### Temporal (revD)
@@ -93,6 +99,18 @@ Destino canónico:
 - `validation/revM/f18_multi_metric_topn_benchmark_validation.csv`
 - `validation/revM/f18_multi_metric_topn_generalization_cases.md`
 - `validation/revM/f18_multi_metric_topn_notes.md`
+
+Estado:
+- sincronizado
+
+### Q32/Q34 top-N com filtro cruzado (revN)
+Destino canónico:
+- `generators/topn_cross_filter_generator.py`
+- `validation/revN/q32_q34_benchmark_validation.csv`
+- `validation/revN/q32_q34_regression_slice.csv`
+- `validation/revN/q32_q34_generalization_eval.csv`
+- `validation/revN/q32_q34_generalization_cases.md`
+- `validation/revN/q32_q34_notes.md`
 
 Estado:
 - sincronizado
