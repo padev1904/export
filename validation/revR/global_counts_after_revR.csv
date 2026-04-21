@@ -1,0 +1,11 @@
+metric,value
+benchmark_total,268
+benchmark_closed_before_revR,204
+benchmark_closed_now,212
+benchmark_open_now,56
+q1_q60_closed_now,60
+q61_q150_closed_now,56
+q151_q268_closed_now,96
+revR_topn_global_family_total,12
+revR_topn_global_family_pass,12
+revR_topn_global_generalization_pass,6
