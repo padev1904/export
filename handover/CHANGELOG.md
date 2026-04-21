@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 2026-04-21 — revU rank_within_partition closure
+- fechamento canónico da família rank_within_partition
+- benchmark da família: 27/27 PASS por equivalência de resultado
+- benchmark da família: 26/27 PASS em igualdade estrita de grelha
+- diferença estrita remanescente: Q108 com alias divergente mas resultado equivalente
+- generalização fora do benchmark: 6/6 PASS
+- atualização de generators/rank_partition_generator.py
+- criação de validation/revU/rank_partition_benchmark_validation.csv
+- criação de validation/revU/rank_partition_generalization_eval.csv
+- criação de validation/revU/rank_partition_generalization_cases.md
+- criação de validation/revU/rank_partition_notes.md
+- criação de validation/revU/global_counts_after_revU.csv
+- atualização factual da contagem global para 253/268 fechadas e 15/268 abertas, assumindo não sobreposição das 27 perguntas da família
+
 ## 2026-04-21 — revT cancellation closure
 - fechamento canónico da família cancellation
 - benchmark da família: 8/8 PASS
