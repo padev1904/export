@@ -54,6 +54,11 @@
 - validation/revT/cancellation_generalization_cases.md
 - validation/revT/cancellation_notes.md
 - validation/revT/global_counts_after_revT.csv
+- validation/revU/rank_partition_benchmark_validation.csv
+- validation/revU/rank_partition_generalization_eval.csv
+- validation/revU/rank_partition_generalization_cases.md
+- validation/revU/rank_partition_notes.md
+- validation/revU/global_counts_after_revU.csv
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
