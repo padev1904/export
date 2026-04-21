@@ -1,0 +1,41 @@
+qid,question,semantic_pass,oracle_rows,generated_rows
+72,Qual a diferença entre preço de lista e valor líquido faturado por tipo de lista de preços em 2026?,PASS,17,17
+73,Qual o total de descontos de quantidade por grupo de cliente em 2026?,PASS,157,157
+78,Qual a quantidade faturada e a quantidade em unidade base por produto em 2026?,PASS,3750,3750
+82,Qual o valor líquido faturado por grupo de contas do cliente em 2026?,PASS,4,4
+83,Qual o valor líquido faturado por condição de expedição do cliente em 2026?,PASS,3,3
+84,Qual o valor líquido faturado por zona de transporte do cliente em 2026?,PASS,3,3
+85,Qual o valor líquido faturado por país da região do cliente em 2026?,PASS,1,1
+88,Qual a diferença entre o preço de lista ZLP1 e o valor líquido faturado por tipo de lista de preços em 2026?,PASS,17,17
+92,Qual o peso bruto total por unidade de peso em 2026?,PASS,4,4
+96,Qual a diferença entre o preço de lista e o valor líquido faturado por marca de produto em 2026?,PASS,85,85
+131,Qual a diferença entre quantidade faturada e quantidade em unidade base por família de produto em 2026?,PASS,79,79
+135,Qual o peso líquido total faturado por família de produto em 2026?,PASS,79,79
+147,Qual a diferença entre quantidade faturada e quantidade em unidade base por marca de produto em 2026?,PASS,85,85
+221,Qual é a faturação por organização de vendas e por canal no ano atual?,PASS,7,7
+222,Mostra o valor líquido faturado por organização de vendas e canal de distribuição este ano.,PASS,7,7
+223,Como se distribui a faturação do ano corrente por organização de vendas e canal?,PASS,7,7
+227,Qual é a faturação por país no ano atual?,PASS,15,15
+228,Mostra o valor líquido faturado por país este ano.,PASS,15,15
+229,Como se distribui a faturação do ano corrente por país?,PASS,15,15
+230,Qual é a faturação por país de partida no ano atual?,PASS,16,16
+231,Mostra o valor líquido faturado por país de expedição este ano.,PASS,16,16
+232,Como se distribui a faturação do ano corrente por país de partida?,PASS,16,16
+233,Qual é a faturação por tipo de documento de faturação no ano atual?,PASS,11,11
+234,Mostra o valor líquido faturado por tipo de documento este ano.,PASS,11,11
+235,Como se distribui a faturação do ano corrente por tipo de documento de faturação?,PASS,11,11
+236,Qual é a faturação por categoria de documento de faturação no ano atual?,PASS,7,7
+237,Mostra o valor líquido faturado por categoria de documento este ano.,PASS,7,7
+238,Como se distribui a faturação do ano corrente por categoria de documento de faturação?,PASS,7,7
+239,Qual é a faturação por tipo de lista de preços no ano atual?,PASS,17,17
+240,Mostra o valor líquido faturado por tipo de lista de preços este ano.,PASS,17,17
+241,Como se distribui a faturação do ano corrente por price list type?,PASS,17,17
+254,Qual é a faturação por marca no ano atual?,PASS,85,85
+255,Mostra o valor líquido faturado por brand este ano.,PASS,85,85
+256,Como se distribui a faturação do ano corrente por marca de produto?,PASS,85,85
+257,Qual é a faturação por família de produto no ano atual?,PASS,79,79
+258,Mostra o valor líquido faturado por product family este ano.,PASS,79,79
+259,Como se distribui a faturação do ano corrente por família de produto?,PASS,79,79
+260,Qual é a faturação por tipo de material no ano atual?,PASS,32,32
+261,Mostra o valor líquido faturado por material type este ano.,PASS,32,32
+262,Como se distribui a faturação do ano corrente por tipo de material?,PASS,32,32
