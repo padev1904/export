@@ -3,9 +3,10 @@
 ## Entrada obrigatória quando a sessão pode ser um fork
 1. ler `handover/FORK_RECOVERY_PROTOCOL.md`
 2. ler `handover/HANDOVER_CURRENT.md`
-3. ler `handover/ARTEFACTS_INDEX.md`
-4. ler `handover/CHANGELOG.md`
-5. usar o bloco `RETOMA RÁPIDA` de `HANDOVER_CURRENT.md` como ponto de arranque
+3. ler `handover/RETOMA_CHECKLIST.md`
+4. ler `handover/ARTEFACTS_INDEX.md`
+5. ler `handover/CHANGELOG.md`
+6. usar o bloco `RETOMA RÁPIDA` de `HANDOVER_CURRENT.md` como ponto de arranque
 
 ## Antes de continuar o projeto
 1. confirmar a última revisão fechada
@@ -19,8 +20,8 @@ No final de cada resposta de progresso, incluir sempre:
 `Próximos passos para a prompt de arranque`
 
 ## Próximo alvo atualmente acordado
-1. fechar percentage_share
-2. fechar top_n_global
-3. fechar top_n
-4. fechar cancellation
-5. recalcular a contagem global real após cada revisão
+1. fechar top_n_global
+2. correr regressão da família
+3. criar perguntas novas fora do benchmark
+4. recalcular a contagem global real após a revisão
+5. atualizar repositório canónico
