@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## 2026-04-22 — revW period_compare closure
+- fechamento canónico da família period_compare
+- benchmark da família: 4/4 PASS por equivalência de resultado
+- benchmark da família: 4/4 PASS em igualdade estrita de grelha
+- generalização fora do benchmark: 6/6 PASS
+- criação de generators/period_compare_generator.py
+- criação de validation/revW/period_compare_benchmark_validation.csv
+- criação de validation/revW/period_compare_generalization_eval.csv
+- criação de validation/revW/period_compare_notes.md
+- criação de validation/revW/global_counts_after_revW.csv
+- atualização factual da contagem global para 261/268 fechadas e 7/268 abertas
+
+## 2026-04-22 — handover sync after revW repo audit
+- atualização de handover/HANDOVER_CURRENT.md para refletir estado revW
+- atualização de handover/ARTEFACTS_INDEX.md com artefactos revW
+- criação de validation/revW/backlog_reconciliation_status.md
+- documentação da necessidade de reconciliação benchmark-wide para identificar os 7 `qid` ainda abertos
+
 ## 2026-04-22 — revV distinct_count closure
 - fechamento canónico da família distinct_count
 - benchmark da família: 4/4 PASS por equivalência de resultado
