@@ -1,11 +1,6 @@
 # ARTEFACTS INDEX
 
-## Objetivo
-Mapear os artefactos técnicos e documentais relevantes e indicar o respetivo estado no repositório canónico.
-
-## Estado de sincronização
-### Já sincronizado no repositório
-#### Documentação canónica
+## Documentação canónica
 - `README.md`
 - `handover/HANDOVER_CURRENT.md`
 - `handover/CHANGELOG.md`
@@ -14,111 +9,23 @@ Mapear os artefactos técnicos e documentais relevantes e indicar o respetivo es
 - `handover/ARTEFACTS_INDEX.md`
 - `repo_structure/REPO_STRUCTURE_CANONICAL.md`
 
-#### Camada técnica
+## Camada técnica canónica
 - `generators/temporal_generator.py`
 - `generators/lifecycle_generator.py`
 - `generators/pareto_generator.py`
 - `generators/rank_partition_generator.py`
 - `generators/f18_multi_metric_topn_generator.py`
 - `generators/topn_cross_filter_generator.py`
-- `validation/revD/tsql_emulator_benchmark_exec.csv`
-- `validation/revD/temporal_benchmark_validation.csv`
-- `validation/revD/temporal_generalization_eval.csv`
-- `validation/revD/temporal_generalization_cases.md`
-- `validation/revE/lifecycle_benchmark_validation.csv`
-- `validation/revE/lifecycle_generalization_eval.csv`
-- `validation/revE/lifecycle_generalization_cases.md`
-- `validation/revK/f16_pareto_benchmark_validation.csv`
-- `validation/revK/f16_pareto_family_regression.csv`
-- `validation/revK/f16_pareto_generalization_eval.csv`
-- `validation/revK/f16_pareto_generalization_cases.md`
-- `validation/revK/f16_pareto_notes.md`
-- `validation/revL/f12_rank_partition_benchmark_validation.csv`
-- `validation/revL/f12_rank_partition_family_regression.csv`
-- `validation/revL/f12_rank_partition_generalization_eval.csv`
-- `validation/revL/f12_rank_partition_generalization_cases.md`
-- `validation/revL/f12_rank_partition_notes.md`
-- `validation/revM/f18_multi_metric_topn_benchmark_validation.csv`
-- `validation/revM/f18_multi_metric_topn_generalization_cases.md`
-- `validation/revM/f18_multi_metric_topn_notes.md`
-- `validation/revN/q32_q34_benchmark_validation.csv`
-- `validation/revN/q32_q34_regression_slice.csv`
-- `validation/revN/q32_q34_generalization_eval.csv`
-- `validation/revN/q32_q34_generalization_cases.md`
-- `validation/revN/q32_q34_notes.md`
+- `validation/revD/`
+- `validation/revE/`
+- `validation/revK/`
+- `validation/revL/`
+- `validation/revM/`
+- `validation/revN/`
+- `validation/revO/global_benchmark_counts.csv`
+- `validation/revO/global_benchmark_residual_summary.csv`
+- `validation/revO/backlog_residual_real.md`
 
-## Mapeamento de origem local para destino canónico
-### Temporal (revD)
-Destino canónico:
-- `generators/temporal_generator.py`
-- `validation/revD/tsql_emulator_benchmark_exec.csv`
-- `validation/revD/temporal_benchmark_validation.csv`
-- `validation/revD/temporal_generalization_eval.csv`
-- `validation/revD/temporal_generalization_cases.md`
-
-Estado:
-- sincronizado
-
-### Lifecycle (revE)
-Destino canónico:
-- `generators/lifecycle_generator.py`
-- `validation/revE/lifecycle_benchmark_validation.csv`
-- `validation/revE/lifecycle_generalization_eval.csv`
-- `validation/revE/lifecycle_generalization_cases.md`
-
-Estado:
-- sincronizado
-
-### Pareto 80 (revK)
-Destino canónico:
-- `generators/pareto_generator.py`
-- `validation/revK/f16_pareto_benchmark_validation.csv`
-- `validation/revK/f16_pareto_family_regression.csv`
-- `validation/revK/f16_pareto_generalization_eval.csv`
-- `validation/revK/f16_pareto_generalization_cases.md`
-- `validation/revK/f16_pareto_notes.md`
-
-Estado:
-- sincronizado
-
-### Rank within partition (revL)
-Destino canónico:
-- `generators/rank_partition_generator.py`
-- `validation/revL/f12_rank_partition_benchmark_validation.csv`
-- `validation/revL/f12_rank_partition_family_regression.csv`
-- `validation/revL/f12_rank_partition_generalization_eval.csv`
-- `validation/revL/f12_rank_partition_generalization_cases.md`
-- `validation/revL/f12_rank_partition_notes.md`
-
-Estado:
-- sincronizado
-
-### F18 multi_metric_topn (revM)
-Destino canónico:
-- `generators/f18_multi_metric_topn_generator.py`
-- `validation/revM/f18_multi_metric_topn_benchmark_validation.csv`
-- `validation/revM/f18_multi_metric_topn_generalization_cases.md`
-- `validation/revM/f18_multi_metric_topn_notes.md`
-
-Estado:
-- sincronizado
-
-### Q32/Q34 top-N com filtro cruzado (revN)
-Destino canónico:
-- `generators/topn_cross_filter_generator.py`
-- `validation/revN/q32_q34_benchmark_validation.csv`
-- `validation/revN/q32_q34_regression_slice.csv`
-- `validation/revN/q32_q34_generalization_eval.csv`
-- `validation/revN/q32_q34_generalization_cases.md`
-- `validation/revN/q32_q34_notes.md`
-
-Estado:
-- sincronizado
-
-## O que não deve continuar a crescer no repositório
-- handovers por revisão fora da árvore `handover/`
-- checklists por revisão fora da árvore `handover/`
-- ZIPs de handover
-- cópias redundantes do mesmo estado em múltiplos caminhos
-- qualquer ficheiro bruto derivado diretamente do ZIP original
-- artefactos intermédios supersedidos quando já existir a versão canónica sincronizada
+## Nota
+`revO` não cria novo gerador; consolida o estado global real do benchmark e o backlog residual canónico.
+A matriz global completa desta revisão existe como artefacto local descarregável, enquanto o repositório mantém a síntese canónica mínima para evitar crescimento redundante.
