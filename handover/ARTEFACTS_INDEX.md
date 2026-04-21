@@ -24,6 +24,9 @@
 - generators/topn_generator.py
 - generators/cancellation_generator.py
 - generators/distinct_count_generator.py
+- generators/period_compare_generator.py
+
+## Validação por revisão
 - validation/revD/
 - validation/revE/
 - validation/revK/
@@ -31,40 +34,61 @@
 - validation/revM/
 - validation/revN/
 - validation/revO/
+
+### revP
 - validation/revP/grouped_aggregate_benchmark_validation.csv
 - validation/revP/grouped_aggregate_generalization_eval.csv
 - validation/revP/grouped_aggregate_generalization_cases.md
 - validation/revP/grouped_aggregate_notes.md
 - validation/revP/global_counts_after_revP.csv
+
+### revQ
 - validation/revQ/percentage_share_benchmark_validation.csv
 - validation/revQ/percentage_share_generalization_eval.csv
 - validation/revQ/percentage_share_generalization_cases.md
 - validation/revQ/percentage_share_notes.md
 - validation/revQ/global_counts_after_revQ.csv
+
+### revR
 - validation/revR/topn_global_benchmark_validation.csv
 - validation/revR/topn_global_generalization_eval.csv
 - validation/revR/topn_global_generalization_cases.md
 - validation/revR/topn_global_notes.md
 - validation/revR/global_counts_after_revR.csv
+
+### revS
 - validation/revS/topn_benchmark_validation.csv
 - validation/revS/topn_generalization_eval.csv
 - validation/revS/topn_notes.md
 - validation/revS/global_counts_after_revS.csv
+
+### revT
 - validation/revT/cancellation_benchmark_validation.csv
 - validation/revT/cancellation_generalization_eval.csv
 - validation/revT/cancellation_generalization_cases.md
 - validation/revT/cancellation_notes.md
 - validation/revT/global_counts_after_revT.csv
+
+### revU
 - validation/revU/rank_partition_benchmark_validation.csv
 - validation/revU/rank_partition_generalization_eval.csv
 - validation/revU/rank_partition_generalization_cases.md
 - validation/revU/rank_partition_notes.md
 - validation/revU/global_counts_after_revU.csv
+
+### revV
 - validation/revV/distinct_count_benchmark_validation.csv
 - validation/revV/distinct_count_generalization_eval.csv
 - validation/revV/distinct_count_generalization_cases.md
 - validation/revV/distinct_count_notes.md
 - validation/revV/global_counts_after_revV.csv
+
+### revW
+- validation/revW/period_compare_benchmark_validation.csv
+- validation/revW/period_compare_generalization_eval.csv
+- validation/revW/period_compare_notes.md
+- validation/revW/global_counts_after_revW.csv
+- validation/revW/backlog_reconciliation_status.md
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
