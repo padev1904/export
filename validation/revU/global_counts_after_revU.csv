@@ -1,0 +1,9 @@
+metric,value
+benchmark_total,268
+benchmark_closed_before_revU,226
+benchmark_closed_now_assuming_nonoverlap,253
+benchmark_open_now_assuming_nonoverlap,15
+revU_rank_partition_family_total,27
+revU_rank_partition_family_semantic_pass,27
+revU_rank_partition_family_strict_pass,26
+revU_rank_partition_generalization_pass,6
