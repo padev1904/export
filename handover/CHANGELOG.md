@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 2026-04-21 — revT cancellation closure
+- fechamento canónico da família cancellation
+- benchmark da família: 8/8 PASS
+- generalização fora do benchmark: 6/6 PASS
+- criação de generators/cancellation_generator.py
+- criação de validation/revT/cancellation_benchmark_validation.csv
+- criação de validation/revT/cancellation_generalization_eval.csv
+- criação de validation/revT/cancellation_generalization_cases.md
+- criação de validation/revT/cancellation_notes.md
+- criação de validation/revT/global_counts_after_revT.csv
+- atualização factual da contagem global para 226/268 fechadas e 42/268 abertas
+
 ## 2026-04-21 — revS top_n closure
 - fechamento canónico da família top_n
 - benchmark da família: 6/6 PASS
