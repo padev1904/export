@@ -1,0 +1,9 @@
+metric,value
+benchmark_total,268
+benchmark_closed_before_revW,257
+benchmark_closed_now_assuming_nonoverlap,261
+benchmark_open_now_assuming_nonoverlap,7
+revW_period_compare_family_total,4
+revW_period_compare_family_semantic_pass,4
+revW_period_compare_family_strict_pass,4
+revW_period_compare_generalization_pass,6
