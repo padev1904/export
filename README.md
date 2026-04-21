@@ -46,4 +46,7 @@ Podem ser carregados:
 - `revL` técnico sincronizado no repositório para `F12_rank_within_partition` em `generators/` e `validation/revL/`
 - `revM` técnico sincronizado no repositório para `F18_multi_metric_topn` em `generators/` e `validation/revM/`
 - `revN` técnico sincronizado no repositório para reconciliação explícita de `Q32/Q34` em `generators/` e `validation/revN/`
-- próxima prioridade operacional: calcular backlog residual real pós-`Q32/Q34` e consolidar a contagem global final do benchmark
+- `revO` sincroniza o inventário residual real do benchmark em `validation/revO/`
+- benchmark fechado com evidência canónica atualmente sincronizada: 147/268
+- backlog residual atualmente consolidado: 121/268
+- próxima prioridade operacional: `grouped_aggregate`, depois `percentage_share`, `top_n_global` e `top_n`
