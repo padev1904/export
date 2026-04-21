@@ -1,0 +1,7 @@
+metric,value
+benchmark_total,268
+benchmark_closed_now,147
+benchmark_open_now,121
+q1_q60_closed_now,60
+q61_q150_closed_now,29
+q151_q268_closed_now,58
