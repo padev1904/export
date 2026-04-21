@@ -19,9 +19,10 @@
 No final de cada resposta de progresso, incluir sempre:
 `Próximos passos para a prompt de arranque`
 
-## Próximo alvo atualmente acordado
-1. fechar rank_within_partition
+## Próximo alvo acordado
+1. fechar period_compare
 2. correr regressão da família
 3. criar perguntas novas fora do benchmark
-4. recalcular a contagem global real após a revisão
-5. atualizar repositório canónico
+4. comparar SQL manual independente com SQL do gerador universal por equivalência de resultado
+5. recalcular a contagem global real após a revisão
+6. atualizar repositório canónico
