@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## 2026-04-21 — revN Q32/Q34 reconciliation
+- fechamento canónico do arquétipo `top_n_with_cross_filter`
+- promoção de `generators/topn_cross_filter_generator.py` para a versão canónica `revN`
+- validação executável direta de `Q32/Q34`
+- benchmark da família: `2/2 PASS` por equivalência de resultado
+- generalização fora do benchmark com SQL manual independente: `6/6 PASS`
+- criação de `validation/revN/q32_q34_benchmark_validation.csv`
+- criação de `validation/revN/q32_q34_regression_slice.csv`
+- criação de `validation/revN/q32_q34_generalization_eval.csv`
+- criação de `validation/revN/q32_q34_generalization_cases.md`
+- criação de `validation/revN/q32_q34_notes.md`
+- reconciliação explícita da divergência factual antiga de `Q1-Q60`
+- atualização de `HANDOVER_CURRENT.md`, `CHANGELOG.md`, `ARTEFACTS_INDEX.md`, `RETOMA_CHECKLIST.md` e `README.md`
+- próxima prioridade operacional passa a ser o cálculo do backlog residual real pós-`Q32/Q34` e a consolidação da contagem global do benchmark
+
 ## 2026-04-21 — revM F18 multi-metric-topN closure
 - fechamento canónico da família `F18_multi_metric_topn`
 - promoção de `generators/f18_multi_metric_topn_generator.py` para a versão canónica `revM`
