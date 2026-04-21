@@ -1,0 +1,5 @@
+qid,question,strict_pass,semantic_pass,generated_rows,oracle_rows,note
+70,Como comparam 2025 e 2026 em valor líquido faturado por mês?,1,1,12,12,
+109,Qual a variação percentual do valor líquido faturado de 2025 para 2026 por organização de vendas?,1,1,2,2,
+142,Qual a variação absoluta do valor líquido faturado de 2025 para 2026 por canal de distribuição?,1,1,7,7,
+149,Qual a variação percentual do valor líquido faturado de 2025 para 2026 por tipo de documento de faturação?,1,1,5,5,
