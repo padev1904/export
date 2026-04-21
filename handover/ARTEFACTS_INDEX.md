@@ -9,6 +9,7 @@
 - handover/RETOMA_CHECKLIST.md
 - handover/ARTEFACTS_INDEX.md
 - repo_structure/REPO_STRUCTURE_CANONICAL.md
+- handover/STARTUP_PROMPT_FIXED.md
 
 ## Camada técnica canónica
 - generators/temporal_generator.py
@@ -18,6 +19,7 @@
 - generators/f18_multi_metric_topn_generator.py
 - generators/topn_cross_filter_generator.py
 - generators/grouped_aggregate_generator.py
+- generators/percentage_share_generator.py
 - validation/revD/
 - validation/revE/
 - validation/revK/
@@ -30,9 +32,15 @@
 - validation/revP/grouped_aggregate_generalization_cases.md
 - validation/revP/grouped_aggregate_notes.md
 - validation/revP/global_counts_after_revP.csv
+- validation/revQ/percentage_share_benchmark_validation.csv
+- validation/revQ/percentage_share_generalization_eval.csv
+- validation/revQ/percentage_share_generalization_cases.md
+- validation/revQ/percentage_share_notes.md
+- validation/revQ/global_counts_after_revQ.csv
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
 2. handover/HANDOVER_CURRENT.md
 3. handover/RETOMA_CHECKLIST.md
-4. handover/CHANGELOG.md
+4. handover/ARTEFACTS_INDEX.md
+5. handover/CHANGELOG.md
