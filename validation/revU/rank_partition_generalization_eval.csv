@@ -1,0 +1,7 @@
+test_id,question,strict_pass,semantic_pass,generated_rows,manual_rows,note
+G01,Quais são os 4 produtos com maior valor líquido faturado dentro de cada canal de distribuição em 2026?,1,1,18,18,
+G02,Quais são os 2 países com maior crescimento absoluto de valor líquido faturado dentro de cada organização de vendas entre 2025 e 2026?,1,1,4,4,
+G03,Quais são os 2 grupos de cliente com maior desconto promocional total dentro de cada mês em 2026?,1,1,8,8,
+G04,Quais são as 2 marcas com maior preço médio líquido por unidade dentro de cada família de produto em 2026?,1,1,13,13,
+G05,Quais são os 2 pontos de expedição com maior valor líquido faturado dentro de cada organização de vendas em 2026?,1,1,4,4,
+G06,Quais são os 2 tipos de lista de preços com maior diferença entre preço de lista e valor líquido faturado em cada mês de 2026?,1,1,8,8,
