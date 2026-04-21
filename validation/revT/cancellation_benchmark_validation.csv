@@ -1,0 +1,9 @@
+qid,question,operation,status,oracle_rows,generated_rows
+61,Quantos documentos cancelados existem por mês em 2026?,cancelled_docs_by_month,PASS,4,4
+62,Qual a taxa de cancelamento de documentos por mês em 2026?,rate_by_month,PASS,4,4
+63,Quais são os tipos de documento de faturação com mais documentos cancelados em 2026?,top_cancelled_docs_by_dimension,PASS,2,2
+93,Qual a taxa de cancelamento de documentos por tipo de documento de faturação em 2026?,rate_by_dimension,PASS,4,4
+104,Qual a taxa de cancelamento de documentos por tipo de documento de faturação e por mês em 2026?,rate_by_month_and_dimension,PASS,8,8
+116,Qual a taxa de cancelamento de documentos por canal de distribuição em 2026?,rate_by_dimension,PASS,2,2
+125,Quais são as 2 organizações de vendas com maior taxa de cancelamento de documentos dentro de cada mês em 2026?,top_rate_within_month,PASS,7,7
+127,Qual a taxa de cancelamento de documentos por tipo de documento de faturação e por canal de distribuição em 2026?,rate_by_two_dimensions,PASS,8,8
