@@ -1,6 +1,6 @@
 # HANDOVER CURRENT
 
-Última consolidação: 2026-04-20 (revL F12_rank_within_partition closed)
+Última consolidação: 2026-04-21 (revM F18_multi_metric_topn closed)
 
 ## 1) Âmbito
 Projeto de geração universal de T-SQL para SQL Server, com foco em:
@@ -148,12 +148,43 @@ Divergência estrutural remanescente:
 - Q108 difere apenas no alias da métrica (`DiferencaPrecoListaValorLiquido` vs `DiferencaPrecoListaVsLiquido`)
 - equivalência semântica preservada
 
+### Multi metric top-N (revM)
+Subconjunto benchmark validado:
+- Q58
+- Q59
+- Q75
+- Q90
+- Q188
+- Q189
+- Q190
+- Q248
+- Q249
+- Q250
+- Q251
+- Q252
+- Q253
+
+Estado validado:
+- benchmark da família: 13/13 PASS por equivalência semântica
+- regressão integral da família nesta revisão: 13/13 PASS
+- generalização fora do benchmark com SQL manual independente: 8/8 PASS
+
+Semântica operacional fechada:
+- top-N global por entidade com uma ou várias métricas ordenadoras
+- quando a métrica envolve `GrossMargin` ou `NetCommercialSales`, aplicar `IsItAnAdditionalCalculatedRecord = 1`
+- quando a métrica é `avg_net_price_unit`, calcular sempre `SUM(NetAmount) / NULLIF(SUM(BillingQuantity), 0)`
+- aplicar `HAVING SUM(BillingQuantity) <> 0` nas perguntas de preço médio unitário
+- suportar entidades `customer`, `product`, `brand`, `family`, `material_type`
+- suportar time scopes `year_2026`, `current_year`, `last_12_months`
+- usar defaults semânticos de `top_n` por arquétipo quando a pergunta não explicita N
+
 ## 6) Estado do repositório canónico
 ### Já sincronizado no repositório
 - `generators/temporal_generator.py`
 - `generators/lifecycle_generator.py`
 - `generators/pareto_generator.py`
 - `generators/rank_partition_generator.py`
+- `generators/f18_multi_metric_topn_generator.py`
 - `validation/revD/tsql_emulator_benchmark_exec.csv`
 - `validation/revD/temporal_benchmark_validation.csv`
 - `validation/revD/temporal_generalization_eval.csv`
@@ -171,6 +202,9 @@ Divergência estrutural remanescente:
 - `validation/revL/f12_rank_partition_generalization_eval.csv`
 - `validation/revL/f12_rank_partition_generalization_cases.md`
 - `validation/revL/f12_rank_partition_notes.md`
+- `validation/revM/f18_multi_metric_topn_benchmark_validation.csv`
+- `validation/revM/f18_multi_metric_topn_generalization_cases.md`
+- `validation/revM/f18_multi_metric_topn_notes.md`
 - documentação canónica em `handover/` e `repo_structure/`
 
 ## 7) Método obrigatório para cada nova família
@@ -186,9 +220,9 @@ Divergência estrutural remanescente:
 10. atualizar `HANDOVER_CURRENT.md`, `CHANGELOG.md`, `ARTEFACTS_INDEX.md` e `RETOMA_CHECKLIST.md`
 
 ## 8) Prioridade atual
-1. fechar `F18_multi_metric_topn`
-2. depois reconciliar explicitamente Q32/Q34
-3. depois backlog residual não fechado e consolidação final do benchmark
+1. reconciliar explicitamente Q32/Q34
+2. fechar backlog residual não fechado
+3. consolidar benchmark final e documentação canónica única
 
 ## 9) Regras de higiene documental
 No repositório deve existir:
@@ -203,11 +237,13 @@ As revisões devem viver sobretudo em:
 - `validation/revE/`
 - `validation/revK/`
 - `validation/revL/`
+- `validation/revM/`
 - `generators/`
 
 Não manter no repositório:
 - ZIPs de handover
 - handovers por revisão fora da árvore canónica
+- checklists por revisão fora da árvore canónica
 - cópias redundantes do mesmo estado em múltiplos caminhos
 - ficheiros intermédios supersedidos quando já exista a versão canónica sincronizada
 - qualquer ficheiro bruto derivado diretamente do ZIP original
