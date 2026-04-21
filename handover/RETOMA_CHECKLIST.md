@@ -20,7 +20,7 @@ No final de cada resposta de progresso, incluir sempre:
 `Próximos passos para a prompt de arranque`
 
 ## Próximo alvo atualmente acordado
-1. fechar top_n
+1. fechar rank_within_partition
 2. correr regressão da família
 3. criar perguntas novas fora do benchmark
 4. recalcular a contagem global real após a revisão
