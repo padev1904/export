@@ -1,0 +1,245 @@
+qid,question,oracle_rows,generated_rows,pass_semantic,oracle_sql,generated_sql
+3,Qual o valor líquido faturado total em 2026?,10,10,True,"SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY c.TCustomer
+ORDER BY ValorLiquidoFaturado DESC;","SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate / 10000 = 2026
+GROUP BY c.TCustomer
+ORDER BY ValorLiquidoFaturado DESC;"
+4,Quais são os 10 produtos com maior quantidade faturada em 2026?,10,10,True,"SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.BillingQuantity) AS QuantidadeFaturada
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY p.TProduct
+ORDER BY QuantidadeFaturada DESC;","SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.BillingQuantity) AS QuantidadeFaturada
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate / 10000 = 2026
+GROUP BY p.TProduct
+ORDER BY QuantidadeFaturada DESC;"
+58,Quais são os 10 clientes com maior margem bruta em 2026 considerando apenas registos adicionais calculados?,10,10,True,"SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.GrossMargin) AS MargemBruta
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND f.BillingDocumentIsCancelled = 0
+  AND f.IsItAnAdditionalCalculatedRecord = 1
+GROUP BY c.TCustomer
+ORDER BY MargemBruta DESC;","SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.GrossMargin) AS MargemBruta
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate / 10000 = 2026
+  AND f.IsItAnAdditionalCalculatedRecord = 1
+GROUP BY c.TCustomer
+ORDER BY MargemBruta DESC;"
+59,Quais são os 10 produtos com mais vendas comerciais líquidas em 2026 considerando apenas registos adicionais calculados?,10,10,True,"SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.NetCommercialSales) AS VendasComerciaisLiquidas
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND f.BillingDocumentIsCancelled = 0
+  AND f.IsItAnAdditionalCalculatedRecord = 1
+GROUP BY p.TProduct
+ORDER BY VendasComerciaisLiquidas DESC;","SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.NetCommercialSales) AS VendasComerciaisLiquidas
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate / 10000 = 2026
+  AND f.IsItAnAdditionalCalculatedRecord = 1
+GROUP BY p.TProduct
+ORDER BY VendasComerciaisLiquidas DESC;"
+97,Quais são as 10 marcas com maior desconto promocional total em 2026?,10,10,True,"SELECT TOP 10
+    pb.TProductBrand AS MarcaProduto,
+    SUM(f.ZDPRPromotional + f.ZCPRPromotionalCampaign + f.REA1PromotionalDiscount) AS DescontoPromocionalTotal
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+JOIN dbo.D_ProductBrand pb
+    ON p.NIDProductBrand = pb.NIDProductBrand
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY pb.TProductBrand
+ORDER BY DescontoPromocionalTotal ASC;","SELECT TOP 10
+    pb.TProductBrand AS MarcaProduto,
+    SUM(f.ZDPRPromotional + f.ZCPRPromotionalCampaign + f.REA1PromotionalDiscount) AS DescontoPromocionalTotal
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+JOIN dbo.D_ProductBrand pb
+    ON p.NIDProductBrand = pb.NIDProductBrand
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate / 10000 = 2026
+GROUP BY pb.TProductBrand
+ORDER BY DescontoPromocionalTotal ASC;"
+136,Quais são os 10 clientes com maior número de documentos de faturação distintos em 2026?,10,10,True,"SELECT TOP 10
+    c.TCustomer AS Cliente,
+    COUNT(DISTINCT f.BillingDocument) AS NumeroDocumentos
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY c.TCustomer
+ORDER BY NumeroDocumentos DESC;","SELECT TOP 10
+    c.TCustomer AS Cliente,
+    COUNT(DISTINCT f.BillingDocument) AS NumeroDocumentos
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate / 10000 = 2026
+GROUP BY c.TCustomer
+ORDER BY NumeroDocumentos DESC;"
+141,Quais são os 5 produtos com maior diferença entre preço de lista e valor líquido faturado em 2026?,5,5,True,"SELECT TOP 5
+    p.TProduct AS Produto,
+    SUM(f.ZLP1PriceList) - SUM(f.NetAmount) AS DiferencaPrecoListaVsLiquido
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY p.TProduct
+ORDER BY DiferencaPrecoListaVsLiquido DESC;","SELECT TOP 5
+    p.TProduct AS Produto,
+    SUM(f.ZLP1PriceList) - SUM(f.NetAmount) AS DiferencaPrecoListaVsLiquido
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate / 10000 = 2026
+GROUP BY p.TProduct
+ORDER BY DiferencaPrecoListaVsLiquido DESC;"
+179,Quais são os 10 clientes com maior faturação nos últimos 12 meses?,10,10,True,"SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, 1, EOMONTH(GETDATE(), -12)), 112))
+GROUP BY c.TCustomer
+ORDER BY ValorLiquidoFaturado DESC;","SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, 1, EOMONTH(GETDATE(), -12)), 112))
+GROUP BY c.TCustomer
+ORDER BY ValorLiquidoFaturado DESC;"
+182,Quais são os 10 produtos com maior faturação nos últimos 12 meses?,10,10,True,"SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, 1, EOMONTH(GETDATE(), -12)), 112))
+GROUP BY p.TProduct
+ORDER BY ValorLiquidoFaturado DESC;","SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, 1, EOMONTH(GETDATE(), -12)), 112))
+GROUP BY p.TProduct
+ORDER BY ValorLiquidoFaturado DESC;"
+185,Quais são os 10 produtos com maior quantidade faturada nos últimos 12 meses?,10,10,True,"SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.BillingQuantity) AS QuantidadeFaturada
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, 1, EOMONTH(GETDATE(), -12)), 112))
+GROUP BY p.TProduct
+ORDER BY QuantidadeFaturada DESC;","SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.BillingQuantity) AS QuantidadeFaturada
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, 1, EOMONTH(GETDATE(), -12)), 112))
+GROUP BY p.TProduct
+ORDER BY QuantidadeFaturada DESC;"
+188,Quais são os 20 produtos com maior preço médio líquido por unidade nos últimos 12 meses?,20,20,True,"SELECT TOP 20
+    p.TProduct AS Produto,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado,
+    SUM(f.BillingQuantity) AS QuantidadeFaturada,
+    SUM(f.NetAmount) / NULLIF(SUM(f.BillingQuantity), 0) AS PrecoMedioLiquidoUnitario
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, 1, EOMONTH(GETDATE(), -12)), 112))
+GROUP BY p.TProduct
+HAVING SUM(f.BillingQuantity) <> 0
+ORDER BY PrecoMedioLiquidoUnitario DESC;","SELECT TOP 20
+    p.TProduct AS Produto,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado,
+    SUM(f.BillingQuantity) AS QuantidadeFaturada,
+    SUM(f.NetAmount) / NULLIF(SUM(f.BillingQuantity), 0) AS PrecoMedioLiquidoUnitario
+FROM dbo.F_Invoice f
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, 1, EOMONTH(GETDATE(), -12)), 112))
+GROUP BY p.TProduct
+HAVING SUM(f.BillingQuantity) <> 0
+ORDER BY PrecoMedioLiquidoUnitario DESC;"
+251,Quais são os 10 clientes com maior margem bruta no ano atual?,10,10,True,"SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.GrossMargin) AS MargemBruta
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.IsItAnAdditionalCalculatedRecord = 1
+  AND f.BillingDocumentDate / 10000 = YEAR(GETDATE())
+GROUP BY c.TCustomer
+ORDER BY MargemBruta DESC;","SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.GrossMargin) AS MargemBruta
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+WHERE f.BillingDocumentIsCancelled = 0
+  AND f.BillingDocumentDate / 10000 = YEAR(GETDATE())
+  AND f.IsItAnAdditionalCalculatedRecord = 1
+GROUP BY c.TCustomer
+ORDER BY MargemBruta DESC;"
