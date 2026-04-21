@@ -20,6 +20,7 @@
 - generators/topn_cross_filter_generator.py
 - generators/grouped_aggregate_generator.py
 - generators/percentage_share_generator.py
+- generators/topn_global_generator.py
 - validation/revD/
 - validation/revE/
 - validation/revK/
@@ -37,6 +38,11 @@
 - validation/revQ/percentage_share_generalization_cases.md
 - validation/revQ/percentage_share_notes.md
 - validation/revQ/global_counts_after_revQ.csv
+- validation/revR/topn_global_benchmark_validation.csv
+- validation/revR/topn_global_generalization_eval.csv
+- validation/revR/topn_global_generalization_cases.md
+- validation/revR/topn_global_notes.md
+- validation/revR/global_counts_after_revR.csv
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
