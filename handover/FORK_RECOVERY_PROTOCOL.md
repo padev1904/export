@@ -10,9 +10,16 @@ A fonte de verdade é sempre o repositório canónico, não a memória da conver
 ## Regra principal
 Se houver divergência entre conversa e repositório, prevalece sempre o repositório canónico.
 
+## Prompt de arranque
+A prompt de arranque é fixa.
+Não deve transportar contexto mutável nem próximos passos variáveis.
+A versão canónica da prompt fixa vive em:
+- `handover/STARTUP_PROMPT_FIXED.md`
+
 ## Procedimento obrigatório de retoma
 1. consultar o repositório canónico
 2. ler por esta ordem:
+   - `handover/FORK_RECOVERY_PROTOCOL.md`
    - `handover/HANDOVER_CURRENT.md`
    - `handover/RETOMA_CHECKLIST.md`
    - `handover/ARTEFACTS_INDEX.md`
@@ -26,8 +33,11 @@ Se houver divergência entre conversa e repositório, prevalece sempre o reposit
 No final de cada resposta de progresso, incluir sempre a secção:
 `Próximos passos para a prompt de arranque`
 
+Essa secção não serve para alterar a prompt.
+Serve apenas para indicar o que a documentação canónica do repositório deve refletir no próximo arranque.
+
 Essa secção deve indicar:
-1. ficheiros a ler no repositório no próximo arranque
+1. ficheiros a reler no repositório
 2. última família fechada
 3. benchmark fechado e backlog aberto
 4. próxima prioridade operacional
