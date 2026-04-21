@@ -1,0 +1,9 @@
+metric,value
+benchmark_total,268
+benchmark_closed_now,187
+benchmark_open_now,81
+q1_q60_closed_now,60
+q61_q150_closed_now,42
+q151_q268_closed_now,85
+revP_grouped_aggregate_closed,40
+revP_grouped_aggregate_generalization_pass,6
