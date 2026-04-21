@@ -44,4 +44,5 @@ Podem ser carregados:
 - `revE` técnico sincronizado no repositório em `generators/` e `validation/revE/`
 - `revK` técnico sincronizado no repositório para `F16_pareto_80` em `generators/` e `validation/revK/`
 - `revL` técnico sincronizado no repositório para `F12_rank_within_partition` em `generators/` e `validation/revL/`
-- próxima prioridade operacional: `F18_multi_metric_topn`, depois reconciliação explícita de `Q32/Q34`
+- `revM` técnico sincronizado no repositório para `F18_multi_metric_topn` em `generators/` e `validation/revM/`
+- próxima prioridade operacional: reconciliação explícita de `Q32/Q34`, depois backlog residual não fechado
