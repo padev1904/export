@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 2026-04-21 — revQ percentage_share closure
+- fechamento canónico da família percentage_share
+- benchmark da família: 20/20 PASS
+- generalização fora do benchmark: 6/6 PASS
+- criação de generators/percentage_share_generator.py
+- criação de validation/revQ/percentage_share_benchmark_validation.csv
+- criação de validation/revQ/percentage_share_generalization_eval.csv
+- criação de validation/revQ/percentage_share_generalization_cases.md
+- criação de validation/revQ/percentage_share_notes.md
+- criação de validation/revQ/global_counts_after_revQ.csv
+- atualização factual da contagem global para 204/268 fechadas e 64/268 abertas
+
 ## 2026-04-21 — revP grouped_aggregate closure
 - fechamento canónico da família grouped_aggregate
 - benchmark da família: 40/40 PASS
