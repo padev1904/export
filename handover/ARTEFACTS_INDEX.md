@@ -19,6 +19,7 @@ Mapear os artefactos técnicos e documentais relevantes e indicar o respetivo es
 - `generators/lifecycle_generator.py`
 - `generators/pareto_generator.py`
 - `generators/rank_partition_generator.py`
+- `generators/f18_multi_metric_topn_generator.py`
 - `validation/revD/tsql_emulator_benchmark_exec.csv`
 - `validation/revD/temporal_benchmark_validation.csv`
 - `validation/revD/temporal_generalization_eval.csv`
@@ -36,6 +37,9 @@ Mapear os artefactos técnicos e documentais relevantes e indicar o respetivo es
 - `validation/revL/f12_rank_partition_generalization_eval.csv`
 - `validation/revL/f12_rank_partition_generalization_cases.md`
 - `validation/revL/f12_rank_partition_notes.md`
+- `validation/revM/f18_multi_metric_topn_benchmark_validation.csv`
+- `validation/revM/f18_multi_metric_topn_generalization_cases.md`
+- `validation/revM/f18_multi_metric_topn_notes.md`
 
 ## Mapeamento de origem local para destino canónico
 ### Temporal (revD)
@@ -83,9 +87,19 @@ Destino canónico:
 Estado:
 - sincronizado
 
+### F18 multi_metric_topn (revM)
+Destino canónico:
+- `generators/f18_multi_metric_topn_generator.py`
+- `validation/revM/f18_multi_metric_topn_benchmark_validation.csv`
+- `validation/revM/f18_multi_metric_topn_generalization_cases.md`
+- `validation/revM/f18_multi_metric_topn_notes.md`
+
+Estado:
+- sincronizado
+
 ## O que não deve continuar a crescer no repositório
 - handovers por revisão fora da árvore `handover/`
-- checklists por revisão
+- checklists por revisão fora da árvore `handover/`
 - ZIPs de handover
 - cópias redundantes do mesmo estado em múltiplos caminhos
 - qualquer ficheiro bruto derivado diretamente do ZIP original
