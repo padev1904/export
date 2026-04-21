@@ -1,0 +1,7 @@
+test_id,strict_pass,semantic_pass,generated_rows,manual_rows
+PCG01,1,1,2,2
+PCG02,1,1,7,7
+PCG03,1,1,7,7
+PCG04,1,1,30,30
+PCG05,1,1,5,5
+PCG06,1,1,12,12
