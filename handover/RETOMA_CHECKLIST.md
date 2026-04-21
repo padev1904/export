@@ -35,6 +35,6 @@
 8. rever se foi criada nova redundância documental
 
 ## Próximo alvo atualmente acordado
-1. `F18_multi_metric_topn`
-2. reconciliação explícita de `Q32/Q34`
-3. backlog residual não fechado e consolidação final do benchmark
+1. reconciliação explícita de `Q32/Q34`
+2. backlog residual não fechado e consolidação final do benchmark
+3. limpeza final de redundâncias documentais, mantendo apenas a árvore canónica
