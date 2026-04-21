@@ -3,6 +3,7 @@
 ## Documentação canónica
 - README.md
 - handover/HANDOVER_CURRENT.md
+- handover/FORK_RECOVERY_PROTOCOL.md
 - handover/CHANGELOG.md
 - handover/SAFE_SOURCE_MANIFEST.md
 - handover/RETOMA_CHECKLIST.md
@@ -29,3 +30,9 @@
 - validation/revP/grouped_aggregate_generalization_cases.md
 - validation/revP/grouped_aggregate_notes.md
 - validation/revP/global_counts_after_revP.csv
+
+## Ponto de entrada em caso de fork
+1. handover/FORK_RECOVERY_PROTOCOL.md
+2. handover/HANDOVER_CURRENT.md
+3. handover/RETOMA_CHECKLIST.md
+4. handover/CHANGELOG.md
