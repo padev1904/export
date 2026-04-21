@@ -1,0 +1,14 @@
+qid,question,entity,metrics,time_scope,top_n,pass_semantic,oracle_rows,generated_rows
+58,Quais são os 10 clientes com maior margem bruta em 2026 considerando apenas registos adicionais calculados?,customer,gross_margin,year_2026,10,True,10,10
+59,Quais são os 10 produtos com mais vendas comerciais líquidas em 2026 considerando apenas registos adicionais calculados?,product,net_commercial_sales,year_2026,10,True,10,10
+75,Quais são as marcas com maior margem bruta e vendas comerciais líquidas em 2026?,brand,net_commercial_sales|gross_margin,year_2026,15,True,9,9
+90,"Quais são as marcas com maior margem bruta e vendas comerciais líquidas em 2026, considerando apenas registos calculados adicionais?",brand,net_commercial_sales|gross_margin,year_2026,15,True,9,9
+188,Quais são os 20 produtos com maior preço médio líquido por unidade nos últimos 12 meses?,product,net_amount|billing_quantity|avg_net_price_unit,last_12_months,20,True,20,20
+189,Mostra o top 20 de produtos por preço médio líquido unitário no último ano móvel.,product,net_amount|billing_quantity|avg_net_price_unit,last_12_months,20,True,20,20
+190,Que produtos têm o maior valor médio por unidade faturada nos últimos 12 meses?,product,net_amount|billing_quantity|avg_net_price_unit,last_12_months,20,True,20,20
+248,Quais são os 20 produtos com maior custo total e margem bruta no ano atual?,product,cost_total|gross_margin,current_year,20,True,20,20
+249,Mostra os 20 produtos com maior custo e margem bruta este ano.,product,cost_total|gross_margin,current_year,20,True,20,20
+250,Que produtos lideram o custo total e a margem bruta no ano corrente?,product,cost_total|gross_margin,current_year,20,True,20,20
+251,Quais são os 10 clientes com maior margem bruta no ano atual?,customer,gross_margin,current_year,10,True,10,10
+252,Mostra o top 10 de clientes por margem bruta este ano.,customer,gross_margin,current_year,10,True,10,10
+253,Quem são os clientes que mais margem bruta geraram no ano corrente?,customer,gross_margin,current_year,10,True,10,10
