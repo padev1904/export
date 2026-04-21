@@ -1,0 +1,31 @@
+qid,question,status,generated_sql
+3,Quais são os 10 clientes com maior valor líquido faturado em 2026?,BASELINE_REFERENCE,
+4,Quais são os 10 produtos com maior quantidade faturada em 2026?,BASELINE_REFERENCE,
+31,Como evoluiu por mês em 2026 o valor líquido faturado para o cliente com código C000123?,BASELINE_REFERENCE,
+33,Como evoluiu por mês a quantidade faturada em 2026 para o produto com código P000123?,BASELINE_REFERENCE,
+32,Quais são os produtos com mais valor líquido faturado em 2026 para o cliente Cliente Exemplo?,PASS,"SELECT TOP 10
+    p.TProduct AS Produto,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND c.TCustomer = 'Cliente Exemplo'
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY p.TProduct
+ORDER BY ValorLiquidoFaturado DESC;"
+34,Quais são os clientes com mais valor líquido faturado em 2026 para o produto Produto Exemplo?,PASS,"SELECT TOP 10
+    c.TCustomer AS Cliente,
+    SUM(f.NetAmount) AS ValorLiquidoFaturado
+FROM dbo.F_Invoice f
+JOIN dbo.D_Customer c
+    ON f.NIDPayerParty = c.NIDCustomer
+JOIN dbo.D_Product p
+    ON f.NIDProduct = p.NIDProduct
+WHERE f.BillingDocumentDate / 10000 = 2026
+  AND p.TProduct = 'Produto Exemplo'
+  AND f.BillingDocumentIsCancelled = 0
+GROUP BY c.TCustomer
+ORDER BY ValorLiquidoFaturado DESC;"
