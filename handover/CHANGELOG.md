@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-04-21 — revS top_n closure
+- fechamento canónico da família top_n
+- benchmark da família: 6/6 PASS
+- generalização fora do benchmark: 6/6 PASS
+- criação de generators/topn_generator.py
+- criação de validation/revS/topn_benchmark_validation.csv
+- criação de validation/revS/topn_generalization_eval.csv
+- criação de validation/revS/topn_notes.md
+- criação de validation/revS/global_counts_after_revS.csv
+- atualização factual da contagem global para 218/268 fechadas e 50/268 abertas
+
 ## 2026-04-21 — revR top_n_global closure
 - fechamento canónico da família top_n_global
 - benchmark da família: 12/12 PASS
