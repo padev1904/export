@@ -1,5 +1,23 @@
 # HANDOVER CURRENT
 
+## RETOMA RÁPIDA
+- última revisão fechada: revP
+- última família fechada: grouped_aggregate
+- benchmark fechado: 187/268
+- backlog aberto: 81/268
+- próxima prioridade: percentage_share
+- próximos passos:
+  1. fechar percentage_share
+  2. correr regressão da família
+  3. criar perguntas novas fora do benchmark
+  4. recalcular a contagem global
+  5. atualizar repositório canónico
+
+## Nota de fork de sessão
+Esta sessão pode ser retomada a partir de um fork criado pela edição de uma instrução antiga.
+Se isso acontecer, a fonte de verdade é o repositório canónico e não a conversa corrente.
+Ver também: `handover/FORK_RECOVERY_PROTOCOL.md`.
+
 Última consolidação: 2026-04-21 (revP grouped_aggregate closed)
 
 ## Estado factual consolidado
