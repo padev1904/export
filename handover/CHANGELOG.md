@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 2026-04-21 — revM F18 multi-metric-topN closure
+- fechamento canónico da família `F18_multi_metric_topn`
+- promoção de `generators/f18_multi_metric_topn_generator.py` para a versão canónica `revM`
+- validação executável do subset benchmark `Q58/Q59/Q75/Q90/Q188/Q189/Q190/Q248/Q249/Q250/Q251/Q252/Q253`
+- benchmark da família: `13/13 PASS` por equivalência semântica
+- regressão integral da família em `revM`: `13/13 PASS`
+- generalização fora do benchmark com SQL manual independente: `8/8 PASS`
+- criação de `validation/revM/f18_multi_metric_topn_benchmark_validation.csv`
+- criação de `validation/revM/f18_multi_metric_topn_generalization_cases.md`
+- criação de `validation/revM/f18_multi_metric_topn_notes.md`
+- atualização de `HANDOVER_CURRENT.md`, `CHANGELOG.md`, `ARTEFACTS_INDEX.md`, `RETOMA_CHECKLIST.md` e `README.md`
+- próxima prioridade operacional passa a ser a reconciliação explícita de `Q32/Q34`
+
 ## 2026-04-20 — revL rank-within-partition closure
 - fechamento canónico da família `F12_rank_within_partition`
 - promoção de `generators/rank_partition_generator.py` para a versão canónica `revL`
