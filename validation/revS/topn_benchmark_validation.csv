@@ -1,0 +1,7 @@
+qid,question,status_semantic,oracle_rows,generated_rows,archetype
+64,Quais são os documentos de faturação com mais de 5 linhas em 2026?,PASS,20,20,document_more_than_n_lines
+67,Quais são as 20 combinações cliente-produto com maior valor líquido faturado em 2026?,PASS,20,20,customer_product_combo_net_amount
+71,Quais são os clientes com maior crescimento absoluto de valor líquido faturado de 2025 para 2026?,PASS,20,20,customer_growth_absolute
+79,Que documentos de faturação têm simultaneamente linhas positivas e negativas em 2026?,PASS,50,50,mixed_sign_documents
+95,Quais são os 5 clientes com maior crescimento absoluto de quantidade faturada de 2025 para 2026?,PASS,5,5,customer_growth_absolute
+110,Quais são os 5 documentos de faturação com maior valor líquido absoluto total em 2026 entre os que têm simultaneamente linhas positivas e negativas?,PASS,5,5,mixed_sign_documents_abs_total
