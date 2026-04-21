@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 2026-04-21 — revR top_n_global closure
+- fechamento canónico da família top_n_global
+- benchmark da família: 12/12 PASS
+- generalização fora do benchmark: 6/6 PASS
+- criação de generators/topn_global_generator.py
+- criação de validation/revR/topn_global_benchmark_validation.csv
+- criação de validation/revR/topn_global_generalization_eval.csv
+- criação de validation/revR/topn_global_generalization_cases.md
+- criação de validation/revR/topn_global_notes.md
+- criação de validation/revR/global_counts_after_revR.csv
+- atualização factual da contagem global para 212/268 fechadas e 56/268 abertas
+
 ## 2026-04-21 — revQ percentage_share closure
 - fechamento canónico da família percentage_share
 - benchmark da família: 20/20 PASS
