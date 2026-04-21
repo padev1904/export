@@ -35,6 +35,7 @@
 8. rever se foi criada nova redundância documental
 
 ## Próximo alvo atualmente acordado
-1. reconciliação explícita de `Q32/Q34`
-2. backlog residual não fechado e consolidação final do benchmark
-3. limpeza final de redundâncias documentais, mantendo apenas a árvore canónica
+1. calcular backlog residual real pós-`Q32/Q34`
+2. consolidar a contagem global real do benchmark
+3. fechar agrupamentos residuais por família/problema
+4. limpeza final de redundâncias documentais, mantendo apenas a árvore canónica
