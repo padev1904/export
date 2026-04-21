@@ -14,6 +14,10 @@
 4. confirmar a próxima prioridade operacional
 5. confirmar a evidência canónica da última revisão
 
+## Regra de saída obrigatória
+No final de cada resposta de progresso, incluir sempre:
+`Próximos passos para a prompt de arranque`
+
 ## Próximo alvo atualmente acordado
 1. fechar percentage_share
 2. fechar top_n_global
