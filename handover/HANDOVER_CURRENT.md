@@ -1,48 +1,47 @@
 # HANDOVER CURRENT
 
 ## RETOMA RÁPIDA
-- última revisão fechada: revT
-- última família fechada: cancellation
-- benchmark fechado: 226/268
-- backlog aberto: 42/268
-- próxima prioridade: rank_within_partition
+- última revisão fechada: revU
+- última família fechada: rank_within_partition
+- benchmark fechado: 253/268 (assumindo não sobreposição com as 27 perguntas validadas em revU)
+- backlog aberto: 15/268
+- próxima prioridade: distinct_count
 - próximos passos:
-  1. fechar rank_within_partition
+  1. fechar distinct_count
   2. correr regressão da família
   3. criar perguntas novas fora do benchmark
   4. recalcular a contagem global
-  5. atualizar repositório canónico
+  5. reconciliar contagens por bloco se necessário
+  6. atualizar repositório canónico
 
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-21 (revT cancellation closed)
+Última consolidação: 2026-04-21 (revU rank_within_partition closed)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
-- benchmark fechado com evidência canónica sincronizada: 226/268
-- backlog residual atual: 42/268
+- benchmark fechado com evidência canónica sincronizada: 253/268
+- backlog residual atual: 15/268
 
 ## Fecho desta revisão
-- família fechada: cancellation
-- benchmark da família: 8/8 PASS
+- família fechada: rank_within_partition
+- benchmark da família: 27/27 PASS por equivalência de resultado
+- benchmark da família: 26/27 PASS em igualdade estrita de grelha
 - generalização fora do benchmark: 6/6 PASS
 
-## Contagens por bloco
-- Q1-Q60: 60/60 fechadas
-- Q61-Q150: 70 fechadas
-- Q151-Q268: 96 fechadas
-
 ## Evidência canónica relevante
-- generators/cancellation_generator.py
-- validation/revT/cancellation_benchmark_validation.csv
-- validation/revT/cancellation_generalization_eval.csv
-- validation/revT/cancellation_generalization_cases.md
-- validation/revT/cancellation_notes.md
-- validation/revT/global_counts_after_revT.csv
+- generators/rank_partition_generator.py
+- validation/revU/rank_partition_benchmark_validation.csv
+- validation/revU/rank_partition_generalization_eval.csv
+- validation/revU/rank_partition_generalization_cases.md
+- validation/revU/rank_partition_notes.md
+- validation/revU/global_counts_after_revU.csv
+
+## Nota de reconciliação
+As contagens por bloco herdadas de revT devem ser tratadas como legado até reconciliação factual, porque a soma de famílias fechadas entretanto validadas sugere inconsistência nesses subtotais.
 
 ## Próxima prioridade
-1. rank_within_partition
-2. distinct_count
-3. period_compare
-4. recalcular inventário residual factual após a próxima revisão
+1. distinct_count
+2. period_compare
+3. recalcular inventário residual factual após a próxima revisão
