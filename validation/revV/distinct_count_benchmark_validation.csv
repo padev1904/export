@@ -1,0 +1,5 @@
+qid,question,strict_pass,semantic_pass,generated_rows,oracle_rows,note
+65,Quais são os clientes com mais de 100 documentos de faturação em 2026?,1,1,0,0,
+66,Quais são os produtos presentes em mais de 50 documentos de faturação em 2026?,1,1,56,56,
+134,Qual o número de documentos de faturação distintos por organização de vendas em 2026?,1,1,2,2,
+136,Quais são os 10 clientes com maior número de documentos de faturação distintos em 2026?,1,1,10,10,
