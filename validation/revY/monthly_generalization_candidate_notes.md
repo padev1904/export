@@ -5,7 +5,13 @@ Expandir a validação fora do benchmark para os arquétipos mensais consolidado
 
 ## Estado destes casos
 Os casos em `validation/revY/monthly_generalization_candidate_cases.csv` são **candidatos de validação**.
-Não representam PASS/FAIL nem substituem validação por equivalência de resultado.
+Não representam PASS/FAIL por equivalência de resultado.
+
+Existe já validação dirigida de `parser_ok` e `sql_shape_ok` em:
+- `validation/revY/monthly_generalization_candidate_parser_validation.csv`
+
+Essa validação confirma apenas que o gerador atual reconhece estes casos e produz SQL com shape esperado.
+Não substitui comparação de resultado face a SQL manual independente.
 
 ## Porque estes casos foram escolhidos
 Cobrem precisamente os blocos que ganharam suporte ou consolidação recente no `temporal_generator`:
