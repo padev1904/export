@@ -1,5 +1,32 @@
 # CHANGELOG
 
+## 2026-04-22 — post-revY time series and cancellation consolidation pass
+- atualização de `generators/sqlserver_patterns.py`
+- atualização de `generators/temporal_generator.py`
+- atualização de `generators/cancellation_generator.py`
+- criação de `validation/revY/post_closure_timeseries_cancellation_consolidation_validation.csv`
+- criação de `validation/revY/post_closure_timeseries_cancellation_consolidation_notes.md`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- atualização de `handover/HANDOVER_CURRENT.md`
+- consolidação técnica dirigida sobre padrões temporais mensais e cancelamento mensal por dimensão já fechados benchmark-wide em `revY`
+- validação dirigida nesta passagem sobre:
+  - `Q61`, `Q62`, `Q86`, `Q104`, `Q125`, `Q138`, `Q144`
+- clarificação explícita de que alguns casos mensais por dimensão permanecem fora do âmbito do `temporal_generator` atual e exigem consolidação posterior
+- sem evidência documental de regressão do estado canónico `268/268`
+
+## 2026-04-22 — post-revY temporal consolidation pass
+- atualização de `generators/sqlserver_patterns.py`
+- atualização de `generators/topn_global_generator.py`
+- atualização de `generators/rank_partition_generator.py`
+- criação de `validation/revY/post_closure_temporal_consolidation_validation.csv`
+- criação de `validation/revY/post_closure_temporal_consolidation_notes.md`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- consolidação técnica dirigida sobre variantes `current_year` e `last_12_months` já fechadas benchmark-wide em `revY`
+- validação dirigida nesta passagem sobre:
+  - `Q180`, `Q181`, `Q183`, `Q184`, `Q186`, `Q187`, `Q224`, `Q225`, `Q226`
+  - `Q191`, `Q192`, `Q193`, `Q194`, `Q195`, `Q196`
+- sem evidência documental de regressão do estado canónico `268/268`
+
 ## 2026-04-22 — post-revY technical consolidation pass
 - criação de `generators/sqlserver_patterns.py`
 - criação de `generators/avg_per_document_generator.py` em versão funcional mínima
