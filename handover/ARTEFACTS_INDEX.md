@@ -116,6 +116,8 @@
 - validation/revY/monthly_generalization_candidate_notes.md
 - validation/revY/monthly_generalization_candidate_parser_validation.csv
 - validation/revY/monthly_generalization_manual_oracle_sql.sql
+- validation/revY/monthly_generalization_local_sample_equivalence_eval.csv
+- validation/revY/monthly_generalization_local_sample_equivalence_notes.md
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
