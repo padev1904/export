@@ -104,6 +104,7 @@
 - validation/revY/global_counts_after_revY.csv
 - validation/revY/residual_generalization_eval.csv
 - validation/revY/residual_generalization_cases.csv
+- validation/revY/residual_pattern_consolidation_scope.md
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
