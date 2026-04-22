@@ -20,6 +20,11 @@ Consolidar em camada técnica canónica os padrões temporais ainda dispersos em
   - bucket mensal como `DATEFROMPARTS(...)`
 - `cancellation_generator.py` deixa de repetir manualmente o filtro anual e o bucket mensal
 - `temporal_generator.py` deixa de depender de datas Python hardcoded e de colunas auxiliares locais como `MonthStart`/`BillingYear`
+- a passagem foi alargada para suportar os casos mensais explícitos em ano fechado que tinham ficado inicialmente fora do âmbito do `temporal_generator`, incluindo:
+  - `grupo de contas de cliente`
+  - `organização de vendas`
+  - `tipo de processamento de devolução`
+  - métrica mensal `list_minus_net`
 
 ## Limite desta validação
 A validação registada nesta passagem é **dirigida** e **semanticamente orientada**.
@@ -30,19 +35,16 @@ Não substitui uma futura validação benchmark-wide por equivalência de result
 - `Q61`
 - `Q62`
 - `Q86`
+- `Q100`
 - `Q104`
+- `Q114`
+- `Q122`
 - `Q125`
+- `Q137`
 - `Q138`
 - `Q144`
 
-### Casos explicitamente fora do âmbito deste gerador temporal consolidado
-Os seguintes exemplos continuam a depender de geradores/famílias próprios ou de consolidação posterior mais ampla, pelo que **não** foram promovidos como cobertura desta passagem:
-- `Q100`
-- `Q114`
-- `Q122`
-- `Q137`
-
 ## Próxima subtarefa recomendada
-1. consolidar os restantes casos mensais por dimensão ainda fora do âmbito do `temporal_generator` atual
-2. manter validação fora do benchmark em paralelo para travar overfit
+1. manter validação fora do benchmark em paralelo para travar overfit
+2. avaliar se compensa consolidar noutro bloco reutilizável as dimensões mensais ainda apenas reconhecidas pelo `temporal_generator`
 3. só promover nova revisão factual benchmark-wide se houver evidência documental explícita de regressão ou nova validação total
