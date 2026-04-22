@@ -173,6 +173,8 @@ def classify_question(question: str) -> SemanticSpec:
         return SemanticSpec('F11_percentage_share', 'monthly_ratio_to_billing', 'promo_total', dim, 'last_6_months', original_question=question)
     if 'por mes' in qn and year is not None:
         return SemanticSpec('F09_time_series_monthly', 'monthly_trend', measure, dim, 'explicit_year', year=year, original_question=question)
+    if 'por mes' in qn and ('ano atual' in qn or 'ano corrente' in qn or 'este ano' in qn):
+        return SemanticSpec('F09_time_series_monthly', 'monthly_trend', measure, dim, 'current_year', original_question=question)
     if ('evolucao mensal' in qn) or ('mes a mes' in qn) or ('evoluiu mensalmente' in qn) or ('por mes nos ultimos 6 meses' in qn) or ('por mes no ultimo semestre movel' in qn):
         return SemanticSpec('F15_window_trend', 'monthly_trend', measure, dim, 'last_6_months', original_question=question)
     raise ValueError(f'Pergunta nao suportada pelo gerador temporal: {question}')
