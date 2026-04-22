@@ -52,6 +52,24 @@ def month_bucket_expr(column: str = 'f.BillingDocumentDate') -> str:
     return f"CAST(({column} / 100) % 100 AS INT)"
 
 
+def build_named_time_predicate(
+    time_scope: str,
+    *,
+    year: int | None = None,
+    column: str = 'f.BillingDocumentDate',
+    anchor_date_sql: str = CURRENT_DATE_SQL,
+) -> str:
+    if time_scope == 'explicit_year':
+        if year is None:
+            raise ValueError('year is required for explicit_year')
+        return explicit_year_predicate(year, column)
+    if time_scope == 'current_year':
+        return current_year_predicate(column)
+    if time_scope == 'last_12_months':
+        return rolling_months_predicate(12, column, anchor_date_sql)
+    raise ValueError(f'unsupported time scope: {time_scope}')
+
+
 def dedupe_joins(joins: Iterable[str]) -> Tuple[str, ...]:
     out: list[str] = []
     seen: set[str] = set()
