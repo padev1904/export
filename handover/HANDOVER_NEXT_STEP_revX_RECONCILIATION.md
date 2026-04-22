@@ -22,50 +22,42 @@ Ler por esta ordem:
 - A última família fechada é `period_compare`.
 - O benchmark fechado com evidência canónica sincronizada está em `261/268`.
 - O backlog residual factual está em `7/268`.
-- O repositório ainda **não contém** um ficheiro canónico com a enumeração explícita dos 7 `qid` residuais pós-`revW`.
+- O repositório já contém `validation/revX/backlog_residual_after_revW.csv`, mas esse ficheiro continua explicitamente marcado como não canónico (`is_canonical = false`).
 
-## Divergência já conhecida
-Os ficheiros de topo como `README.md`, `handover/HANDOVER_CURRENT.md` e `handover/CHANGELOG.md` ainda podem refletir o estado anterior (`revV`, `257/268`, `distinct_count`).
-
-Não tratar esses ficheiros como estado mais recente sem os cruzar com:
-- `validation/revW/global_counts_after_revW.csv`
-- `validation/revW/period_compare_benchmark_validation.csv`
-- `validation/revW/backlog_reconciliation_status.md`
-- `validation/revX/reconciliation_preflight.md`
+## Divergência já resolvida
+Os ficheiros de topo como `README.md`, `handover/HANDOVER_CURRENT.md` e `handover/CHANGELOG.md` já foram sincronizados com o estado pós-`revW` e com o working set residual da `revX`.
 
 ## Próxima prioridade operacional
-Antes de fechar qualquer nova família universal, reconciliar canonicamente o inventário residual pós-`revW`.
+Antes de fechar qualquer nova família universal, consolidar documentalmente o inventário residual pós-`revW` e só depois promovê-lo a canónico.
 
 ## Tarefa imediata obrigatória
-Criar:
+Validar documentalmente:
+- `Q77`
+- `Q81`
+- `Q118`
+- `Q143`
 
-`validation/revX/backlog_residual_after_revW.csv`
-
-com, no mínimo, as colunas:
-- `qid`
-- `question`
-- `family`
-- `status`
-- `evidence_source`
-- `is_canonical`
+E decidir se:
+- já estão absorvidos por evidência canónica anterior
+- ou se algum deles deve regressar ao residual explícito de `revX`
 
 ## Método obrigatório
-1. Consolidar todos os `benchmark_validation.csv` canónicos existentes no repositório.
-2. Marcar todos os `qid` já fechados por equivalência de resultado.
-3. Isolar exatamente os `7 qid` ainda abertos.
-4. Só depois criar o CSV residual canónico.
+1. Consolidar toda a evidência canónica relevante já existente no repositório.
+2. Fechar documentalmente o estado de `Q77`, `Q81`, `Q118` e `Q143`.
+3. Confirmar ou corrigir `validation/revX/backlog_residual_after_revW.csv`.
+4. Só depois promover esse CSV a inventário residual canónico final.
 5. Só depois decidir a próxima família universal residual a fechar.
 
 ## Regra crítica
 Não promover hipóteses operacionais a factos canónicos antes da reconciliação benchmark-wide.
 
-## Hipótese operacional útil, mas ainda não canónica
-Usar apenas como pista de trabalho até existir o CSV residual explícito por `qid`.
+## Working set residual atual
+Usar como working set explícito, ainda não canónico:
 
 Família universal residual mais plausível:
 - `time_series`
 
-QID de trabalho mais prováveis dessa família:
+QID de trabalho atuais dessa família:
 - `86`
 - `100`
 - `114`
@@ -73,10 +65,10 @@ QID de trabalho mais prováveis dessa família:
 - `137`
 - `138`
 
-Caso especial residual plausível fora da família principal:
+Caso especial residual fora da família principal:
 - `76`
 
-Candidatos possivelmente já absorvidos por evidência canónica anterior, mas sem enumeração residual explícita:
+Candidatos ainda por fecho documental:
 - `77`
 - `81`
 - `118`
@@ -85,9 +77,9 @@ Candidatos possivelmente já absorvidos por evidência canónica anterior, mas s
 ## Instrução de execução
 - Não duplicar trabalho já fechado.
 - Não reabrir `period_compare`.
-- Não assumir que os 7 residuais são exatamente os candidatos acima.
+- Não assumir que o working set de 7 linhas já é o residual canónico final.
 - Validar tudo contra artefactos reais do repositório.
-- Só declarar backlog residual fechado quando existir ficheiro canónico explícito com os 7 `qid`.
+- Só declarar backlog residual fechado quando o CSV residual estiver explicitamente promovido a canónico.
 
 ## Prompt de arranque sugerida para a próxima sessão
 """
@@ -116,11 +108,11 @@ Estado factual já confirmado:
 2. Última família fechada: `period_compare`
 3. Benchmark fechado: `261/268`
 4. Backlog aberto: `7/268`
-5. Próxima prioridade operacional: reconciliar canonicamente o inventário residual pós-`revW`
-6. Subtarefa concreta seguinte: criar `validation/revX/backlog_residual_after_revW.csv` com os 7 `qid` exatos antes de fechar a próxima família universal residual.
+5. Próxima prioridade operacional: consolidar e promover o inventário residual pós-`revW` a enumeração canónica final
+6. Subtarefa concreta seguinte: validar documentalmente `Q77`, `Q81`, `Q118` e `Q143` antes de promover `validation/revX/backlog_residual_after_revW.csv` a inventário residual canónico final
 
 Regra crítica:
-- Não promover hipóteses a factos canónicos sem reconciliação benchmark-wide.
+- Não promover hipóteses a factos canónicos sem reconciliação benchmark-wide fechada.
 - Não reabrir `period_compare`.
-- Não assumir que os `qid` candidatos são os residuais finais sem evidência canónica explícita.
+- Não assumir que o working set residual de 7 linhas já é o residual final sem evidência canónica explícita.
 """
