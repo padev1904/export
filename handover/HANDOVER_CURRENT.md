@@ -6,17 +6,17 @@
 - última família fechada isoladamente: period_compare
 - benchmark fechado: 268/268
 - backlog aberto: 0/268
-- próxima prioridade: manter a distinção entre benchmark fechado e validação fora do benchmark já aceite com base em `f_invoice_sample.csv`, sem nova refatoração estrutural do bloco mensal salvo evidência nova
+- próxima prioridade: ampliar progressivamente a camada técnica para cobrir o lote `analyst_free_questions_v2` fora do benchmark, em blocos de capacidade reutilizável
 - próximos passos:
-  1. usar `validation/revY/monthly_generalization_eval.csv` como evidência aceite para `MG01`–`MG08`
-  2. usar `validation/revY/analyst_free_questions_eval_v1.csv` como novo lote aceite de 10 perguntas formuladas em estilo de analista
-  3. preservar a regra de que estas aceitações são fora do benchmark e não alteram `268/268`
-  4. tratar o bloco mensal atual como congelado por estabilização, salvo regressão ou novo conjunto material de casos
+  1. usar `validation/revY/analyst_free_questions_v2_gap_matrix.csv` como matriz operacional do gap atual
+  2. seguir `validation/revY/analyst_free_questions_v2_expansion_plan.md` por workstreams, começando por `WS4`
+  3. preservar a regra de que esta linha é fora do benchmark e não altera `268/268`
+  4. manter o bloco mensal atual congelado por estabilização, salvo evidência nova independente desta linha
 
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-22 (analyst-free question set v1 synced and validated)
+Última consolidação: 2026-04-22 (analyst-free question set v2 gap mapped and expansion handover synced)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
@@ -89,6 +89,17 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - novo lote de 10 perguntas formuladas a partir da documentação de `F_Invoice` e dimensões, em estilo de analista de negócio e sem partir do catálogo de famílias como critério de formulação
 - execução local do SQL manual e do SQL gerado pelo código real dos geradores, com equivalência 10/10 na base aceite `f_invoice_sample.csv`
 
+### Sétima passagem pós-fecho
+- criação de `validation/revY/analyst_free_questions_v2.csv`
+- criação de `validation/revY/analyst_free_questions_v2_notes.md`
+- lote de 20 perguntas adicionais, mais exigentes do que os lotes anteriores, formuladas em estilo de analista sénior e sem dependência do catálogo de famílias
+- cobertura por execução confirmada apenas em `4/20`
+- gap real identificado em `16/20`
+- criação de `validation/revY/analyst_free_questions_v2_gap_matrix.csv`
+- criação de `validation/revY/analyst_free_questions_v2_expansion_plan.md`
+- criação de `handover/HANDOVER_NEXT_STEP_ANALYST_V2_EXPANSION.md`
+- decisão explícita: a próxima sessão deve ampliar capacidades por workstream reutilizável, começando por `WS4`
+
 ## Evidência canónica relevante
 - generators/period_compare_generator.py
 - generators/sqlserver_patterns.py
@@ -98,6 +109,8 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - generators/temporal_generator.py
 - generators/cancellation_generator.py
 - generators/lifecycle_generator.py
+- generators/pareto_generator.py
+- generators/percentage_share_generator.py
 - validation/revY/benchmark_explicit_gap_before_revY_41.csv
 - validation/revY/benchmark_residual_closure_validation.csv
 - validation/revY/global_counts_after_revY.csv
@@ -122,7 +135,12 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - validation/revY/analyst_free_questions_notes_v1.md
 - validation/revY/analyst_free_questions_manual_sql_v1.sql
 - validation/revY/analyst_free_questions_generated_sql_v1.sql
+- validation/revY/analyst_free_questions_v2.csv
+- validation/revY/analyst_free_questions_v2_notes.md
+- validation/revY/analyst_free_questions_v2_gap_matrix.csv
+- validation/revY/analyst_free_questions_v2_expansion_plan.md
 - handover/STABILIZATION_DECISION_MONTHLY_DIMENSION_REFACTOR.md
+- handover/HANDOVER_NEXT_STEP_ANALYST_V2_EXPANSION.md
 
 ## Nota de reconciliação
 O fecho `revY` substitui a necessidade de continuar a reconciliação residual aberta em `revX`.
@@ -134,7 +152,7 @@ Esse gap foi fechado benchmark-wide com validação por equivalência de resulta
 - `validation/revY/benchmark_residual_closure_validation.csv`
 
 ## Próxima prioridade
-1. manter a distinção entre benchmark fechado e generalização fora do benchmark aceite nesta amostra
-2. não refatorar o bloco mensal sem evidência nova de valor
-3. evitar reabertura de trabalho benchmark-wide já fechado sem nova evidência de regressão
-4. continuar a atualizar o repositório canónico no fim de cada revisão
+1. ampliar capacidades para reduzir o gap `16/20` do lote `analyst_free_questions_v2`
+2. começar por `WS4` (`rank derived / multi-partition`)
+3. preservar a distinção entre benchmark fechado e expansão fora do benchmark
+4. evitar reabertura de trabalho benchmark-wide já fechado sem nova evidência de regressão
