@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2026-04-22 — revX provenance-gap note
+- criação de `validation/revX/candidate_provenance_gap_Q77_Q81_Q118_Q143.md`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- atualização de `handover/HANDOVER_CURRENT.md`
+- registo explícito de que a passagem atual não identificou prova documental canónica suficiente, no conjunto canónico atualmente indexado, para fechar a proveniência de `Q77`, `Q81`, `Q118` e `Q143`
+- clarificação de que o bloqueio remanescente é de proveniência documental e não de fecho técnico de famílias já concluídas
+
 ## 2026-04-22 — revX residual working set sync
 - criação de `validation/revX/backlog_residual_after_revW.csv`
 - criação de `validation/revX/backlog_residual_candidates_after_revW_11.csv`
