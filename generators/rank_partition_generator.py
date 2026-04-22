@@ -1,36 +1,48 @@
-
 from __future__ import annotations
+
 from dataclasses import dataclass
 import re
+
+from sqlserver_patterns import (
+    build_named_time_predicate,
+    dedupe_joins,
+    explicit_year_predicate,
+    month_bucket_expr,
+)
+
 
 def normalize_q(q: str) -> str:
     x = q.lower().strip()
     rep = str.maketrans('áàâãéêíóôõúç', 'aaaaeeiooouc')
     return x.translate(rep)
 
+
 PARTITIONS = {
-    'pais': ('co.TCountry', ['JOIN D_Country co ON f.NIDCountry = co.NIDCountry'], 'Pais'),
-    'organizacao de vendas': ('so.TSalesOrganization', ['JOIN D_SalesOrganization so ON f.NIDSalesOrganization = so.NIDSalesOrganization'], 'OrganizacaoVendas'),
-    'familia de produto': ('pf.TProductFamily', ['JOIN D_Product p ON f.NIDProduct = p.NIDProduct', 'JOIN D_ProductFamily pf ON p.NIDProductFamily = pf.NIDProductFamily'], 'FamiliaProduto'),
-    'canal de distribuicao': ('dc.TDistributionChannel', ['JOIN D_DistributionChannel dc ON f.NIDDistributionChannel = dc.NIDDistributionChannel'], 'CanalDistribuicao'),
-    'mes': ('CAST((f.BillingDocumentDate / 100) % 100 AS INT)', [], 'Mes'),
-    'marca': ('pb.TProductBrand', ['JOIN D_Product p ON f.NIDProduct = p.NIDProduct', 'JOIN D_ProductBrand pb ON p.NIDProductBrand = pb.NIDProductBrand'], 'MarcaProduto'),
+    'pais': ('co.TCountry', ['JOIN dbo.D_Country co ON f.NIDCountry = co.NIDCountry'], 'Pais'),
+    'regiao': ('r.TRegion', ['JOIN dbo.D_Region r ON f.NIDRegion = r.NIDRegion'], 'Regiao'),
+    'organizacao de vendas': ('so.TSalesOrganization', ['JOIN dbo.D_SalesOrganization so ON f.NIDSalesOrganization = so.NIDSalesOrganization'], 'OrganizacaoVendas'),
+    'familia de produto': ('pf.TProductFamily', ['JOIN dbo.D_Product p ON f.NIDProduct = p.NIDProduct', 'JOIN dbo.D_ProductFamily pf ON p.NIDProductFamily = pf.NIDProductFamily'], 'FamiliaProduto'),
+    'canal de distribuicao': ('dc.TDistributionChannel', ['JOIN dbo.D_DistributionChannel dc ON f.NIDDistributionChannel = dc.NIDDistributionChannel'], 'CanalDistribuicao'),
+    'canal': ('dc.TDistributionChannel', ['JOIN dbo.D_DistributionChannel dc ON f.NIDDistributionChannel = dc.NIDDistributionChannel'], 'CanalDistribuicao'),
+    'mes': (month_bucket_expr(), [], 'Mes'),
+    'marca': ('pb.TProductBrand', ['JOIN dbo.D_Product p ON f.NIDProduct = p.NIDProduct', 'JOIN dbo.D_ProductBrand pb ON p.NIDProductBrand = pb.NIDProductBrand'], 'MarcaProduto'),
 }
 
 ENTITIES = {
     'documentos de faturacao': ('f.BillingDocument', [], 'BillingDocument'),
-    'grupos de preco de cliente': ('cpg.TCustomerPriceGroup', ['JOIN D_CustomerPriceGroup cpg ON f.NIDCustomerPriceGroup = cpg.NIDCustomerPriceGroup'], 'GrupoPrecoCliente'),
-    'grupos de cliente': ('cg.TCustomerGroup', ['JOIN D_CustomerGroup cg ON f.NIDCustomerGroup = cg.NIDCustomerGroup'], 'GrupoCliente'),
-    'pontos de expedicao': ('sp.TShippingPoint', ['JOIN D_ShippingPoint sp ON f.NIDShippingPoint = sp.NIDShippingPoint'], 'PontoExpedicao'),
-    'organizacoes de vendas': ('so.TSalesOrganization', ['JOIN D_SalesOrganization so ON f.NIDSalesOrganization = so.NIDSalesOrganization'], 'OrganizacaoVendas'),
-    'familias de produto': ('pf.TProductFamily', ['JOIN D_Product p ON f.NIDProduct = p.NIDProduct', 'JOIN D_ProductFamily pf ON p.NIDProductFamily = pf.NIDProductFamily'], 'FamiliaProduto'),
-    'tipos de lista de precos': ('plt.TPriceListType', ['JOIN D_PriceListType plt ON f.NIDPriceListType = plt.NIDPriceListType'], 'TipoListaPrecos'),
-    'clientes': ('c.TCustomer', ['JOIN D_Customer c ON f.NIDPayerParty = c.NIDCustomer'], 'Cliente'),
-    'produtos': ('p.TProduct', ['JOIN D_Product p ON f.NIDProduct = p.NIDProduct'], 'Produto'),
-    'marcas': ('pb.TProductBrand', ['JOIN D_Product p ON f.NIDProduct = p.NIDProduct', 'JOIN D_ProductBrand pb ON p.NIDProductBrand = pb.NIDProductBrand'], 'MarcaProduto'),
-    'regioes': ('r.TRegion', ['JOIN D_Region r ON f.NIDRegion = r.NIDRegion'], 'Regiao'),
-    'paises': ('co.TCountry', ['JOIN D_Country co ON f.NIDCountry = co.NIDCountry'], 'Pais'),
+    'grupos de preco de cliente': ('cpg.TCustomerPriceGroup', ['JOIN dbo.D_CustomerPriceGroup cpg ON f.NIDCustomerPriceGroup = cpg.NIDCustomerPriceGroup'], 'GrupoPrecoCliente'),
+    'grupos de cliente': ('cg.TCustomerGroup', ['JOIN dbo.D_CustomerGroup cg ON f.NIDCustomerGroup = cg.NIDCustomerGroup'], 'GrupoCliente'),
+    'pontos de expedicao': ('sp.TShippingPoint', ['JOIN dbo.D_ShippingPoint sp ON f.NIDShippingPoint = sp.NIDShippingPoint'], 'PontoExpedicao'),
+    'organizacoes de vendas': ('so.TSalesOrganization', ['JOIN dbo.D_SalesOrganization so ON f.NIDSalesOrganization = so.NIDSalesOrganization'], 'OrganizacaoVendas'),
+    'familias de produto': ('pf.TProductFamily', ['JOIN dbo.D_Product p ON f.NIDProduct = p.NIDProduct', 'JOIN dbo.D_ProductFamily pf ON p.NIDProductFamily = pf.NIDProductFamily'], 'FamiliaProduto'),
+    'tipos de lista de precos': ('plt.TPriceListType', ['JOIN dbo.D_PriceListType plt ON f.NIDPriceListType = plt.NIDPriceListType'], 'TipoListaPrecos'),
+    'clientes': ('c.TCustomer', ['JOIN dbo.D_Customer c ON f.NIDPayerParty = c.NIDCustomer'], 'Cliente'),
+    'produtos': ('p.TProduct', ['JOIN dbo.D_Product p ON f.NIDProduct = p.NIDProduct'], 'Produto'),
+    'marcas': ('pb.TProductBrand', ['JOIN dbo.D_Product p ON f.NIDProduct = p.NIDProduct', 'JOIN dbo.D_ProductBrand pb ON p.NIDProductBrand = pb.NIDProductBrand'], 'MarcaProduto'),
+    'regioes': ('r.TRegion', ['JOIN dbo.D_Region r ON f.NIDRegion = r.NIDRegion'], 'Regiao'),
+    'paises': ('co.TCountry', ['JOIN dbo.D_Country co ON f.NIDCountry = co.NIDCountry'], 'Pais'),
 }
+
 
 @dataclass
 class Spec:
@@ -41,12 +53,24 @@ class Spec:
     metric: str = ''
     years: tuple = (2026,)
     needs_valid_filter: bool = True
+    time_scope: str = 'explicit_year'
+    year: int | None = 2026
+
 
 def detect_n(qn: str) -> int:
-    m = re.search(r'quais sao os (\d+)|quais sao as (\d+)', qn)
-    if not m:
-        raise ValueError(f'N not detected: {qn}')
-    return int(next(g for g in m.groups() if g))
+    patterns = [
+        r'quais sao os (\d+)',
+        r'quais sao as (\d+)',
+        r'mostra o top (\d+)',
+        r'quem sao os (\d+)',
+        r'quais foram os (\d+)',
+    ]
+    for pattern in patterns:
+        m = re.search(pattern, qn)
+        if m:
+            return int(m.group(1))
+    raise ValueError(f'N not detected: {qn}')
+
 
 def alias_to_sql(alias: str):
     for expr, joins, al in PARTITIONS.values():
@@ -57,12 +81,6 @@ def alias_to_sql(alias: str):
             return expr, joins
     raise KeyError(alias)
 
-def dedupe(seq):
-    out=[]; seen=set()
-    for x in seq:
-        if x not in seen:
-            out.append(x); seen.add(x)
-    return out
 
 def classify(question: str) -> Spec:
     qn = normalize_q(question)
@@ -70,13 +88,15 @@ def classify(question: str) -> Spec:
 
     if 'dentro de cada familia de produto e por mes' in qn:
         spec.partition_keys = ['Mes', 'FamiliaProduto']
-    elif 'dentro de cada pais' in qn:
+    elif 'dentro de cada pais' in qn or 'por pais' in qn:
         spec.partition_keys = ['Pais']
-    elif 'em cada organizacao de vendas' in qn or 'dentro de cada organizacao de vendas' in qn:
+    elif 'por regiao' in qn or 'para cada regiao' in qn:
+        spec.partition_keys = ['Regiao']
+    elif 'em cada organizacao de vendas' in qn or 'dentro de cada organizacao de vendas' in qn or 'por organizacao de vendas' in qn:
         spec.partition_keys = ['OrganizacaoVendas']
     elif 'dentro de cada familia de produto' in qn:
         spec.partition_keys = ['FamiliaProduto']
-    elif 'dentro de cada canal de distribuicao' in qn:
+    elif 'dentro de cada canal de distribuicao' in qn or 'dentro de cada canal' in qn or 'por canal' in qn or 'para cada canal de distribuicao' in qn:
         spec.partition_keys = ['CanalDistribuicao']
     elif 'em cada mes' in qn or 'dentro de cada mes' in qn:
         spec.partition_keys = ['Mes']
@@ -105,6 +125,17 @@ def classify(question: str) -> Spec:
     if not spec.entity_key:
         raise ValueError(f'Entity not detected: {question}')
 
+    year_match = re.search(r'em (20\d{2})', qn)
+    if year_match:
+        spec.time_scope = 'explicit_year'
+        spec.year = int(year_match.group(1))
+    elif 'ano atual' in qn or 'ano corrente' in qn or 'este ano' in qn:
+        spec.time_scope = 'current_year'
+        spec.year = None
+    elif 'ultimos 12 meses' in qn or 'ultimo ano movel' in qn:
+        spec.time_scope = 'last_12_months'
+        spec.year = None
+
     if 'variacao percentual de valor liquido faturado' in qn:
         spec.metric = 'pct_change_net_amount'
         spec.years = (2025, 2026)
@@ -127,11 +158,12 @@ def classify(question: str) -> Spec:
         spec.metric = 'qty_discount'
     elif 'desconto promocional total' in qn:
         spec.metric = 'promo_discount_total'
-    elif 'valor liquido faturado' in qn:
+    elif 'valor liquido faturado' in qn or 'faturacao' in qn or 'valor faturado' in qn or 'mais faturad' in qn or 'mais faturaram' in qn:
         spec.metric = 'net_amount'
     else:
         raise ValueError(f'Metric not detected: {question}')
     return spec
+
 
 def build_sql(spec: Spec) -> str:
     part_exprs = []
@@ -142,10 +174,12 @@ def build_sql(spec: Spec) -> str:
         joins.extend(j)
     ent_expr, ent_joins = alias_to_sql(spec.entity_key)
     joins.extend(ent_joins)
-    joins = dedupe(joins)
+    joins = list(dedupe_joins(joins))
 
-    year_filter = 'CAST(f.BillingDocumentDate / 10000 AS INT) = 2026' if spec.years == (2026,) else 'CAST(f.BillingDocumentDate / 10000 AS INT) IN (2025, 2026)'
-    filters = [year_filter]
+    if spec.metric in {'growth_net_amount', 'growth_billing_quantity', 'pct_change_net_amount'}:
+        filters = [f'CAST(f.BillingDocumentDate / 10000 AS INT) IN ({", ".join(str(y) for y in spec.years)})']
+    else:
+        filters = [build_named_time_predicate(spec.time_scope, year=spec.year)]
     if spec.needs_valid_filter:
         filters.append('f.BillingDocumentIsCancelled = 0')
     where = ' AND\n      '.join(filters)
@@ -174,7 +208,7 @@ def build_sql(spec: Spec) -> str:
         {part_select},
         {ent_expr} AS {spec.entity_key},
         {metric_expr} AS {metric_alias}
-    FROM F_Invoice f
+    FROM dbo.F_Invoice f
     {' '.join(joins)}
     WHERE {where}
     GROUP BY {part_group}, {ent_expr}
@@ -198,7 +232,7 @@ ORDER BY {order_partition}, r.{metric_alias} {direction}, r.{spec.entity_key};""
         {part_select},
         {ent_expr} AS {spec.entity_key},
         SUM(f.NetAmount) / NULLIF(SUM(f.BillingQuantity), 0) AS PrecoMedioLiquidoPorUnidade
-    FROM F_Invoice f
+    FROM dbo.F_Invoice f
     {' '.join(joins)}
     WHERE {where}
     GROUP BY {part_group}, {ent_expr}
@@ -224,9 +258,9 @@ ORDER BY {order_partition}, r.PrecoMedioLiquidoPorUnidade DESC, r.{spec.entity_k
     SELECT
         {part_select},
         {ent_expr} AS {spec.entity_key},
-        SUM(CASE WHEN CAST(f.BillingDocumentDate / 10000 AS INT) = 2026 THEN {base_expr} ELSE 0 END)
-        - SUM(CASE WHEN CAST(f.BillingDocumentDate / 10000 AS INT) = 2025 THEN {base_expr} ELSE 0 END) AS {metric_alias}
-    FROM F_Invoice f
+        SUM(CASE WHEN {explicit_year_predicate(2026)} THEN {base_expr} ELSE 0 END)
+        - SUM(CASE WHEN {explicit_year_predicate(2025)} THEN {base_expr} ELSE 0 END) AS {metric_alias}
+    FROM dbo.F_Invoice f
     {' '.join(joins)}
     WHERE {where}
     GROUP BY {part_group}, {ent_expr}
@@ -249,9 +283,9 @@ ORDER BY {order_partition}, r.{metric_alias} DESC, r.{spec.entity_key};"""
     SELECT
         {part_select},
         {ent_expr} AS {spec.entity_key},
-        SUM(CASE WHEN CAST(f.BillingDocumentDate / 10000 AS INT) = 2025 THEN f.NetAmount ELSE 0 END) AS Valor2025,
-        SUM(CASE WHEN CAST(f.BillingDocumentDate / 10000 AS INT) = 2026 THEN f.NetAmount ELSE 0 END) AS Valor2026
-    FROM F_Invoice f
+        SUM(CASE WHEN {explicit_year_predicate(2025)} THEN f.NetAmount ELSE 0 END) AS Valor2025,
+        SUM(CASE WHEN {explicit_year_predicate(2026)} THEN f.NetAmount ELSE 0 END) AS Valor2026
+    FROM dbo.F_Invoice f
     {' '.join(joins)}
     WHERE {where}
     GROUP BY {part_group}, {ent_expr}
@@ -276,13 +310,13 @@ ORDER BY {order_partition}, r.VariacaoPercentual DESC, r.{spec.entity_key};"""
     if spec.metric == 'cancellation_rate':
         return f"""WITH docs AS (
     SELECT
-        CAST((f.BillingDocumentDate / 100) % 100 AS INT) AS Mes,
+        {month_bucket_expr()} AS Mes,
         f.BillingDocument,
         f.NIDSalesOrganization,
         MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
-    FROM F_Invoice f
-    WHERE CAST(f.BillingDocumentDate / 10000 AS INT) = 2026
-    GROUP BY CAST((f.BillingDocumentDate / 100) % 100 AS INT), f.BillingDocument, f.NIDSalesOrganization
+    FROM dbo.F_Invoice f
+    WHERE {explicit_year_predicate(2026)}
+    GROUP BY {month_bucket_expr()}, f.BillingDocument, f.NIDSalesOrganization
 ), rates AS (
     SELECT
         d.Mes,
@@ -291,7 +325,7 @@ ORDER BY {order_partition}, r.VariacaoPercentual DESC, r.{spec.entity_key};"""
         SUM(d.DocumentoCancelado) AS DocumentosCancelados,
         100.0 * SUM(d.DocumentoCancelado) / NULLIF(COUNT(*), 0) AS TaxaCancelamento
     FROM docs d
-    JOIN D_SalesOrganization so ON d.NIDSalesOrganization = so.NIDSalesOrganization
+    JOIN dbo.D_SalesOrganization so ON d.NIDSalesOrganization = so.NIDSalesOrganization
     GROUP BY d.Mes, so.TSalesOrganization
 ), ranked AS (
     SELECT
@@ -308,15 +342,15 @@ ORDER BY r.Mes, r.TaxaCancelamento DESC, r.TotalDocumentos DESC, r.OrganizacaoVe
     if spec.metric == 'abs_document_net_amount_mixed_sign':
         return f"""WITH docs AS (
     SELECT
-        CAST((f.BillingDocumentDate / 100) % 100 AS INT) AS Mes,
+        {month_bucket_expr()} AS Mes,
         f.BillingDocument,
         ABS(SUM(f.NetAmount)) AS ValorLiquidoTotal,
         MIN(f.NetAmount) AS ValorMinimoLinha,
         MAX(f.NetAmount) AS ValorMaximoLinha
-    FROM F_Invoice f
-    WHERE CAST(f.BillingDocumentDate / 10000 AS INT) = 2026
+    FROM dbo.F_Invoice f
+    WHERE {explicit_year_predicate(2026)}
       AND f.BillingDocumentIsCancelled = 0
-    GROUP BY CAST((f.BillingDocumentDate / 100) % 100 AS INT), f.BillingDocument
+    GROUP BY {month_bucket_expr()}, f.BillingDocument
     HAVING MIN(f.NetAmount) < 0 AND MAX(f.NetAmount) > 0
 ), ranked AS (
     SELECT
