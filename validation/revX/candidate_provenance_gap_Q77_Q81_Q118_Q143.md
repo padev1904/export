@@ -33,7 +33,8 @@ A inspeção do histórico de commits associado aos geradores canónicos atualme
 - `distinct_count`
 - `period_compare`
 
-Foi também observado um commit de remoção de um gerador obsoleto `revC`, mas esse commit removia apenas `temporal_generator_revC.py` e não constitui evidência de fecho anterior para `avg_per_document` nem para a família `other`.
+Foi também observado um conjunto de commits de remoção de um pacote obsoleto `revC`.
+A inspeção dos commits de remoção do gerador e do benchmark evaluation de `revC` mostra que esse pacote cobria apenas perguntas temporais / `window_trend` / `period_compare` / `percentage_share` temporais, e não constitui evidência de fecho anterior para `avg_per_document` nem para a família `other`.
 
 No histórico inspecionado nesta passagem, não apareceu commit explícito de gerador dedicado para:
 - `avg_per_document`
