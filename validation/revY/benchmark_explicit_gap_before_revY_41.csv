@@ -1,0 +1,42 @@
+qid,question
+74,Qual o total de descontos promocionais por marca em 2026?
+76,Quantas linhas têm unidade de faturação diferente da unidade base em 2026?
+77,Qual a taxa média de câmbio por moeda transaccional em 2026?
+81,Qual o valor líquido faturado em 2026 para o código de organização de vendas 1000 e o código de canal 10?
+86,Qual a quantidade faturada por mês e pela descrição da família de produto em 2026?
+89,"Qual o total de descontos promocionais por marca em 2026, usando as componentes promocionais reais?"
+100,Qual o valor líquido faturado por grupo de contas de cliente e por mês em 2026?
+114,Qual a diferença entre preço de lista e valor líquido faturado por marca e por mês em 2026?
+118,Qual o valor médio líquido por documento de faturação por grupo de cliente em 2026?
+122,Qual o valor líquido faturado por tipo de processamento de devolução e por mês em 2026?
+137,Qual o valor líquido faturado por mês e por organização de vendas em 2026?
+138,Qual o valor líquido faturado por canal de distribuição e por mês em 2026?
+143,Qual o valor médio líquido por documento de faturação por organização de vendas em 2026?
+144,Qual a taxa de cancelamento de documentos por canal de distribuição e por mês em 2026?
+180,Mostra o top 10 de clientes por valor líquido faturado nos últimos 12 meses.
+181,Quem são os 10 clientes que mais faturaram no último ano móvel?
+183,Mostra o top 10 de produtos por valor líquido faturado no último ano móvel.
+184,Que produtos mais faturaram nos últimos 12 meses?
+186,Mostra o top 10 de produtos por quantidade vendida no último ano móvel.
+187,Que produtos venderam mais unidades nos últimos 12 meses?
+191,Quais são os 3 produtos mais faturados por região nos últimos 12 meses?
+192,Mostra o top 3 de produtos por região com base na faturação do último ano móvel.
+193,"Para cada região, quais foram os 3 produtos com maior valor faturado nos últimos 12 meses?"
+194,Quais são os 5 clientes com maior faturação por canal no ano atual?
+195,Mostra o top 5 de clientes dentro de cada canal com base na faturação deste ano.
+196,"Para cada canal de distribuição, quem são os 5 clientes que mais faturaram no ano corrente?"
+206,Quantos clientes novos tivemos por mês nos últimos 12 meses?
+208,Quantos clientes compraram pela primeira vez em cada mês dos últimos 12 meses?
+211,Quantos clientes voltaram a comprar nos últimos 30 dias depois de 180 dias sem atividade?
+212,Quantos clientes perdemos nos últimos 90 dias face aos 90 dias anteriores?
+213,Mostra o número de clientes ativos no bloco anterior de 90 dias que não compraram nos 90 dias mais recentes.
+214,Quantos clientes compraram há 90 a 180 dias mas não compraram nos últimos 90 dias?
+215,Que produtos não tiveram vendas nos últimos 90 dias?
+216,Mostra os produtos sem faturação nos 90 dias mais recentes.
+217,Quais são os produtos sem qualquer venda nos últimos 90 dias?
+218,Qual é o ticket médio por documento e por mês nos últimos 6 meses?
+219,"Mostra o valor médio por documento de faturação, mês a mês, nos últimos 6 meses."
+220,Como evoluiu o ticket médio mensal por documento no último semestre móvel?
+224,Qual é o ranking das organizações de vendas por faturação no ano atual?
+225,Mostra a classificação das organizações de vendas por valor líquido faturado este ano.
+226,Como ficam ordenadas as organizações de vendas pela faturação do ano corrente?
