@@ -1,102 +1,74 @@
-from __future__ import annotations
 from dataclasses import dataclass
-from typing import Optional
 import re
-import unicodedata
+
+from sqlserver_patterns import int_date_expr, previous_days_window_predicates, trailing_days_predicate
+
 
 @dataclass
 class LifecycleSpec:
-    family: str = 'F17_lifecycle'
-    entity: str = 'customer'      # customer | product
-    operation: str = ''           # first_purchase_monthly_count | reactivated_count | reactivated_list | lost_count | lost_list | lost_list_by_dimension
-    recent_days: Optional[int] = None
-    inactivity_days: Optional[int] = None
-    moving_months: Optional[int] = None
-    dimension: Optional[str] = None
-    original_question: str = ''
+    entity: str = 'customer'
+    operation: str = ''
+    recent_days: int | None = None
+    inactivity_days: int | None = None
+    dimension: str | None = None
+
 
 def normalize_text(text: str) -> str:
-    text = text.lower().strip()
-    text = ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
-    text = re.sub(r'\s+', ' ', text)
-    return text
+    q = text.lower().strip()
+    for a, b in [('á','a'),('à','a'),('â','a'),('ã','a'),('é','e'),('ê','e'),('í','i'),('ó','o'),('ô','o'),('õ','o'),('ú','u'),('ç','c')]:
+        q = q.replace(a, b)
+    return ' '.join(q.split())
 
-def detect_entity(qn: str) -> str:
-    if 'produto' in qn or 'produtos' in qn:
-        return 'product'
-    return 'customer'
 
-def extract_days(qn: str, default_recent: Optional[int] = None, default_inactive: Optional[int] = None) -> tuple[Optional[int], Optional[int]]:
+def detect_entity(q: str) -> str:
+    return 'product' if 'produto' in q or 'produtos' in q else 'customer'
+
+
+def extract_days(q: str, default_recent=None, default_inactive=None):
     recent = default_recent
     inactive = default_inactive
-
-    m_recent = re.search(r'ultim[oa]s? (\d+) dias', qn)
-    if m_recent:
-        recent = int(m_recent.group(1))
-    elif 'ultimo mes' in qn or 'ultimo mês' in qn:
-        recent = 30
-
+    m = re.search(r'ultim[oa]s? (\d+) dias', q)
+    if m:
+        recent = int(m.group(1))
     for pattern in [
-        r'apos pelo menos (\d+) dias sem (?:compras|vendas)',
-        r'apos (\d+) dias sem (?:compras|vendas)',
-        r'considerando (\d+) dias de inatividade anterior',
+        r'apos pelo menos (\d+) dias sem (?:compras|vendas|atividade)',
+        r'apos (\d+) dias sem (?:compras|vendas|atividade)',
     ]:
-        m = re.search(pattern, qn)
-        if m:
-            inactive = int(m.group(1))
+        m2 = re.search(pattern, q)
+        if m2:
+            inactive = int(m2.group(1))
             break
-
     return recent, inactive
 
+
 def classify_lifecycle(question: str) -> LifecycleSpec:
-    qn = normalize_text(question)
-    entity = detect_entity(qn)
-    dimension = 'sales_organization' if ('organizacao de vendas' in qn or 'organização de vendas' in qn) else None
+    q = normalize_text(question)
+    entity = detect_entity(q)
+    dimension = 'sales_organization' if 'organizacao de vendas' in q else None
 
-    if 'primeira compra' in qn or 'primeira venda' in qn:
-        return LifecycleSpec(
-            entity=entity,
-            operation='first_purchase_monthly_count',
-            moving_months=12,
-            original_question=question,
-        )
+    if 'primeira compra' in q or 'primeira venda' in q or 'clientes novos' in q or 'primeira vez' in q:
+        return LifecycleSpec(entity=entity, operation='first_purchase_monthly_count', recent_days=12)
 
-    if 'reativad' in qn:
-        recent_days, inactivity_days = extract_days(qn, default_recent=30, default_inactive=180)
-        operation = 'reactivated_count'
-        if qn.startswith(('quais os', 'quais as', 'quais sao os', 'quais são os', 'quais sao as', 'quais são as')):
-            operation = 'reactivated_list'
-        return LifecycleSpec(
-            entity=entity,
-            operation=operation,
-            recent_days=recent_days,
-            inactivity_days=inactivity_days,
-            dimension=dimension,
-            original_question=question,
-        )
+    if 'reativad' in q or 'voltaram a comprar' in q:
+        recent, inactive = extract_days(q, 30, 180)
+        return LifecycleSpec(entity=entity, operation='reactivated_count', recent_days=recent, inactivity_days=inactive, dimension=dimension)
 
-    if 'perdid' in qn:
-        recent_days, _ = extract_days(qn, default_recent=90, default_inactive=None)
-        operation = 'lost_count'
-        if dimension:
-            operation = 'lost_list_by_dimension'
-        elif qn.startswith(('quais os', 'quais as', 'quais sao os', 'quais são os', 'quais sao as', 'quais são as')):
-            operation = 'lost_list'
-        return LifecycleSpec(
-            entity=entity,
-            operation=operation,
-            recent_days=recent_days,
-            dimension=dimension,
-            original_question=question,
-        )
+    if 'sem vendas nos ultimos' in q or 'nao tiveram vendas nos ultimos' in q or 'sem faturacao nos 90 dias mais recentes' in q or 'sem qualquer venda nos ultimos' in q:
+        return LifecycleSpec(entity=entity, operation='no_recent_sales_list', recent_days=90)
 
-    raise ValueError(f'Pergunta lifecycle não suportada: {question}')
+    if 'perdid' in q or 'perdemos' in q or 'bloco anterior de 90 dias' in q or '90 a 180 dias' in q:
+        return LifecycleSpec(entity=entity, operation='lost_count' if not dimension else 'lost_list_by_dimension', recent_days=90, dimension=dimension)
+
+    raise ValueError('Pergunta lifecycle nao suportada')
+
 
 def entity_column(entity: str) -> str:
     return 'f.NIDProduct' if entity == 'product' else 'f.NIDPayerParty'
 
+
 def entity_alias(entity: str) -> str:
     return 'NIDProduct' if entity == 'product' else 'NIDPayerParty'
+
 
 def build_lifecycle_sql(spec: LifecycleSpec) -> str:
     ent_col = entity_column(spec.entity)
@@ -104,120 +76,112 @@ def build_lifecycle_sql(spec: LifecycleSpec) -> str:
 
     if spec.operation == 'first_purchase_monthly_count':
         return f"""
-WITH first_activity AS (
+WITH first_purchase AS (
     SELECT
         {ent_col} AS {ent_alias},
-        MIN(f.MonthStart) AS FirstMonth
+        MIN(f.BillingDocumentDate) AS PrimeiraCompraInt
     FROM dbo.F_Invoice f
     WHERE f.BillingDocumentIsCancelled = 0
     GROUP BY {ent_col}
-), last_12 AS (
-    SELECT FirstMonth
-    FROM first_activity
-    WHERE FirstMonth >= DATE('2026-04-20', '-11 months', 'start of month')
 )
 SELECT
-    FirstMonth AS Mes,
+    DATEFROMPARTS(fp.PrimeiraCompraInt / 10000, (fp.PrimeiraCompraInt / 100) % 100, 1) AS Mes,
     COUNT(*) AS NumeroEntidadesPrimeiraAtividade
-FROM last_12
-GROUP BY FirstMonth
+FROM first_purchase fp
+WHERE fp.PrimeiraCompraInt >= {int_date_expr('DATEADD(day, 1, EOMONTH(GETDATE(), -12))')}
+GROUP BY DATEFROMPARTS(fp.PrimeiraCompraInt / 10000, (fp.PrimeiraCompraInt / 100) % 100, 1)
 ORDER BY Mes ASC;
 """.strip()
 
-    if spec.operation in ('reactivated_count', 'reactivated_list'):
+    if spec.operation == 'reactivated_count':
         recent = spec.recent_days or 30
         inactive = spec.inactivity_days or 180
-        select_list = 'COUNT(*) AS NumeroEntidadesReativadas' if spec.operation == 'reactivated_count' else f'rc.{ent_alias}'
-        order_by = '' if spec.operation == 'reactivated_count' else f'\nORDER BY rc.{ent_alias} ASC'
         return f"""
 WITH recent_entities AS (
-    SELECT DISTINCT
-        {ent_col} AS {ent_alias}
+    SELECT DISTINCT {ent_col} AS {ent_alias}
     FROM dbo.F_Invoice f
     WHERE f.BillingDocumentIsCancelled = 0
-      AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, -{recent}, CAST(GETDATE() AS date)), 112))
+      AND {trailing_days_predicate(recent)}
 ),
 inactive_window AS (
-    SELECT DISTINCT
-        {ent_col} AS {ent_alias}
+    SELECT DISTINCT {ent_col} AS {ent_alias}
     FROM dbo.F_Invoice f
     WHERE f.BillingDocumentIsCancelled = 0
-      AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, -{recent + inactive}, CAST(GETDATE() AS date)), 112))
-      AND f.BillingDocumentDate < CONVERT(int, CONVERT(char(8), DATEADD(day, -{recent}, CAST(GETDATE() AS date)), 112))
+      AND f.BillingDocumentDate >= {int_date_expr(f'DATEADD(day, -{recent + inactive}, CAST(GETDATE() AS date))')}
+      AND f.BillingDocumentDate < {int_date_expr(f'DATEADD(day, -{recent}, CAST(GETDATE() AS date))')}
 )
-SELECT
-    {select_list}
+SELECT COUNT(*) AS NumeroEntidadesReativadas
 FROM recent_entities rc
 WHERE NOT EXISTS (
-    SELECT 1
-    FROM inactive_window iw
-    WHERE iw.{ent_alias} = rc.{ent_alias}
-){order_by};
+    SELECT 1 FROM inactive_window iw WHERE iw.{ent_alias} = rc.{ent_alias}
+);
 """.strip()
 
-    if spec.operation in ('lost_count', 'lost_list'):
+    if spec.operation == 'lost_count':
         recent = spec.recent_days or 90
-        select_list = 'COUNT(*) AS NumeroEntidadesPerdidas' if spec.operation == 'lost_count' else f'pe.{ent_alias}'
-        order_by = '' if spec.operation == 'lost_count' else f'\nORDER BY pe.{ent_alias} ASC'
+        prev_lower, prev_upper = previous_days_window_predicates(recent)
         return f"""
-WITH prior_entities AS (
-    SELECT DISTINCT
-        {ent_col} AS {ent_alias}
+WITH previous_window AS (
+    SELECT DISTINCT {ent_col} AS {ent_alias}
     FROM dbo.F_Invoice f
     WHERE f.BillingDocumentIsCancelled = 0
-      AND f.BillingDocumentDate < CONVERT(int, CONVERT(char(8), DATEADD(day, -{recent}, CAST(GETDATE() AS date)), 112))
+      AND {prev_lower}
+      AND {prev_upper}
 ),
-recent_entities AS (
-    SELECT DISTINCT
-        {ent_col} AS {ent_alias}
+current_window AS (
+    SELECT DISTINCT {ent_col} AS {ent_alias}
     FROM dbo.F_Invoice f
     WHERE f.BillingDocumentIsCancelled = 0
-      AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, -{recent}, CAST(GETDATE() AS date)), 112))
+      AND {trailing_days_predicate(recent)}
 )
-SELECT
-    {select_list}
-FROM prior_entities pe
+SELECT COUNT(*) AS NumeroEntidadesPerdidas
+FROM previous_window p
 WHERE NOT EXISTS (
-    SELECT 1
-    FROM recent_entities re
-    WHERE re.{ent_alias} = pe.{ent_alias}
-){order_by};
+    SELECT 1 FROM current_window c WHERE c.{ent_alias} = p.{ent_alias}
+);
+""".strip()
+
+    if spec.operation == 'no_recent_sales_list':
+        recent = spec.recent_days or 90
+        return f"""
+WITH recent_products AS (
+    SELECT DISTINCT f.NIDProduct
+    FROM dbo.F_Invoice f
+    WHERE f.BillingDocumentIsCancelled = 0
+      AND {trailing_days_predicate(recent)}
+)
+SELECT p.TProduct AS Produto
+FROM dbo.D_Product p
+LEFT JOIN recent_products rp ON rp.NIDProduct = p.NIDProduct
+WHERE rp.NIDProduct IS NULL
+ORDER BY p.TProduct ASC;
 """.strip()
 
     if spec.operation == 'lost_list_by_dimension':
         recent = spec.recent_days or 90
+        prev_lower, prev_upper = previous_days_window_predicates(recent)
         return f"""
 WITH historical_pairs AS (
-    SELECT DISTINCT
-        so.TSalesOrganization AS OrganizacaoVendas,
-        {ent_col} AS {ent_alias}
+    SELECT DISTINCT so.TSalesOrganization AS OrganizacaoVendas, {ent_col} AS {ent_alias}
     FROM dbo.F_Invoice f
-    JOIN dbo.D_SalesOrganization so
-      ON f.NIDSalesOrganization = so.NIDSalesOrganization
+    JOIN dbo.D_SalesOrganization so ON f.NIDSalesOrganization = so.NIDSalesOrganization
     WHERE f.BillingDocumentIsCancelled = 0
-      AND f.BillingDocumentDate < CONVERT(int, CONVERT(char(8), DATEADD(day, -{recent}, CAST(GETDATE() AS date)), 112))
+      AND {prev_lower}
+      AND {prev_upper}
 ),
 recent_pairs AS (
-    SELECT DISTINCT
-        so.TSalesOrganization AS OrganizacaoVendas,
-        {ent_col} AS {ent_alias}
+    SELECT DISTINCT so.TSalesOrganization AS OrganizacaoVendas, {ent_col} AS {ent_alias}
     FROM dbo.F_Invoice f
-    JOIN dbo.D_SalesOrganization so
-      ON f.NIDSalesOrganization = so.NIDSalesOrganization
+    JOIN dbo.D_SalesOrganization so ON f.NIDSalesOrganization = so.NIDSalesOrganization
     WHERE f.BillingDocumentIsCancelled = 0
-      AND f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, -{recent}, CAST(GETDATE() AS date)), 112))
+      AND {trailing_days_predicate(recent)}
 )
-SELECT
-    hp.OrganizacaoVendas,
-    hp.{ent_alias}
+SELECT hp.OrganizacaoVendas, hp.{ent_alias}
 FROM historical_pairs hp
 WHERE NOT EXISTS (
-    SELECT 1
-    FROM recent_pairs rp
-    WHERE rp.OrganizacaoVendas = hp.OrganizacaoVendas
-      AND rp.{ent_alias} = hp.{ent_alias}
+    SELECT 1 FROM recent_pairs rp WHERE rp.OrganizacaoVendas = hp.OrganizacaoVendas AND rp.{ent_alias} = hp.{ent_alias}
 )
 ORDER BY hp.OrganizacaoVendas ASC, hp.{ent_alias} ASC;
 """.strip()
 
-    raise ValueError(spec)
+    raise ValueError('unsupported lifecycle operation')
