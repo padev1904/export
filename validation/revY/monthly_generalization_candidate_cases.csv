@@ -1,0 +1,9 @@
+test_id,question,target_generator,stress_pattern,status
+MG01,Qual o valor líquido faturado por grupo de contas de cliente e por mês no ano atual?,temporal_generator,monthly explicit current_year via customer bridge,pending_execution
+MG02,Qual a diferença entre preço de lista e valor líquido faturado por marca e por mês no ano atual?,temporal_generator,monthly explicit current_year plus indirect product dimension plus list_minus_net,pending_execution
+MG03,Qual o valor líquido faturado por tipo de processamento de devolução e por mês no ano corrente?,temporal_generator,monthly explicit current_year plus return item processing type,pending_execution
+MG04,Qual o valor líquido faturado por mês e por organização de vendas no ano atual?,temporal_generator,monthly explicit current_year plus direct sales organization,pending_execution
+MG05,Qual a quantidade faturada por mês e por organização de vendas em 2025?,temporal_generator,monthly explicit prior year plus direct sales organization,pending_execution
+MG06,Qual a margem bruta por marca e por mês em 2026 considerando apenas registos adicionais calculados?,temporal_generator,monthly explicit year plus indirect product dimension plus additional calculated rule,pending_execution
+MG07,Como evoluiu por mês nos últimos 6 meses o valor líquido faturado por grupo de contas de cliente?,temporal_generator,monthly moving window via customer bridge,pending_execution
+MG08,Qual a diferença entre preço de lista e valor líquido faturado por organização de vendas e por mês em 2026?,temporal_generator,monthly explicit year plus direct dimension plus list_minus_net,pending_execution
