@@ -25,6 +25,8 @@
 - generators/cancellation_generator.py
 - generators/distinct_count_generator.py
 - generators/period_compare_generator.py
+- generators/sqlserver_patterns.py
+- generators/avg_per_document_generator.py
 
 ## Validação por revisão
 - validation/revD/
@@ -105,6 +107,8 @@
 - validation/revY/residual_generalization_eval.csv
 - validation/revY/residual_generalization_cases.csv
 - validation/revY/residual_pattern_consolidation_scope.md
+- validation/revY/post_closure_refactor_semantic_validation.csv
+- validation/revY/post_closure_refactor_notes.md
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
