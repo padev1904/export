@@ -120,6 +120,11 @@
 - validation/revY/monthly_generalization_local_sample_equivalence_notes.md
 - validation/revY/monthly_generalization_acceptance_notes.md
 - validation/revY/monthly_generalization_eval.csv
+- validation/revY/analyst_free_questions_v1.csv
+- validation/revY/analyst_free_questions_eval_v1.csv
+- validation/revY/analyst_free_questions_notes_v1.md
+- validation/revY/analyst_free_questions_manual_sql_v1.sql
+- validation/revY/analyst_free_questions_generated_sql_v1.sql
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
