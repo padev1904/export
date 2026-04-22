@@ -110,6 +110,8 @@
 - validation/revY/post_closure_refactor_notes.md
 - validation/revY/post_closure_temporal_consolidation_validation.csv
 - validation/revY/post_closure_temporal_consolidation_notes.md
+- validation/revY/post_closure_timeseries_cancellation_consolidation_validation.csv
+- validation/revY/post_closure_timeseries_cancellation_consolidation_notes.md
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
