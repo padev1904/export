@@ -1,13 +1,16 @@
 import re
 from dataclasses import dataclass
 
+from sqlserver_patterns import build_named_time_predicate
+
+
 @dataclass
 class ParsedTopNGlobal:
     entity: str
     measure: str
     time_scope: str
     year: int | None
-    top_n: int
+    top_n: int | None
 
 
 class TopNGlobalGenerator:
@@ -17,8 +20,16 @@ class TopNGlobalGenerator:
         q = question.strip().rstrip('?')
         ql = q.lower()
 
-        top_match = re.search(r'quais são os\s+(\d+)\s+', ql)
-        top_n = int(top_match.group(1)) if top_match else 10
+        top_match = re.search(
+            r'quais são os\s+(\d+)\s+|mostra o top\s+(\d+)\s+|quem são os\s+(\d+)\s+',
+            ql,
+        )
+        if top_match:
+            top_n = int(next(g for g in top_match.groups() if g))
+        elif 'ranking' in ql or 'classificação' in ql or 'classificacao' in ql or 'ordenadas' in ql:
+            top_n = None
+        else:
+            top_n = 10
 
         if 'clientes' in ql:
             entity = 'customer'
@@ -26,6 +37,8 @@ class TopNGlobalGenerator:
             entity = 'product'
         elif 'marcas' in ql:
             entity = 'brand'
+        elif 'organizações de vendas' in ql or 'organizacoes de vendas' in ql:
+            entity = 'sales_organization'
         else:
             raise ValueError('Entidade não suportada para top_n_global.')
 
@@ -41,9 +54,17 @@ class TopNGlobalGenerator:
             measure = 'gross_margin'
         elif 'vendas comerciais líquidas' in ql or 'vendas comerciais liquidas' in ql:
             measure = 'net_commercial_sales'
-        elif 'quantidade faturada' in ql:
+        elif 'quantidade faturada' in ql or 'venderam mais unidades' in ql or 'quantidade vendida' in ql:
             measure = 'billing_quantity'
-        elif 'faturação' in ql or 'valor líquido faturado' in ql or 'valor liquido faturado' in ql:
+        elif (
+            'faturação' in ql
+            or 'faturacao' in ql
+            or 'valor líquido faturado' in ql
+            or 'valor liquido faturado' in ql
+            or 'mais faturaram' in ql
+            or 'maior valor faturado' in ql
+            or 'mais faturados' in ql
+        ):
             measure = 'net_amount'
         else:
             raise ValueError('Métrica não suportada para top_n_global.')
@@ -52,10 +73,10 @@ class TopNGlobalGenerator:
         if year_match:
             time_scope = 'explicit_year'
             year = int(year_match.group(1))
-        elif 'ano atual' in ql:
+        elif 'ano atual' in ql or 'ano corrente' in ql or 'este ano' in ql:
             time_scope = 'current_year'
             year = None
-        elif 'últimos 12 meses' in ql or 'ultimos 12 meses' in ql:
+        elif 'últimos 12 meses' in ql or 'ultimos 12 meses' in ql or 'último ano móvel' in ql or 'ultimo ano movel' in ql:
             time_scope = 'last_12_months'
             year = None
         else:
@@ -84,16 +105,18 @@ class TopNGlobalGenerator:
             label = 'pb.TProductBrand'
             alias = 'MarcaProduto'
             group_by = 'pb.TProductBrand'
+        elif p.entity == 'sales_organization':
+            joins = "JOIN dbo.D_SalesOrganization so\n    ON f.NIDSalesOrganization = so.NIDSalesOrganization"
+            label = 'so.TSalesOrganization'
+            alias = 'OrganizacaoVendas'
+            group_by = 'so.TSalesOrganization'
         else:
             raise ValueError('Entidade inválida.')
 
-        where = ["f.BillingDocumentIsCancelled = 0"]
-        if p.time_scope == 'explicit_year':
-            where.append(f"f.BillingDocumentDate / 10000 = {p.year}")
-        elif p.time_scope == 'current_year':
-            where.append("f.BillingDocumentDate / 10000 = YEAR(GETDATE())")
-        elif p.time_scope == 'last_12_months':
-            where.append("f.BillingDocumentDate >= CONVERT(int, CONVERT(char(8), DATEADD(day, 1, EOMONTH(GETDATE(), -12)), 112))")
+        where = [
+            "f.BillingDocumentIsCancelled = 0",
+            build_named_time_predicate(p.time_scope, year=p.year),
+        ]
 
         if p.measure in {'gross_margin', 'net_commercial_sales'}:
             where.append("f.IsItAnAdditionalCalculatedRecord = 1")
@@ -118,8 +141,9 @@ class TopNGlobalGenerator:
         if p.measure == 'promo_total':
             order_dir = 'ASC'
 
+        select_clause = 'SELECT' if p.top_n is None else f'SELECT TOP {p.top_n}'
         sql = (
-            f"SELECT TOP {p.top_n}\n"
+            f"{select_clause}\n"
             f"    {label} AS {alias},\n"
             f"    {select_measure}\n"
             f"FROM dbo.F_Invoice f\n"
