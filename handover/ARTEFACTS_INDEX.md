@@ -3,6 +3,7 @@
 ## Documentação canónica
 - README.md
 - handover/HANDOVER_CURRENT.md
+- handover/HANDOVER_NEXT_STEP_ANALYST_V2_EXPANSION.md
 - handover/FORK_RECOVERY_PROTOCOL.md
 - handover/CHANGELOG.md
 - handover/SAFE_SOURCE_MANIFEST.md
@@ -10,6 +11,7 @@
 - handover/ARTEFACTS_INDEX.md
 - repo_structure/REPO_STRUCTURE_CANONICAL.md
 - handover/STARTUP_PROMPT_FIXED.md
+- handover/STABILIZATION_DECISION_MONTHLY_DIMENSION_REFACTOR.md
 
 ## Camada técnica canónica
 - generators/temporal_generator.py
@@ -125,10 +127,15 @@
 - validation/revY/analyst_free_questions_notes_v1.md
 - validation/revY/analyst_free_questions_manual_sql_v1.sql
 - validation/revY/analyst_free_questions_generated_sql_v1.sql
+- validation/revY/analyst_free_questions_v2.csv
+- validation/revY/analyst_free_questions_v2_notes.md
+- validation/revY/analyst_free_questions_v2_gap_matrix.csv
+- validation/revY/analyst_free_questions_v2_expansion_plan.md
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
 2. handover/HANDOVER_CURRENT.md
-3. handover/RETOMA_CHECKLIST.md
-4. handover/ARTEFACTS_INDEX.md
-5. handover/CHANGELOG.md
+3. handover/HANDOVER_NEXT_STEP_ANALYST_V2_EXPANSION.md
+4. handover/RETOMA_CHECKLIST.md
+5. handover/ARTEFACTS_INDEX.md
+6. handover/CHANGELOG.md
