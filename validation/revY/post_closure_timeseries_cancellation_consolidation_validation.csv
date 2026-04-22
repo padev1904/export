@@ -2,11 +2,11 @@ id,question,generator,parser_ok,sql_shape_ok,detail
 Q61,Quantos documentos cancelados existem por mês em 2026?,cancellation,1,1,ok
 Q62,Qual a taxa de cancelamento de documentos por mês em 2026?,cancellation,1,1,ok
 Q86,Qual a quantidade faturada por mês e pela descrição da família de produto em 2026?,temporal,1,1,ok
-Q100,Qual o valor líquido faturado por grupo de contas de cliente e por mês em 2026?,temporal,0,0,fora_do_ambito_deste_gerador
+Q100,Qual o valor líquido faturado por grupo de contas de cliente e por mês em 2026?,temporal,1,1,ok
 Q104,Qual a taxa de cancelamento de documentos por tipo de documento de faturação e por mês em 2026?,cancellation,1,1,ok
-Q114,Qual a diferença entre preço de lista e valor líquido faturado por marca e por mês em 2026?,temporal,0,0,fora_do_ambito_deste_gerador
-Q122,Qual o valor líquido faturado por tipo de processamento de devolução e por mês em 2026?,temporal,0,0,fora_do_ambito_deste_gerador
+Q114,Qual a diferença entre preço de lista e valor líquido faturado por marca e por mês em 2026?,temporal,1,1,ok
+Q122,Qual o valor líquido faturado por tipo de processamento de devolução e por mês em 2026?,temporal,1,1,ok
 Q125,Quais são as 2 organizações de vendas com maior taxa de cancelamento de documentos dentro de cada mês em 2026?,cancellation,1,1,ok
-Q137,Qual o valor líquido faturado por mês e por organização de vendas em 2026?,temporal,0,0,fora_do_ambito_deste_gerador
+Q137,Qual o valor líquido faturado por mês e por organização de vendas em 2026?,temporal,1,1,ok
 Q138,Qual o valor líquido faturado por canal de distribuição e por mês em 2026?,temporal,1,1,ok
 Q144,Qual a taxa de cancelamento de documentos por canal de distribuição e por mês em 2026?,cancellation,1,1,ok
