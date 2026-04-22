@@ -1,0 +1,21 @@
+test_id,question,complexity
+B01,Quais são os clientes que explicam os primeiros 80% da faturação dentro de cada canal de distribuição nos últimos 12 meses?,muito elevada
+B02,Quais são as 3 marcas com maior crescimento percentual de margem bruta dentro de cada família de produto entre o mês atual e o mesmo mês do ano anterior, considerando apenas registos adicionais calculados?,extrema
+B03,Qual a quota de valor líquido faturado de cada organização de vendas dentro de cada canal de distribuição e por mês no ano atual?,muito elevada
+B04,Quais são os 5 produtos com maior preço médio líquido por unidade dentro de cada marca nos últimos 12 meses, excluindo casos com quantidade total zero?,muito elevada
+B05,Que clientes foram reativados nos últimos 90 dias por organização de vendas, após pelo menos 180 dias sem compras?,extrema
+B06,Quais são os 3 países com maior crescimento absoluto de faturação dentro de cada canal de distribuição entre 2025 e 2026?,muito elevada
+B07,Qual a taxa de cancelamento de documentos por marca e por mês no ano atual?,muito elevada
+B08,Quais são os 2 tipos de lista de preços com maior diferença entre preço de lista e valor líquido faturado dentro de cada organização de vendas e por mês em 2026?,extrema
+B09,Qual o ticket médio por documento por grupo de contas de cliente e por mês nos últimos 6 meses?,muito elevada
+B10,Quais são os 3 clientes com maior crescimento absoluto de quantidade faturada dentro de cada país entre os últimos 90 dias e os 90 dias anteriores?,extrema
+B11,Qual a percentagem da margem bruta de cada marca dentro da respetiva família de produto e por mês no ano atual, considerando apenas registos adicionais calculados?,extrema
+B12,Quais são os documentos de faturação com maior valor líquido absoluto dentro de cada canal de distribuição nos últimos 12 meses, entre os que têm simultaneamente linhas positivas e negativas?,extrema
+B13,Qual a diferença entre quantidade faturada e quantidade em unidade base por família de produto e por organização de vendas em 2026?,muito elevada
+B14,Quais são os 3 grupos de cliente com maior desconto promocional total dentro de cada marca e por mês em 2026?,extrema
+B15,Qual a variação percentual do valor líquido faturado por região entre 2025 e 2026, excluindo regiões onde ambos os períodos são zero?,muito elevada
+B16,Quais são os clientes perdidos nos últimos 90 dias por canal de distribuição, considerando que tinham compras nos 180 dias anteriores a esse período?,extrema
+B17,Qual o valor líquido faturado acumulado YTD por organização de vendas e por mês no ano atual?,muito elevada
+B18,Quais são as 2 famílias de produto com maior peso líquido médio por unidade dentro de cada organização de vendas em 2026, excluindo quantidades totais zero?,extrema
+B19,Qual a quota de faturação de cada país dentro de cada organização de vendas nos últimos 12 meses?,muito elevada
+B20,Quais são os 3 canais de distribuição com maior taxa de cancelamento de documentos dentro de cada trimestre de 2026?,extrema
