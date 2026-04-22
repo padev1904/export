@@ -47,7 +47,6 @@
 ### revQ
 - validation/revQ/percentage_share_benchmark_validation.csv
 - validation/revQ/percentage_share_generalization_eval.csv
-- validation/revQ/percentage_share_generalization_cases.md
 - validation/revQ/percentage_share_notes.md
 - validation/revQ/global_counts_after_revQ.csv
 
@@ -109,6 +108,8 @@
 - validation/revY/residual_pattern_consolidation_scope.md
 - validation/revY/post_closure_refactor_semantic_validation.csv
 - validation/revY/post_closure_refactor_notes.md
+- validation/revY/post_closure_temporal_consolidation_validation.csv
+- validation/revY/post_closure_temporal_consolidation_notes.md
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
