@@ -98,6 +98,13 @@
 - validation/revX/candidate_provenance_gap_Q77_Q81_Q118_Q143.md
 - validation/revX/candidate_evidence_matrix_Q77_Q81_Q118_Q143.csv
 
+### revY benchmark residual closure
+- validation/revY/benchmark_explicit_gap_before_revY_41.csv
+- validation/revY/benchmark_residual_closure_validation.csv
+- validation/revY/global_counts_after_revY.csv
+- validation/revY/residual_generalization_eval.csv
+- validation/revY/residual_generalization_cases.csv
+
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
 2. handover/HANDOVER_CURRENT.md
