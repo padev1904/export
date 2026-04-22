@@ -19,7 +19,7 @@
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-22 (revW period_compare closed; handover sync after repo audit)
+Última consolidação: 2026-04-22 (revW period_compare closed; handover sync after repo audit; revX preflight note added)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
@@ -39,12 +39,21 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - validation/revW/period_compare_notes.md
 - validation/revW/global_counts_after_revW.csv
 - validation/revW/backlog_reconciliation_status.md
+- validation/revX/reconciliation_preflight.md
 
 ## Nota de reconciliação
 Os artefactos técnicos de revW estão sincronizados no repositório.
 A enumeração exata dos 7 `qid` ainda abertos continua a exigir reconciliação benchmark-wide porque o repositório não tinha, até esta atualização, um inventário residual pós-revW explicitamente enumerado por pergunta.
 
+Foi acrescentado o artefacto `validation/revX/reconciliation_preflight.md` para separar claramente:
+- factos verificados
+- hipóteses operacionais de trabalho
+- próxima ação obrigatória
+
+Esse artefacto é de preflight e **não substitui** a enumeração canónica ainda em falta.
+
 ## Próxima prioridade
 1. reconciliar inventário residual factual pós-revW
 2. identificar exatamente os 7 `qid` ainda abertos
-3. preparar `revX` com foco na próxima família universal realmente residual
+3. criar `validation/revX/backlog_residual_after_revW.csv`
+4. preparar `revX` com foco na próxima família universal realmente residual
