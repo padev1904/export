@@ -9,14 +9,14 @@
 - próxima prioridade: manter a distinção entre benchmark fechado e validação fora do benchmark já aceite com base em `f_invoice_sample.csv`, sem nova refatoração estrutural do bloco mensal salvo evidência nova
 - próximos passos:
   1. usar `validation/revY/monthly_generalization_eval.csv` como evidência aceite para `MG01`–`MG08`
-  2. preservar a regra de que esta aceitação é fora do benchmark e não altera `268/268`
-  3. tratar o bloco mensal atual como congelado por estabilização, salvo regressão ou novo conjunto material de casos
-  4. manter o repositório canónico sincronizado sempre que houver nova revisão
+  2. usar `validation/revY/analyst_free_questions_eval_v1.csv` como novo lote aceite de 10 perguntas formuladas em estilo de analista
+  3. preservar a regra de que estas aceitações são fora do benchmark e não alteram `268/268`
+  4. tratar o bloco mensal atual como congelado por estabilização, salvo regressão ou novo conjunto material de casos
 
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-22 (monthly generalization accepted on sufficient sample basis; monthly block frozen for stabilization)
+Última consolidação: 2026-04-22 (analyst-free question set v1 synced and validated)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
@@ -80,6 +80,15 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - criação de `handover/STABILIZATION_DECISION_MONTHLY_DIMENSION_REFACTOR.md`
 - decisão explícita de não avançar agora com nova refatoração estrutural do bloco mensal
 
+### Sexta passagem pós-fecho
+- criação de `validation/revY/analyst_free_questions_v1.csv`
+- criação de `validation/revY/analyst_free_questions_eval_v1.csv`
+- criação de `validation/revY/analyst_free_questions_notes_v1.md`
+- criação de `validation/revY/analyst_free_questions_manual_sql_v1.sql`
+- criação de `validation/revY/analyst_free_questions_generated_sql_v1.sql`
+- novo lote de 10 perguntas formuladas a partir da documentação de `F_Invoice` e dimensões, em estilo de analista de negócio e sem partir do catálogo de famílias como critério de formulação
+- execução local do SQL manual e do SQL gerado pelo código real dos geradores, com equivalência 10/10 na base aceite `f_invoice_sample.csv`
+
 ## Evidência canónica relevante
 - generators/period_compare_generator.py
 - generators/sqlserver_patterns.py
@@ -108,6 +117,11 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - validation/revY/monthly_generalization_local_sample_equivalence_notes.md
 - validation/revY/monthly_generalization_acceptance_notes.md
 - validation/revY/monthly_generalization_eval.csv
+- validation/revY/analyst_free_questions_v1.csv
+- validation/revY/analyst_free_questions_eval_v1.csv
+- validation/revY/analyst_free_questions_notes_v1.md
+- validation/revY/analyst_free_questions_manual_sql_v1.sql
+- validation/revY/analyst_free_questions_generated_sql_v1.sql
 - handover/STABILIZATION_DECISION_MONTHLY_DIMENSION_REFACTOR.md
 
 ## Nota de reconciliação
