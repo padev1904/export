@@ -1,0 +1,16 @@
+id,question,generator,parser_ok,sql_shape_ok,detail
+Q180,Mostra o top 10 de clientes por valor líquido faturado nos últimos 12 meses.,topn_global,1,1,ok
+Q181,Quem são os 10 clientes que mais faturaram no último ano móvel?,topn_global,1,1,ok
+Q183,Mostra o top 10 de produtos por valor líquido faturado no último ano móvel.,topn_global,1,1,ok
+Q184,Que produtos mais faturaram nos últimos 12 meses?,topn_global,1,1,ok
+Q186,Mostra o top 10 de produtos por quantidade vendida no último ano móvel.,topn_global,1,1,ok
+Q187,Que produtos venderam mais unidades nos últimos 12 meses?,topn_global,1,1,ok
+Q224,Qual é o ranking das organizações de vendas por faturação no ano atual?,topn_global,1,1,ok
+Q225,Mostra a classificação das organizações de vendas por valor líquido faturado este ano.,topn_global,1,1,ok
+Q226,Como ficam ordenadas as organizações de vendas pela faturação do ano corrente?,topn_global,1,1,ok
+Q191,Quais são os 3 produtos mais faturados por região nos últimos 12 meses?,rank_partition,1,1,ok
+Q192,Mostra o top 3 de produtos por região com base na faturação do último ano móvel.,rank_partition,1,1,ok
+Q193,"Para cada região, quais foram os 3 produtos com maior valor faturado nos últimos 12 meses?",rank_partition,1,1,ok
+Q194,Quais são os 5 clientes com maior faturação por canal no ano atual?,rank_partition,1,1,ok
+Q195,Mostra o top 5 de clientes dentro de cada canal com base na faturação deste ano.,rank_partition,1,1,ok
+Q196,"Para cada canal de distribuição, quem são os 5 clientes que mais faturaram no ano corrente?",rank_partition,1,1,ok
