@@ -20,28 +20,28 @@ Ler sempre por esta ordem:
 
 ## Estado atual resumido
 - benchmark: 268 perguntas
-- última revisão fechada: revW
-- última família fechada: period_compare
-- benchmark fechado com evidência canónica sincronizada: 261/268
-- backlog residual consolidado: 7/268
-- próxima prioridade operacional: consolidar e promover o inventário residual pós-`revW` a enumeração canónica final, sem reabrir trabalho já fechado
+- última revisão fechada: revY
+- último fecho benchmark-wide: residual benchmark closure
+- última família fechada isoladamente: period_compare
+- benchmark fechado com evidência canónica sincronizada: 268/268
+- backlog residual atual: 0/268
+- próxima prioridade operacional: consolidar/refatorar em camada técnica canónica os padrões residuais fechados em `revY` e manter validação fora do benchmark para travar overfit
 
 ## Nota importante
-O repositório já contém um artefacto residual explícito para a `revX`:
+Se houver divergência entre conversa e repositório, prevalece sempre o repositório canónico.
 
-- `validation/revX/backlog_residual_after_revW.csv`
+Os artefactos `revX` e `revW` mantêm valor histórico de reconciliação, mas não prevalecem sobre o fecho benchmark-wide já sincronizado em `revY`.
 
-Esse ficheiro fixa um conjunto residual de trabalho com 7 linhas, mas permanece marcado com:
-- `is_canonical = false`
-
-até existir reconciliação benchmark-wide documentalmente fechada contra toda a evidência canónica anterior.
-
-Para contexto adicional da reconciliação, ver também:
-- `validation/revX/backlog_residual_candidates_after_revW_11.csv`
-- `validation/revX/backlog_residual_after_revW_reconciliation_note.md`
-- `validation/revX/reconciliation_preflight.md`
+Para a evidência canónica mais recente, ver:
+- `handover/HANDOVER_CURRENT.md`
+- `validation/revY/benchmark_explicit_gap_before_revY_41.csv`
+- `validation/revY/benchmark_residual_closure_validation.csv`
+- `validation/revY/global_counts_after_revY.csv`
+- `validation/revY/residual_generalization_eval.csv`
+- `validation/revY/residual_generalization_cases.csv`
 
 ## Próxima ação recomendada
-1. confirmar ou invalidar documentalmente a absorção anterior de `Q77`, `Q81`, `Q118` e `Q143`
-2. promover o residual de 7 linhas a enumeração canónica apenas quando essa prova estiver fechada
-3. se a hipótese residual se mantiver, fechar a família `time_series`
+1. confirmar coerência documental do repositório pós-`revY`
+2. consolidar/refatorar em camada técnica canónica os padrões residuais fechados em `revY`
+3. manter e expandir validação fora do benchmark para os arquétipos agora cobertos
+4. atualizar o repositório canónico no fim de cada revisão
