@@ -1,0 +1,15 @@
+id,question,family,parser_ok,sql_shape_ok,expected_rows,detail
+Q118,Qual o valor médio líquido por documento de faturação por grupo de cliente em 2026?,avg_per_document,1,1,24,ok
+Q143,Qual o valor médio líquido por documento de faturação por organização de vendas em 2026?,avg_per_document,1,1,2,ok
+Q218,Qual é o ticket médio por documento e por mês nos últimos 6 meses?,avg_per_document,1,1,6,ok
+Q219,Mostra o valor médio por documento de faturação, mês a mês, nos últimos 6 meses.,avg_per_document,1,1,6,ok
+Q220,Como evoluiu o ticket médio mensal por documento no último semestre móvel?,avg_per_document,1,1,6,ok
+Q206,Quantos clientes novos tivemos por mês nos últimos 12 meses?,lifecycle,1,1,100,ok
+Q208,Quantos clientes compraram pela primeira vez em cada mês dos últimos 12 meses?,lifecycle,1,1,100,ok
+Q211,Quantos clientes voltaram a comprar nos últimos 30 dias depois de 180 dias sem atividade?,lifecycle,1,1,1,ok
+Q212,Quantos clientes perdemos nos últimos 90 dias face aos 90 dias anteriores?,lifecycle,1,1,1,ok
+Q213,Mostra o número de clientes ativos no bloco anterior de 90 dias que não compraram nos 90 dias mais recentes.,lifecycle,1,1,1,ok
+Q214,Quantos clientes compraram há 90 a 180 dias mas não compraram nos últimos 90 dias?,lifecycle,1,1,1,ok
+Q215,Que produtos não tiveram vendas nos últimos 90 dias?,lifecycle,1,1,229,ok
+Q216,Mostra os produtos sem faturação nos 90 dias mais recentes.,lifecycle,1,1,229,ok
+Q217,Quais são os produtos sem qualquer venda nos últimos 90 dias?,lifecycle,1,1,229,ok
