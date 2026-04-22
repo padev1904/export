@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 2026-04-22 — revX residual working set sync
+- criação de `validation/revX/backlog_residual_after_revW.csv`
+- criação de `validation/revX/backlog_residual_candidates_after_revW_11.csv`
+- criação de `validation/revX/backlog_residual_after_revW_reconciliation_note.md`
+- atualização de `README.md`
+- atualização de `handover/HANDOVER_CURRENT.md`
+- atualização de `handover/RETOMA_CHECKLIST.md`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- atualização de `validation/revW/backlog_reconciliation_status.md`
+- atualização de `validation/revX/reconciliation_preflight.md`
+- atualização de `handover/HANDOVER_NEXT_STEP_revX_RECONCILIATION.md`
+- sincronização explícita do working set residual no repositório
+- manutenção da distinção entre:
+  - contagem factual já canónica (`261/268`, backlog `7/268`)
+  - enumeração residual de trabalho ainda não promovida a canónica
+- próxima ação obrigatória: fechar documentalmente o estado de `Q77`, `Q81`, `Q118` e `Q143` antes de promover o residual de 7 linhas a inventário canónico final
+
 ## 2026-04-22 — revX preflight repo sync
 - sincronização de `README.md` com o estado canónico pós-`revW`
 - criação de `validation/revX/reconciliation_preflight.md`
