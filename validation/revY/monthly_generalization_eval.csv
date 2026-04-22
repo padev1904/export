@@ -1,0 +1,9 @@
+test_id,question,evidence_dataset,result,scope,detail
+MG01,Qual o valor líquido faturado por grupo de contas de cliente e por mês no ano atual?,training_data/documentation/f_invoice_sample.csv,PASS,out_of_benchmark,equivalent_on_accepted_sample
+MG02,Qual a diferença entre preço de lista e valor líquido faturado por marca e por mês no ano atual?,training_data/documentation/f_invoice_sample.csv,PASS,out_of_benchmark,equivalent_on_accepted_sample
+MG03,Qual o valor líquido faturado por tipo de processamento de devolução e por mês no ano corrente?,training_data/documentation/f_invoice_sample.csv,PASS,out_of_benchmark,equivalent_on_accepted_sample
+MG04,Qual o valor líquido faturado por mês e por organização de vendas no ano atual?,training_data/documentation/f_invoice_sample.csv,PASS,out_of_benchmark,equivalent_on_accepted_sample
+MG05,Qual a quantidade faturada por mês e por organização de vendas em 2025?,training_data/documentation/f_invoice_sample.csv,PASS,out_of_benchmark,equivalent_on_accepted_sample
+MG06,Qual a margem bruta por marca e por mês em 2026 considerando apenas registos adicionais calculados?,training_data/documentation/f_invoice_sample.csv,PASS,out_of_benchmark,equivalent_on_accepted_sample
+MG07,Como evoluiu por mês nos últimos 6 meses o valor líquido faturado por grupo de contas de cliente?,training_data/documentation/f_invoice_sample.csv,PASS,out_of_benchmark,equivalent_on_accepted_sample
+MG08,Qual a diferença entre preço de lista e valor líquido faturado por organização de vendas e por mês em 2026?,training_data/documentation/f_invoice_sample.csv,PASS,out_of_benchmark,equivalent_on_accepted_sample
