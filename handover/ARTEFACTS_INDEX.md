@@ -96,6 +96,7 @@
 - validation/revX/backlog_residual_candidates_after_revW_11.csv
 - validation/revX/backlog_residual_after_revW_reconciliation_note.md
 - validation/revX/candidate_provenance_gap_Q77_Q81_Q118_Q143.md
+- validation/revX/candidate_evidence_matrix_Q77_Q81_Q118_Q143.csv
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
