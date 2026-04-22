@@ -6,17 +6,17 @@
 - última família fechada isoladamente: period_compare
 - benchmark fechado: 268/268
 - backlog aberto: 0/268
-- próxima prioridade: consolidar os casos mensais por dimensão ainda fora do âmbito do `temporal_generator` atual e manter validação fora do benchmark para travar overfit
+- próxima prioridade: manter e expandir validação fora do benchmark para os arquétipos mensais agora consolidados e avaliar futura extração de um bloco reutilizável mensal por dimensão
 - próximos passos:
-  1. consolidar os restantes padrões mensais por dimensão ainda dispersos fora do âmbito atual do `temporal_generator`
-  2. manter perguntas novas fora do benchmark para os arquétipos já cobertos e para os blocos seguintes de consolidação
-  3. comparar SQL manual independente com SQL do gerador universal por equivalência de resultado quando houver validação executada
+  1. criar/percorrer perguntas novas fora do benchmark para os arquétipos mensais recém-consolidados
+  2. comparar SQL manual independente com SQL do gerador universal por equivalência de resultado quando houver validação executada
+  3. avaliar se compensa isolar um bloco técnico reutilizável para mensal por dimensão em vez de manter a lógica distribuída no `temporal_generator`
   4. manter o repositório canónico sincronizado sempre que houver nova revisão
 
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-22 (post-revY time-series and cancellation consolidation synced to repo)
+Última consolidação: 2026-04-22 (post-revY monthly dimension cases closed in temporal/time-series consolidation)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
@@ -55,6 +55,11 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - atualização de `generators/cancellation_generator.py`
 - validação dirigida em `validation/revY/post_closure_timeseries_cancellation_consolidation_validation.csv`
 - notas em `validation/revY/post_closure_timeseries_cancellation_consolidation_notes.md`
+- extensão posterior da mesma passagem para cobrir também:
+  - `Q100`
+  - `Q114`
+  - `Q122`
+  - `Q137`
 
 ## Evidência canónica relevante
 - generators/period_compare_generator.py
@@ -87,7 +92,7 @@ Esse gap foi fechado benchmark-wide com validação por equivalência de resulta
 - `validation/revY/benchmark_residual_closure_validation.csv`
 
 ## Próxima prioridade
-1. consolidar os restantes casos mensais por dimensão ainda fora do âmbito do `temporal_generator` atual
-2. manter validação fora do benchmark para os arquétipos já cobertos e para os próximos padrões consolidados
+1. manter e expandir validação fora do benchmark para os arquétipos mensais agora consolidados
+2. avaliar futura extração de um bloco reutilizável mensal por dimensão
 3. preservar a distinção entre fecho benchmark-wide e fecho por família isolada nas próximas revisões
 4. continuar a atualizar o repositório canónico no fim de cada revisão
