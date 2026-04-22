@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 2026-04-22 — post-revY repo coherence sync
+- atualização de `README.md`
+- atualização de `handover/RETOMA_CHECKLIST.md`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- criação de `validation/revY/residual_pattern_consolidation_scope.md`
+- sincronização dos documentos canónicos ainda presos no estado pré-`revY`
+- clarificação explícita de que `revX` e `revW` permanecem como histórico de reconciliação e não prevalecem sobre o fecho benchmark-wide já sincronizado em `revY`
+- explicitação do próximo bloco técnico útil pós-`revY`: consolidar/refatorar em camada técnica canónica os padrões residuais agora fechados, sem reabrir benchmark já encerrado
+
 ## 2026-04-22 — revY benchmark residual closure
 - criação de `validation/revY/benchmark_explicit_gap_before_revY_41.csv`
 - criação de `validation/revY/benchmark_residual_closure_validation.csv`
