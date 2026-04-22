@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-04-22 — revX preflight repo sync
+- sincronização de `README.md` com o estado canónico pós-`revW`
+- criação de `validation/revX/reconciliation_preflight.md`
+- atualização de `handover/HANDOVER_CURRENT.md` para referenciar o artefacto de preflight da `revX`
+- atualização de `handover/ARTEFACTS_INDEX.md` com o artefacto `revX`
+- separação explícita entre:
+  - factos verificados
+  - hipóteses operacionais de trabalho
+  - lacunas documentais ainda abertas
+- mantida a regra factual de que os `7 qid` residuais exatos continuam por enumerar canonicamente
+
 ## 2026-04-22 — revW period_compare closure
 - fechamento canónico da família period_compare
 - benchmark da família: 4/4 PASS por equivalência de resultado
