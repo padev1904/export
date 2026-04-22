@@ -20,8 +20,15 @@ Ler sempre por esta ordem:
 
 ## Estado atual resumido
 - benchmark: 268 perguntas
-- última revisão fechada: revV
-- última família fechada: distinct_count
-- benchmark fechado com evidência canónica sincronizada: 257/268
-- backlog residual consolidado: 11/268
-- próxima prioridade operacional: period_compare, depois reconciliação factual do inventário residual
+- última revisão fechada: revW
+- última família fechada: period_compare
+- benchmark fechado com evidência canónica sincronizada: 261/268
+- backlog residual consolidado: 7/268
+- próxima prioridade operacional: reconciliar inventário residual factual pós-revW e preparar a revX
+
+## Nota importante
+O estado canónico já está sincronizado para `revW`, mas a enumeração explícita dos `7 qid` residuais ainda não existe como ficheiro canónico dedicado.
+
+Para a preparação da próxima revisão, ver:
+- `validation/revW/backlog_reconciliation_status.md`
+- `validation/revX/reconciliation_preflight.md`
