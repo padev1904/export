@@ -1,0 +1,11 @@
+test_id,question,semantic_pass,generated_rows,manual_rows,detail
+H01,Mostra o desconto promocional total por marca no ano atual.,1,21,21,ok
+H02,Qual a taxa média de câmbio por moeda transaccional no ano atual?,1,2,2,ok
+H03,Qual a faturação por mês e por organização de vendas no ano atual?,1,8,8,ok
+H04,Qual o valor médio líquido por documento de faturação por organização de vendas em 2026?,1,2,2,ok
+H05,Mostra o top 10 de produtos por quantidade faturada nos últimos 12 meses.,1,10,10,ok
+H06,"Para cada região, mostra os 3 produtos mais faturados no último ano móvel.",1,154,154,ok
+H07,Quantos clientes deixaram de comprar nos últimos 90 dias face ao bloco anterior,1,1,1,ok
+H08,Que produtos estão sem vendas nos últimos 90 dias?,1,6235,6235,ok
+H09,Mostra o ranking das organizações de vendas por faturação este ano.,1,2,2,ok
+H10,Qual a taxa de cancelamento de documentos por canal de distribuição e por mês em 2026?,1,19,19,ok
