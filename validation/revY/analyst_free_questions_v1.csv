@@ -1,0 +1,11 @@
+test_id,question,complexity
+A01,Qual o total de descontos de quantidade por zona de transporte do cliente em 2026?,média
+A02,Qual o peso bruto total por marca de produto em 2026?,média
+A03,Qual a diferença entre quantidade faturada e quantidade em unidade base por tipo de material em 2026?,média-alta
+A04,Qual o peso líquido total por condição de expedição do cliente em 2026?,média
+A05,Quais são os 3 pontos de expedição com maior valor líquido faturado dentro de cada canal de distribuição em 2026?,alta
+A06,Quais são os 2 grupos de preço de cliente com maior desconto de quantidade dentro de cada marca em 2026?,alta
+A07,Quais são as 2 famílias de produto com maior preço médio líquido por unidade dentro de cada organização de vendas em 2026?,muito elevada
+A08,Quais são os 3 clientes com maior crescimento absoluto de quantidade faturada dentro de cada região entre 2025 e 2026?,muito elevada
+A09,Qual a diferença entre o preço de lista e o valor líquido faturado por país e por mês em 2026?,alta
+A10,Quais são os 2 canais de distribuição com maior taxa de cancelamento de documentos dentro de cada mês em 2026?,muito elevada
