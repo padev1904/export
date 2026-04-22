@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## 2026-04-22 — post-revY monthly dimension closure within time series consolidation
+- atualização de `generators/temporal_generator.py`
+- atualização de `validation/revY/post_closure_timeseries_cancellation_consolidation_validation.csv`
+- atualização de `validation/revY/post_closure_timeseries_cancellation_consolidation_notes.md`
+- atualização de `handover/HANDOVER_CURRENT.md`
+- extensão da consolidação temporal mensal para cobrir os casos que tinham ficado inicialmente fora do âmbito do `temporal_generator`
+- cobertura dirigida adicional nesta passagem sobre:
+  - `Q100`
+  - `Q114`
+  - `Q122`
+  - `Q137`
+- consolidação de suporte mensal explícito por ano para:
+  - `grupo de contas de cliente`
+  - `organização de vendas`
+  - `tipo de processamento de devolução`
+  - métrica `list_minus_net`
+- sem evidência documental de regressão do estado canónico `268/268`
+
 ## 2026-04-22 — post-revY time series and cancellation consolidation pass
 - atualização de `generators/sqlserver_patterns.py`
 - atualização de `generators/temporal_generator.py`
