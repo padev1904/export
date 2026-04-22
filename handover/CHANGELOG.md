@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 2026-04-22 — post-revY technical consolidation pass
+- criação de `generators/sqlserver_patterns.py`
+- criação de `generators/avg_per_document_generator.py` em versão funcional mínima
+- atualização de `generators/lifecycle_generator.py` para sintaxe temporal coerente com T-SQL
+- criação de `validation/revY/post_closure_refactor_semantic_validation.csv`
+- criação de `validation/revY/post_closure_refactor_notes.md`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- consolidação técnica dirigida sobre padrões temporais e `avg_per_document` já fechados benchmark-wide em `revY`
+- validação dirigida nesta passagem sobre:
+  - `Q118`, `Q143`, `Q218`, `Q219`, `Q220`
+  - `Q206`, `Q208`, `Q211`, `Q212`, `Q213`, `Q214`, `Q215`, `Q216`, `Q217`
+- mantida a distinção entre esta consolidação técnica e uma eventual validação benchmark-wide futura
+- sem evidência documental de regressão do estado canónico `268/268`
+
 ## 2026-04-22 — post-revY repo coherence sync
 - atualização de `README.md`
 - atualização de `handover/RETOMA_CHECKLIST.md`
