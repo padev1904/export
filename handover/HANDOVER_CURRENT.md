@@ -6,17 +6,17 @@
 - última família fechada isoladamente: period_compare
 - benchmark fechado: 268/268
 - backlog aberto: 0/268
-- próxima prioridade: manter a distinção entre benchmark fechado e validação fora do benchmark já aceite com base em `f_invoice_sample.csv`, e decidir apenas futuras expansões de cobertura se trouxerem valor incremental real
+- próxima prioridade: manter a distinção entre benchmark fechado e validação fora do benchmark já aceite com base em `f_invoice_sample.csv`, sem nova refatoração estrutural do bloco mensal salvo evidência nova
 - próximos passos:
   1. usar `validation/revY/monthly_generalization_eval.csv` como evidência aceite para `MG01`–`MG08`
   2. preservar a regra de que esta aceitação é fora do benchmark e não altera `268/268`
-  3. avaliar apenas se compensa extrair um bloco técnico reutilizável para mensal por dimensão
+  3. tratar o bloco mensal atual como congelado por estabilização, salvo regressão ou novo conjunto material de casos
   4. manter o repositório canónico sincronizado sempre que houver nova revisão
 
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-22 (monthly generalization accepted on sufficient sample basis)
+Última consolidação: 2026-04-22 (monthly generalization accepted on sufficient sample basis; monthly block frozen for stabilization)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
@@ -77,6 +77,8 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - criação de `validation/revY/monthly_generalization_eval.csv`
 - por decisão operacional desta sessão, `f_invoice_sample.csv` é aceite como suficientemente amplo para esta linha de validação fora do benchmark
 - `MG01`–`MG08` ficam aceites como PASS fora do benchmark com base nessa amostra
+- criação de `handover/STABILIZATION_DECISION_MONTHLY_DIMENSION_REFACTOR.md`
+- decisão explícita de não avançar agora com nova refatoração estrutural do bloco mensal
 
 ## Evidência canónica relevante
 - generators/period_compare_generator.py
@@ -106,6 +108,7 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - validation/revY/monthly_generalization_local_sample_equivalence_notes.md
 - validation/revY/monthly_generalization_acceptance_notes.md
 - validation/revY/monthly_generalization_eval.csv
+- handover/STABILIZATION_DECISION_MONTHLY_DIMENSION_REFACTOR.md
 
 ## Nota de reconciliação
 O fecho `revY` substitui a necessidade de continuar a reconciliação residual aberta em `revX`.
@@ -118,6 +121,6 @@ Esse gap foi fechado benchmark-wide com validação por equivalência de resulta
 
 ## Próxima prioridade
 1. manter a distinção entre benchmark fechado e generalização fora do benchmark aceite nesta amostra
-2. avaliar futura extração de um bloco reutilizável mensal por dimensão
+2. não refatorar o bloco mensal sem evidência nova de valor
 3. evitar reabertura de trabalho benchmark-wide já fechado sem nova evidência de regressão
 4. continuar a atualizar o repositório canónico no fim de cada revisão
