@@ -6,17 +6,17 @@
 - última família fechada isoladamente: period_compare
 - benchmark fechado: 268/268
 - backlog aberto: 0/268
-- próxima prioridade: executar validação por equivalência de resultado para os candidatos mensais fora do benchmark `MG01`–`MG08`, agora já cobertos por parser e SQL shape
+- próxima prioridade: promover, quando possível, equivalência de resultado dos candidatos mensais `MG01`–`MG08` do nível de amostra local para execução em dataset canónico mais amplo
 - próximos passos:
-  1. gerar SQL com o gerador universal atual para `MG01`–`MG08`
-  2. construir SQL manual independente para os mesmos casos
-  3. comparar por equivalência de resultado antes de qualquer PASS/FAIL canónico
+  1. reutilizar `validation/revY/monthly_generalization_manual_oracle_sql.sql` como oráculo manual
+  2. executar comparação por equivalência de resultado em dataset mais amplo, se disponível
+  3. manter a distinção entre evidência em amostra local e validação canónica ampla
   4. avaliar depois se compensa isolar um bloco técnico reutilizável para mensal por dimensão em vez de manter a lógica distribuída no `temporal_generator`
 
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-22 (monthly generalization candidate parser coverage synced to repo)
+Última consolidação: 2026-04-22 (monthly candidate local sample equivalence synced to repo)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
@@ -66,7 +66,14 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - criação de `validation/revY/monthly_generalization_candidate_notes.md`
 - atualização de `generators/temporal_generator.py` para aceitar formulações mensais com `ano atual` / `ano corrente` / `este ano`
 - criação de `validation/revY/monthly_generalization_candidate_parser_validation.csv`
-- candidatos `MG01`–`MG08` ficam com `parser_ok=1` e `sql_shape_ok=1`, mas continuam `pending_execution` para equivalência de resultado
+- candidatos `MG01`–`MG08` ficam com `parser_ok=1` e `sql_shape_ok=1`
+- criação de `validation/revY/monthly_generalization_manual_oracle_sql.sql`
+
+### Quinta passagem pós-fecho
+- criação de `validation/revY/monthly_generalization_local_sample_equivalence_eval.csv`
+- criação de `validation/revY/monthly_generalization_local_sample_equivalence_notes.md`
+- `MG01`–`MG08` equivalentes em amostra local sobre `training_data/documentation/f_invoice_sample.csv`
+- esta evidência permanece explicitamente separada de validação canónica em dataset completo
 
 ## Evidência canónica relevante
 - generators/period_compare_generator.py
@@ -91,6 +98,9 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - validation/revY/monthly_generalization_candidate_cases.csv
 - validation/revY/monthly_generalization_candidate_notes.md
 - validation/revY/monthly_generalization_candidate_parser_validation.csv
+- validation/revY/monthly_generalization_manual_oracle_sql.sql
+- validation/revY/monthly_generalization_local_sample_equivalence_eval.csv
+- validation/revY/monthly_generalization_local_sample_equivalence_notes.md
 
 ## Nota de reconciliação
 O fecho `revY` substitui a necessidade de continuar a reconciliação residual aberta em `revX`.
@@ -102,7 +112,7 @@ Esse gap foi fechado benchmark-wide com validação por equivalência de resulta
 - `validation/revY/benchmark_residual_closure_validation.csv`
 
 ## Próxima prioridade
-1. executar validação por equivalência de resultado para `MG01`–`MG08`
-2. manter a distinção entre parser/shape validation e equivalência real de resultado
+1. promover, quando possível, `MG01`–`MG08` de equivalência em amostra local para equivalência em dataset mais amplo
+2. manter a distinção entre parser/shape validation, evidência em amostra local e validação canónica ampla
 3. avaliar futura extração de um bloco reutilizável mensal por dimensão
 4. continuar a atualizar o repositório canónico no fim de cada revisão
