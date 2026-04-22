@@ -90,6 +90,9 @@
 - validation/revW/global_counts_after_revW.csv
 - validation/revW/backlog_reconciliation_status.md
 
+### revX preflight
+- validation/revX/reconciliation_preflight.md
+
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
 2. handover/HANDOVER_CURRENT.md
