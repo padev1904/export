@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from typing import Optional
 import re
 
+from sqlserver_patterns import explicit_year_predicate, month_bucket_expr
+
 @dataclass
 class CancellationSpec:
     family: str
@@ -79,20 +81,18 @@ def classify_question(question:str)->CancellationSpec:
         return CancellationSpec('cancellation','rate_by_dimension',year,dimension=d1,include_counts=include_counts,original_question=question)
     raise ValueError(f'Unsupported cancellation question: {question}')
 
-def _dim_sql(dim_key:str, table_alias:str='d'):
-    meta=DIMENSIONS[dim_key]
-    return meta, f"JOIN {meta['table']} {table_alias} ON {table_alias}.{meta['pk']} = x.{meta['nid']}"
-
 def generate_sql(spec:CancellationSpec)->str:
     y=spec.year
+    year_filter = explicit_year_predicate(y)
+    month_expr = month_bucket_expr()
     if spec.operation=='cancelled_docs_by_month':
         return f"""SELECT
-    (f.BillingDocumentDate / 100) % 100 AS Mes,
+    {month_expr} AS Mes,
     COUNT(DISTINCT f.BillingDocument) AS DocumentosCancelados
 FROM dbo.F_Invoice f
-WHERE f.BillingDocumentDate / 10000 = {y}
+WHERE {year_filter}
   AND f.BillingDocumentIsCancelled = 1
-GROUP BY (f.BillingDocumentDate / 100) % 100
+GROUP BY {month_expr}
 ORDER BY Mes;"""
     if spec.operation=='top_cancelled_docs_by_dimension':
         m=DIMENSIONS[spec.dimension]
@@ -102,17 +102,19 @@ ORDER BY Mes;"""
 FROM dbo.F_Invoice f
 JOIN {m['table']} d
     ON f.{m['nid']} = d.{m['pk']}
-WHERE f.BillingDocumentDate / 10000 = {y}
+WHERE {year_filter}
   AND f.BillingDocumentIsCancelled = 1
 GROUP BY d.{m['text']}
 ORDER BY DocumentosCancelados DESC, {m['alias']};"""
     if spec.operation=='rate_by_month':
         return f"""WITH docs AS (
     SELECT
-        (f.BillingDocumentDate / 100) % 100 AS Mes, f.BillingDocument, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+        {month_expr} AS Mes,
+        f.BillingDocument,
+        MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
     FROM dbo.F_Invoice f
-    WHERE f.BillingDocumentDate / 10000 = {y}
-    GROUP BY (f.BillingDocumentDate / 100) % 100, f.BillingDocument
+    WHERE {year_filter}
+    GROUP BY {month_expr}, f.BillingDocument
 )
 SELECT
     x.Mes,
@@ -127,9 +129,11 @@ ORDER BY x.Mes;"""
         select_counts = "\n    COUNT(*) AS TotalDocumentos,\n    SUM(x.DocumentoCancelado) AS DocumentosCancelados," if spec.include_counts else ""
         return f"""WITH docs AS (
     SELECT
-        f.BillingDocument, f.{m['nid']}, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+        f.BillingDocument,
+        f.{m['nid']},
+        MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
     FROM dbo.F_Invoice f
-    WHERE f.BillingDocumentDate / 10000 = {y}
+    WHERE {year_filter}
     GROUP BY f.BillingDocument, f.{m['nid']}
 )
 SELECT
@@ -143,10 +147,13 @@ ORDER BY TaxaCancelamento DESC{', TotalDocumentos DESC' if spec.include_counts e
         m=DIMENSIONS[spec.dimension]
         return f"""WITH docs AS (
     SELECT
-        (f.BillingDocumentDate / 100) % 100 AS Mes, f.BillingDocument, f.{m['nid']}, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+        {month_expr} AS Mes,
+        f.BillingDocument,
+        f.{m['nid']},
+        MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
     FROM dbo.F_Invoice f
-    WHERE f.BillingDocumentDate / 10000 = {y}
-    GROUP BY (f.BillingDocumentDate / 100) % 100, f.BillingDocument, f.{m['nid']}
+    WHERE {year_filter}
+    GROUP BY {month_expr}, f.BillingDocument, f.{m['nid']}
 )
 SELECT
     x.Mes,
@@ -162,9 +169,12 @@ ORDER BY x.Mes, TaxaCancelamento DESC, TotalDocumentos DESC, {m['alias']};"""
         m1=DIMENSIONS[spec.dimension]; m2=DIMENSIONS[spec.secondary_dimension]
         return f"""WITH docs AS (
     SELECT
-        f.BillingDocument, f.{m1['nid']}, f.{m2['nid']}, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+        f.BillingDocument,
+        f.{m1['nid']},
+        f.{m2['nid']},
+        MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
     FROM dbo.F_Invoice f
-    WHERE f.BillingDocumentDate / 10000 = {y}
+    WHERE {year_filter}
     GROUP BY f.BillingDocument, f.{m1['nid']}, f.{m2['nid']}
 )
 SELECT
@@ -182,9 +192,11 @@ ORDER BY TaxaCancelamento DESC, TotalDocumentos DESC, {m1['alias']}, {m2['alias'
         m=DIMENSIONS[spec.dimension]
         return f"""WITH docs AS (
     SELECT
-        f.BillingDocument, f.{m['nid']}, MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
+        f.BillingDocument,
+        f.{m['nid']},
+        MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
     FROM dbo.F_Invoice f
-    WHERE f.BillingDocumentDate / 10000 = {y}
+    WHERE {year_filter}
     GROUP BY f.BillingDocument, f.{m['nid']}
 )
 SELECT TOP ({spec.top_n})
@@ -200,13 +212,13 @@ ORDER BY TaxaCancelamento DESC, TotalDocumentos DESC, {m['alias']};"""
         m=DIMENSIONS[spec.dimension]
         return f"""WITH docs AS (
     SELECT
-        (f.BillingDocumentDate / 100) % 100 AS Mes,
+        {month_expr} AS Mes,
         f.BillingDocument,
         f.{m['nid']},
         MAX(CASE WHEN f.BillingDocumentIsCancelled = 1 THEN 1 ELSE 0 END) AS DocumentoCancelado
     FROM dbo.F_Invoice f
-    WHERE f.BillingDocumentDate / 10000 = {y}
-    GROUP BY (f.BillingDocumentDate / 100) % 100, f.BillingDocument, f.{m['nid']}
+    WHERE {year_filter}
+    GROUP BY {month_expr}, f.BillingDocument, f.{m['nid']}
 ), grouped AS (
     SELECT
         x.Mes,
