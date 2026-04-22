@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 2026-04-22 — revY benchmark residual closure
+- criação de `validation/revY/benchmark_explicit_gap_before_revY_41.csv`
+- criação de `validation/revY/benchmark_residual_closure_validation.csv`
+- criação de `validation/revY/global_counts_after_revY.csv`
+- criação de `validation/revY/residual_generalization_eval.csv`
+- criação de `validation/revY/residual_generalization_cases.csv`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- atualização de `handover/HANDOVER_CURRENT.md`
+- fechamento benchmark-wide do residual explícito anterior a `revY`
+- validação do gap de `41 qid` por equivalência de resultado face aos SQL-oráculo do benchmark
+- atualização factual da contagem global para `268/268` fechadas e `0/268` abertas
+- validação adicional fora do benchmark para os padrões residuais fechados: `10/10 PASS`
+
 ## 2026-04-22 — revX provenance-gap note
 - criação de `validation/revX/candidate_provenance_gap_Q77_Q81_Q118_Q143.md`
 - atualização de `handover/ARTEFACTS_INDEX.md`
