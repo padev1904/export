@@ -1,0 +1,9 @@
+test_id,question,target_generator,parser_ok,sql_shape_ok,detail
+MG01,Qual o valor líquido faturado por grupo de contas de cliente e por mês no ano atual?,temporal_generator,1,1,ok
+MG02,Qual a diferença entre preço de lista e valor líquido faturado por marca e por mês no ano atual?,temporal_generator,1,1,ok
+MG03,Qual o valor líquido faturado por tipo de processamento de devolução e por mês no ano corrente?,temporal_generator,1,1,ok
+MG04,Qual o valor líquido faturado por mês e por organização de vendas no ano atual?,temporal_generator,1,1,ok
+MG05,Qual a quantidade faturada por mês e por organização de vendas em 2025?,temporal_generator,1,1,ok
+MG06,Qual a margem bruta por marca e por mês em 2026 considerando apenas registos adicionais calculados?,temporal_generator,1,1,ok
+MG07,Como evoluiu por mês nos últimos 6 meses o valor líquido faturado por grupo de contas de cliente?,temporal_generator,1,1,ok
+MG08,Qual a diferença entre preço de lista e valor líquido faturado por organização de vendas e por mês em 2026?,temporal_generator,1,1,ok
