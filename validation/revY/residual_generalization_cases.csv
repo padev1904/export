@@ -1,0 +1,11 @@
+test_id,case_summary
+H01,desconto promocional total por marca no ano atual
+H02,taxa media de cambio por moeda transaccional no ano atual
+H03,faturacao por mes e por organizacao de vendas no ano atual
+H04,valor medio liquido por documento por organizacao de vendas em 2026
+H05,top 10 de produtos por quantidade faturada nos ultimos 12 meses
+H06,top 3 de produtos por regiao no ultimo ano movel
+H07,clientes perdidos nos ultimos 90 dias face ao bloco anterior
+H08,produtos sem vendas nos ultimos 90 dias
+H09,ranking das organizacoes de vendas por faturacao este ano
+H10,taxa de cancelamento por canal de distribuicao e por mes em 2026
