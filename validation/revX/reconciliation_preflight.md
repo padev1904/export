@@ -6,8 +6,8 @@ Preparar o arranque da `revX` sem confundir:
 - lacunas documentais ainda abertas
 - hipóteses operacionais úteis para planeamento
 
-Este ficheiro **não substitui** a enumeração canónica dos `qid` residuais.
-Serve apenas como artefacto de preflight para a próxima sessão.
+Este ficheiro continua a ser um artefacto de preflight.
+Não substitui a promoção canónica final do residual por `qid`.
 
 ## Factos verificados
 1. A fonte de verdade continua a ser o repositório canónico.
@@ -19,75 +19,54 @@ Serve apenas como artefacto de preflight para a próxima sessão.
    - benchmark: `4/4 PASS` por equivalência de resultado
    - benchmark: `4/4 PASS` em igualdade estrita de grelha
    - generalização fora do benchmark: `6/6 PASS`
-7. O repositório **ainda não contém** um ficheiro canónico que enumere explicitamente os `7 qid` residuais pós-`revW`.
+7. O repositório já contém um ficheiro residual explícito:
+   - `validation/revX/backlog_residual_after_revW.csv`
+8. Esse ficheiro permanece deliberadamente marcado com:
+   - `is_canonical = false`
+9. A promoção canónica final do residual ainda exige fecho benchmark-wide documentalmente explícito.
 
 ## Evidência canónica relevante
 - `handover/HANDOVER_CURRENT.md`
 - `validation/revW/global_counts_after_revW.csv`
 - `validation/revW/backlog_reconciliation_status.md`
 - `validation/revW/period_compare_benchmark_validation.csv`
+- `validation/revX/backlog_residual_after_revW.csv`
+- `validation/revX/backlog_residual_candidates_after_revW_11.csv`
+- `validation/revX/backlog_residual_after_revW_reconciliation_note.md`
 
-## Conjunto candidato documentado em revW
-O ficheiro `validation/revW/backlog_reconciliation_status.md` indica como conjunto candidato ainda por reconciliar:
+## Working set residual sincronizado
+O working set residual explícito de 7 linhas publicado em `revX` contém:
 
 - `76`
-- `77`
-- `81`
 - `86`
 - `100`
 - `114`
-- `118`
 - `122`
 - `137`
 - `138`
-- `143`
 
-Este conjunto tem `11` perguntas potenciais.
-Como o backlog factual após `revW` é `7`, pelo menos `4` destas perguntas já terão sido absorvidas por evidência canónica anterior, mas essa correspondência ainda não está explicitamente enumerada no repositório.
+Todos estes registos foram publicados com:
+- `status = OPEN_PROBABLE_RESIDUAL`
+- `is_canonical = false`
 
-## Hipótese operacional para preparar a revX
-**Secção não canónica.**
-Usar apenas como hipótese de trabalho até existir um ficheiro residual explícito por `qid`.
+## Candidatos ainda por fecho documental
+Continuam separados como candidatos de menor prioridade, possivelmente já absorvidos por evidência canónica anterior:
 
-Hipótese operacional mais plausível para a próxima revisão:
-- família universal residual principal: `time_series`
-- `qid` de trabalho dessa família:
-  - `86`
-  - `100`
-  - `114`
-  - `122`
-  - `137`
-  - `138`
-- caso especial residual fora da família principal:
-  - `76` (`other` / comparação de unidades)
-
-Candidatos de menor prioridade, possivelmente já absorvidos por evidência canónica anterior:
 - `77`
 - `81`
 - `118`
 - `143`
 
 ## Regra de utilização
-1. Não promover esta hipótese a facto canónico sem reconciliação benchmark-wide.
-2. Antes de fechar qualquer nova família, criar um ficheiro residual explícito por `qid`.
-3. Só depois executar a `revX` sobre a próxima família universal realmente residual.
-
-## Próxima ação obrigatória
-Criar:
-
-`validation/revX/backlog_residual_after_revW.csv`
-
-com, no mínimo:
-- `qid`
-- `question`
-- `family`
-- `status`
-- `evidence_source`
-- `is_canonical`
+1. Não promover o working set residual a facto canónico sem reconciliação benchmark-wide fechada.
+2. Antes de fechar qualquer nova família, validar documentalmente `Q77`, `Q81`, `Q118` e `Q143`.
+3. Só depois confirmar ou corrigir o residual de 7 linhas.
+4. Só depois promover esse residual a inventário canónico final.
+5. Só depois executar a `revX` sobre a próxima família universal realmente residual.
 
 ## Recomendação operacional
-1. reconciliar primeiro os `7 qid` exatos
-2. se a hipótese acima se confirmar, fechar `time_series`
+1. validar primeiro os 4 candidatos ainda não resolvidos documentalmente
+2. se o working set residual se confirmar, fechar `time_series`
 3. validar benchmark por equivalência de resultado
 4. criar perguntas novas fora do benchmark
 5. comparar SQL manual independente vs SQL do gerador
