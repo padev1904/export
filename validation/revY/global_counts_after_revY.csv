@@ -1,0 +1,7 @@
+metric,value
+benchmark_total,268
+benchmark_closed_before_revY,227
+benchmark_gap_before_revY,41
+revY_gap_closed_now,41
+benchmark_closed_now,268
+benchmark_open_now,0
