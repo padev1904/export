@@ -24,11 +24,24 @@ Ler sempre por esta ordem:
 - última família fechada: period_compare
 - benchmark fechado com evidência canónica sincronizada: 261/268
 - backlog residual consolidado: 7/268
-- próxima prioridade operacional: reconciliar inventário residual factual pós-revW e preparar a revX
+- próxima prioridade operacional: consolidar e promover o inventário residual pós-`revW` a enumeração canónica final, sem reabrir trabalho já fechado
 
 ## Nota importante
-O estado canónico já está sincronizado para `revW`, mas a enumeração explícita dos `7 qid` residuais ainda não existe como ficheiro canónico dedicado.
+O repositório já contém um artefacto residual explícito para a `revX`:
 
-Para a preparação da próxima revisão, ver:
-- `validation/revW/backlog_reconciliation_status.md`
+- `validation/revX/backlog_residual_after_revW.csv`
+
+Esse ficheiro fixa um conjunto residual de trabalho com 7 linhas, mas permanece marcado com:
+- `is_canonical = false`
+
+até existir reconciliação benchmark-wide documentalmente fechada contra toda a evidência canónica anterior.
+
+Para contexto adicional da reconciliação, ver também:
+- `validation/revX/backlog_residual_candidates_after_revW_11.csv`
+- `validation/revX/backlog_residual_after_revW_reconciliation_note.md`
 - `validation/revX/reconciliation_preflight.md`
+
+## Próxima ação recomendada
+1. confirmar ou invalidar documentalmente a absorção anterior de `Q77`, `Q81`, `Q118` e `Q143`
+2. promover o residual de 7 linhas a enumeração canónica apenas quando essa prova estiver fechada
+3. se a hipótese residual se mantiver, fechar a família `time_series`
