@@ -6,17 +6,17 @@
 - última família fechada isoladamente: period_compare
 - benchmark fechado: 268/268
 - backlog aberto: 0/268
-- próxima prioridade: manter e expandir validação fora do benchmark para os arquétipos mensais agora consolidados e avaliar futura extração de um bloco reutilizável mensal por dimensão
+- próxima prioridade: executar validação por equivalência de resultado para os candidatos mensais fora do benchmark `MG01`–`MG08`, agora já cobertos por parser e SQL shape
 - próximos passos:
-  1. criar/percorrer perguntas novas fora do benchmark para os arquétipos mensais recém-consolidados
-  2. comparar SQL manual independente com SQL do gerador universal por equivalência de resultado quando houver validação executada
-  3. avaliar se compensa isolar um bloco técnico reutilizável para mensal por dimensão em vez de manter a lógica distribuída no `temporal_generator`
-  4. manter o repositório canónico sincronizado sempre que houver nova revisão
+  1. gerar SQL com o gerador universal atual para `MG01`–`MG08`
+  2. construir SQL manual independente para os mesmos casos
+  3. comparar por equivalência de resultado antes de qualquer PASS/FAIL canónico
+  4. avaliar depois se compensa isolar um bloco técnico reutilizável para mensal por dimensão em vez de manter a lógica distribuída no `temporal_generator`
 
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-22 (post-revY monthly dimension cases closed in temporal/time-series consolidation)
+Última consolidação: 2026-04-22 (monthly generalization candidate parser coverage synced to repo)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
@@ -61,6 +61,13 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
   - `Q122`
   - `Q137`
 
+### Quarta passagem pós-fecho
+- criação de `validation/revY/monthly_generalization_candidate_cases.csv`
+- criação de `validation/revY/monthly_generalization_candidate_notes.md`
+- atualização de `generators/temporal_generator.py` para aceitar formulações mensais com `ano atual` / `ano corrente` / `este ano`
+- criação de `validation/revY/monthly_generalization_candidate_parser_validation.csv`
+- candidatos `MG01`–`MG08` ficam com `parser_ok=1` e `sql_shape_ok=1`, mas continuam `pending_execution` para equivalência de resultado
+
 ## Evidência canónica relevante
 - generators/period_compare_generator.py
 - generators/sqlserver_patterns.py
@@ -81,6 +88,9 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - validation/revY/post_closure_temporal_consolidation_notes.md
 - validation/revY/post_closure_timeseries_cancellation_consolidation_validation.csv
 - validation/revY/post_closure_timeseries_cancellation_consolidation_notes.md
+- validation/revY/monthly_generalization_candidate_cases.csv
+- validation/revY/monthly_generalization_candidate_notes.md
+- validation/revY/monthly_generalization_candidate_parser_validation.csv
 
 ## Nota de reconciliação
 O fecho `revY` substitui a necessidade de continuar a reconciliação residual aberta em `revX`.
@@ -92,7 +102,7 @@ Esse gap foi fechado benchmark-wide com validação por equivalência de resulta
 - `validation/revY/benchmark_residual_closure_validation.csv`
 
 ## Próxima prioridade
-1. manter e expandir validação fora do benchmark para os arquétipos mensais agora consolidados
-2. avaliar futura extração de um bloco reutilizável mensal por dimensão
-3. preservar a distinção entre fecho benchmark-wide e fecho por família isolada nas próximas revisões
+1. executar validação por equivalência de resultado para `MG01`–`MG08`
+2. manter a distinção entre parser/shape validation e equivalência real de resultado
+3. avaliar futura extração de um bloco reutilizável mensal por dimensão
 4. continuar a atualizar o repositório canónico no fim de cada revisão
