@@ -48,8 +48,47 @@ def previous_days_window_predicates(
     )
 
 
+def inclusive_upper_bound_predicate(date_expr: str, column: str = 'f.BillingDocumentDate') -> str:
+    return f"{column} <= {int_date_expr(date_expr)}"
+
+
+def date_window_predicates(
+    start_date_sql: str,
+    end_date_sql_exclusive: str,
+    column: str = 'f.BillingDocumentDate',
+) -> Tuple[str, str]:
+    return (
+        f"{column} >= {int_date_expr(start_date_sql)}",
+        f"{column} < {int_date_expr(end_date_sql_exclusive)}",
+    )
+
+
+def current_month_start_date_sql(anchor_date_sql: str = CURRENT_DATE_SQL) -> str:
+    return f"DATEFROMPARTS(YEAR({anchor_date_sql}), MONTH({anchor_date_sql}), 1)"
+
+
+def next_month_start_date_sql(anchor_date_sql: str = CURRENT_DATE_SQL) -> str:
+    return f"DATEADD(month, 1, {current_month_start_date_sql(anchor_date_sql)})"
+
+
+def previous_month_start_date_sql(anchor_date_sql: str = CURRENT_DATE_SQL) -> str:
+    return f"DATEADD(month, -1, {current_month_start_date_sql(anchor_date_sql)})"
+
+
+def same_month_last_year_start_date_sql(anchor_date_sql: str = CURRENT_DATE_SQL) -> str:
+    return f"DATEADD(year, -1, {current_month_start_date_sql(anchor_date_sql)})"
+
+
+def year_month_bucket_expr(column: str = 'f.BillingDocumentDate') -> str:
+    return f"CAST({column} / 100 AS INT)"
+
+
 def month_bucket_expr(column: str = 'f.BillingDocumentDate') -> str:
     return f"CAST(({column} / 100) % 100 AS INT)"
+
+
+def month_start_date_expr(column: str = 'f.BillingDocumentDate') -> str:
+    return f"DATEFROMPARTS({column} / 10000, ({column} / 100) % 100, 1)"
 
 
 def build_named_time_predicate(
@@ -67,6 +106,10 @@ def build_named_time_predicate(
         return current_year_predicate(column)
     if time_scope == 'last_12_months':
         return rolling_months_predicate(12, column, anchor_date_sql)
+    if time_scope == 'last_6_months':
+        return rolling_months_predicate(6, column, anchor_date_sql)
+    if time_scope == 'recent_with_history':
+        return rolling_months_predicate(8, column, anchor_date_sql)
     raise ValueError(f'unsupported time scope: {time_scope}')
 
 
