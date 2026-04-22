@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 2026-04-22 — monthly generalization candidate set for post-revY temporal archetypes
+- criação de `validation/revY/monthly_generalization_candidate_cases.csv`
+- criação de `validation/revY/monthly_generalization_candidate_notes.md`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- preparação explícita de casos fora do benchmark para os arquétipos mensais recém-consolidados
+- estes casos ficam marcados como `pending_execution` e não são promovidos a PASS/FAIL canónico sem comparação por equivalência de resultado
+- foco dos candidatos:
+  - mensal por `grupo de contas de cliente`
+  - mensal por `organização de vendas`
+  - mensal por `tipo de processamento de devolução`
+  - métrica `list_minus_net`
+  - janelas de `ano atual`, `ano corrente`, ano explícito e últimos 6 meses
+
 ## 2026-04-22 — post-revY monthly dimension closure within time series consolidation
 - atualização de `generators/temporal_generator.py`
 - atualização de `validation/revY/post_closure_timeseries_cancellation_consolidation_validation.csv`
