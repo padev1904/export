@@ -5,13 +5,13 @@
 - última família fechada: period_compare
 - benchmark fechado: 261/268
 - backlog aberto: 7/268
-- próxima prioridade: reconciliar inventário residual factual pós-revW
+- próxima prioridade: consolidar a enumeração residual pós-revW e promover, quando validado, o CSV residual a inventário canónico final
 - próximos passos:
-  1. identificar exatamente as 7 perguntas ainda abertas no benchmark
-  2. reconciliar o inventário residual real por `qid`
-  3. mapear cada pergunta à família correta
+  1. validar documentalmente o estado de `Q77`, `Q81`, `Q118` e `Q143`
+  2. confirmar se o working set residual de 7 linhas resiste à reconciliação benchmark-wide
+  3. promover o inventário residual a estado canónico apenas após essa validação
   4. preparar a próxima revisão (`revX`)
-  5. fechar a próxima família universal sem overfit
+  5. fechar a próxima família universal realmente residual sem overfit
   6. criar perguntas novas fora do benchmark
   7. comparar SQL manual independente com SQL do gerador universal por equivalência de resultado
   8. atualizar repositório canónico no fim da revisão
@@ -19,7 +19,7 @@
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-22 (revW period_compare closed; handover sync after repo audit; revX preflight note added)
+Última consolidação: 2026-04-22 (revX residual working set synced to repo; state still revW-closed until reconciliation is promoted)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
@@ -40,20 +40,27 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - validation/revW/global_counts_after_revW.csv
 - validation/revW/backlog_reconciliation_status.md
 - validation/revX/reconciliation_preflight.md
+- validation/revX/backlog_residual_after_revW.csv
+- validation/revX/backlog_residual_candidates_after_revW_11.csv
+- validation/revX/backlog_residual_after_revW_reconciliation_note.md
 
 ## Nota de reconciliação
 Os artefactos técnicos de revW estão sincronizados no repositório.
-A enumeração exata dos 7 `qid` ainda abertos continua a exigir reconciliação benchmark-wide porque o repositório não tinha, até esta atualização, um inventário residual pós-revW explicitamente enumerado por pergunta.
 
-Foi acrescentado o artefacto `validation/revX/reconciliation_preflight.md` para separar claramente:
-- factos verificados
-- hipóteses operacionais de trabalho
-- próxima ação obrigatória
+O repositório passa agora a conter um ficheiro residual explícito por `qid`:
+- `validation/revX/backlog_residual_after_revW.csv`
 
-Esse artefacto é de preflight e **não substitui** a enumeração canónica ainda em falta.
+No entanto, esse ficheiro foi deliberadamente publicado com:
+- `is_canonical = false`
+
+porque a prova benchmark-wide que distingue definitivamente o residual real de 7 linhas dos 4 candidatos possivelmente já absorvidos por evidência anterior ainda precisa de fecho documental explícito.
+
+O ficheiro:
+- evita perder o working set reconciliado
+- não substitui a promoção canónica final ainda em falta
 
 ## Próxima prioridade
-1. reconciliar inventário residual factual pós-revW
-2. identificar exatamente os 7 `qid` ainda abertos
-3. criar `validation/revX/backlog_residual_after_revW.csv`
+1. validar documentalmente `Q77`, `Q81`, `Q118` e `Q143`
+2. confirmar ou corrigir o working set residual de 7 linhas
+3. só depois promover `validation/revX/backlog_residual_after_revW.csv` a inventário residual canónico final
 4. preparar `revX` com foco na próxima família universal realmente residual
