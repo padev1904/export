@@ -1,0 +1,3 @@
+test_id,question,complexity,generated_rows,manual_rows,result_equivalent,evidence_dataset,execution_engine,scope,acceptance_basis
+B07,Qual a taxa de cancelamento de documentos por marca e por mês no ano atual?,muito elevada,52,52,1,training_data/documentation/f_invoice_sample.csv,sqlite_local_translated_from_tsql,out_of_benchmark,canonical_code_reexecuted_on_accepted_sample
+B20,Quais são os 3 canais de distribuição com maior taxa de cancelamento de documentos dentro de cada trimestre de 2026?,extrema,6,6,1,training_data/documentation/f_invoice_sample.csv,sqlite_local_translated_from_tsql,out_of_benchmark,canonical_code_reexecuted_on_accepted_sample
