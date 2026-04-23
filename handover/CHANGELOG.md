@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 2026-04-23 — analyst_free_questions_v2 WS1 canonical sync and reexecution
+- atualização de `generators/percentage_share_generator.py`
+- criação de `validation/revY/analyst_free_questions_v2_ws1_manual_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws1_generated_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws1_equivalence_eval.csv`
+- criação de `validation/revY/analyst_free_questions_v2_ws1_notes.md`
+- atualização de `handover/HANDOVER_CURRENT.md`
+- atualização de `handover/HANDOVER_NEXT_STEP_ANALYST_V2_EXPANSION.md`
+- atualização de `validation/revY/analyst_free_questions_v2_expansion_plan.md`
+- atualização de `validation/revY/analyst_free_questions_v2_gap_matrix.csv`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- sincronização canónica de `WS1` na camada técnica real do repositório
+- reexecução local na base aceite `training_data/documentation/f_invoice_sample.csv` a partir do código canónico gravado
+- equivalência confirmada em `3/3` para `B03`, `B11`, `B19`
+- atualização do estado operacional de `analyst_free_questions_v2` para cobertura `13/20` e gap `7/20`
+- esta linha permanece **fora do benchmark** e não altera o estado canónico `268/268`
+
 ## 2026-04-23 — analyst_free_questions_v2 WS4 canonical sync and reexecution
 - atualização de `generators/rank_partition_generator.py`
 - atualização de `handover/HANDOVER_CURRENT.md`
@@ -247,7 +264,6 @@
 - criação de generators/percentage_share_generator.py
 - criação de validation/revQ/percentage_share_benchmark_validation.csv
 - criação de validation/revQ/percentage_share_generalization_eval.csv
-- criação de validation/revQ/percentage_share_generalization_cases.md
 - criação de validation/revQ/percentage_share_notes.md
 - criação de validation/revQ/global_counts_after_revQ.csv
 - atualização factual da contagem global para 204/268 fechadas e 64/268 abertas
