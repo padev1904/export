@@ -132,9 +132,9 @@
 - validation/revY/analyst_free_questions_v2_gap_matrix.csv
 - validation/revY/analyst_free_questions_v2_expansion_plan.md
 - validation/revY/analyst_free_questions_v2_ws4_manual_sql.sql
-- validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql
-- validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv
-- validation/revY/analyst_free_questions_v2_ws4_notes.md
+- validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql — SQL gerado coerente com o código canónico sincronizado
+- validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv — reexecução com o código canónico gravado
+- validation/revY/analyst_free_questions_v2_ws4_notes.md — notas finais de sincronização canónica de `WS4`
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
