@@ -1,0 +1,2 @@
+test_id,question,complexity,generated_rows,manual_rows,result_equivalent,evidence_dataset,execution_engine,scope,acceptance_basis
+B01,Quais são os clientes que explicam os primeiros 80% da faturação dentro de cada canal de distribuição nos últimos 12 meses?,muito elevada,18,18,1,training_data/documentation/f_invoice_sample.csv,sqlite_local_translated_from_tsql,out_of_benchmark,canonical_code_reexecuted_on_accepted_sample
