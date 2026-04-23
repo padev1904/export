@@ -131,6 +131,10 @@
 - validation/revY/analyst_free_questions_v2_notes.md
 - validation/revY/analyst_free_questions_v2_gap_matrix.csv
 - validation/revY/analyst_free_questions_v2_expansion_plan.md
+- validation/revY/analyst_free_questions_v2_ws4_manual_sql.sql
+- validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql
+- validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv
+- validation/revY/analyst_free_questions_v2_ws4_notes.md
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
