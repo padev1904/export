@@ -50,6 +50,12 @@ def detect_dimension(qn: str) -> tuple[Optional[str], Optional[str], Tuple[str, 
             'TipoDocumentoFaturacao',
             ('JOIN dbo.D_BillingDocumentType bdt ON f.NIDBillingDocumentType = bdt.NIDBillingDocumentType',),
         )
+    if 'regiao' in qn or 'região' in qn:
+        return (
+            'f.NIDRegion',
+            'Regiao',
+            ('JOIN dbo.D_Region r ON f.NIDRegion = r.NIDRegion',),
+        )
     if 'pais' in qn or 'país' in qn:
         return (
             'c.TCountry',
@@ -125,6 +131,31 @@ ORDER BY Mes ASC;"""
 
     if spec.dimension_expr is None or spec.dimension_alias is None:
         raise ValueError(f'Dimensão não suportada para period_compare: {spec.question}')
+
+    if spec.dimension_expr == 'f.NIDRegion':
+        delta_expr = (
+            'g.Valor2026 - g.Valor2025'
+            if spec.delta_mode == 'absolute'
+            else '100.0 * (g.Valor2026 - g.Valor2025) / NULLIF(g.Valor2025, 0)'
+        )
+        delta_alias = 'VariacaoAbsoluta' if spec.delta_mode == 'absolute' else 'VariacaoPercentual'
+        return f"""WITH grouped AS (
+    SELECT
+        f.NIDRegion,
+        SUM(CASE WHEN f.BillingDocumentDate / 10000 = 2025 THEN {spec.measure_expr} ELSE 0 END) AS Valor2025,
+        SUM(CASE WHEN f.BillingDocumentDate / 10000 = 2026 THEN {spec.measure_expr} ELSE 0 END) AS Valor2026
+    FROM dbo.F_Invoice f
+    WHERE {' AND '.join(spec.extra_filters)}
+    GROUP BY f.NIDRegion
+    HAVING SUM(CASE WHEN f.BillingDocumentDate / 10000 = 2025 THEN {spec.measure_expr} ELSE 0 END) <> 0
+        OR SUM(CASE WHEN f.BillingDocumentDate / 10000 = 2026 THEN {spec.measure_expr} ELSE 0 END) <> 0
+)
+SELECT
+    r.TRegion AS Regiao,
+    {delta_expr} AS {delta_alias}
+FROM grouped g
+JOIN dbo.D_Region r ON r.NIDRegion = g.NIDRegion
+ORDER BY {delta_alias} DESC, Regiao ASC;"""
 
     delta_alias = 'VariacaoAbsoluta' if spec.delta_mode == 'absolute' else 'VariacaoPercentual'
     delta_expr = (
