@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## 2026-04-23 — analyst_free_questions_v2 full canonical closure
+- atualização de `generators/lifecycle_generator.py`
+- atualização de `generators/cancellation_generator.py`
+- atualização de `generators/avg_per_document_generator.py`
+- atualização de `generators/period_compare_generator.py`
+- atualização de `generators/pareto_generator.py`
+- criação de `validation/revY/analyst_free_questions_v2_ws2_manual_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws2_generated_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws2_equivalence_eval.csv`
+- criação de `validation/revY/analyst_free_questions_v2_ws2_notes.md`
+- criação de `validation/revY/analyst_free_questions_v2_ws3_manual_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws3_generated_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws3_equivalence_eval.csv`
+- criação de `validation/revY/analyst_free_questions_v2_ws3_notes.md`
+- criação de `validation/revY/analyst_free_questions_v2_ws5_manual_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws5_generated_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws5_equivalence_eval.csv`
+- criação de `validation/revY/analyst_free_questions_v2_ws5_notes.md`
+- criação de `validation/revY/analyst_free_questions_v2_ws6_manual_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws6_generated_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws6_equivalence_eval.csv`
+- criação de `validation/revY/analyst_free_questions_v2_ws6_notes.md`
+- atualização de `validation/revY/analyst_free_questions_v2_gap_matrix.csv`
+- atualização de `validation/revY/analyst_free_questions_v2_expansion_plan.md`
+- atualização de `handover/HANDOVER_CURRENT.md`
+- atualização de `handover/HANDOVER_NEXT_STEP_ANALYST_V2_EXPANSION.md`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- sincronização canónica de `WS2`, `WS3`, `WS5` e `WS6` na camada técnica real do repositório
+- reexecução local na base aceite `training_data/documentation/f_invoice_sample.csv` a partir do código canónico gravado
+- equivalência confirmada para os 7 casos remanescentes: `B01`, `B05`, `B07`, `B09`, `B15`, `B16`, `B20`
+- atualização do estado operacional de `analyst_free_questions_v2` para cobertura `20/20` e gap `0/20`
+- `analyst_free_questions_v2` fica fechado como linha canónica **fora do benchmark**
+- esta linha não altera o estado canónico do benchmark principal, que permanece `268/268`
+
 ## 2026-04-23 — analyst_free_questions_v2 WS1 canonical sync and reexecution
 - atualização de `generators/percentage_share_generator.py`
 - criação de `validation/revY/analyst_free_questions_v2_ws1_manual_sql.sql`
