@@ -11,7 +11,7 @@ Fecho do workstream `WS4 — rank within partition com métricas derivadas e mul
 - B14
 - B18
 
-## Capacidades introduzidas
+## Capacidades sincronizadas na camada técnica canónica
 - ranking por múltiplas chaves de partição (`mes + organizacao`, `mes + marca`)
 - ranking sobre métrica derivada `list_minus_net`
 - ranking sobre métrica derivada `promo_discount_total`
@@ -23,7 +23,8 @@ Fecho do workstream `WS4 — rank within partition com métricas derivadas e mul
 ## Evidência de validação
 - base aceite: `training_data/documentation/f_invoice_sample.csv`
 - motor de execução: `sqlite_local_translated_from_tsql`
-- equivalência local confirmada em `6/6`
+- equivalência confirmada em reexecução com o código canónico gravado: `6/6`
+- `generators/rank_partition_generator.py` ficou sincronizado antes desta reexecução final
 
 ## Regra de perímetro
 - esta passagem permanece **fora do benchmark**
@@ -31,7 +32,7 @@ Fecho do workstream `WS4 — rank within partition com métricas derivadas e mul
 
 ## Nota de interpretação operacional
 - `B12` não explicita `N` no texto canónico da pergunta.
-- Nesta passagem, a interpretação adotada foi devolver o conjunto ordenado por partição, sem corte `TOP N`, preservando ranking interno e sem promover esse detalhe a facto documental externo ao repositório.
+- A interpretação mantida no código canónico é devolver o conjunto ordenado por partição, sem corte `TOP N`, preservando ranking interno.
 
 ## Observação sobre a amostra
 - `B02` devolveu `0` linhas na base aceite atual; a equivalência manual vs gerado foi ainda assim confirmada (`0 = 0`).
