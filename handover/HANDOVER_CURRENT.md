@@ -9,14 +9,14 @@
 - próxima prioridade: ampliar progressivamente a camada técnica para cobrir o lote `analyst_free_questions_v2` fora do benchmark, em blocos de capacidade reutilizável
 - próximos passos:
   1. usar `validation/revY/analyst_free_questions_v2_gap_matrix.csv` como matriz operacional do gap atual
-  2. seguir `validation/revY/analyst_free_questions_v2_expansion_plan.md` por workstreams, começando por `WS4`
+  2. seguir `validation/revY/analyst_free_questions_v2_expansion_plan.md` por workstreams, com `WS4` já fechado e `WS1` como próximo alvo recomendado
   3. preservar a regra de que esta linha é fora do benchmark e não altera `268/268`
   4. manter o bloco mensal atual congelado por estabilização, salvo evidência nova independente desta linha
 
 ## Nota de fork de sessão
 Se houver divergência entre conversa e repositório, prevalece o repositório canónico.
 
-Última consolidação: 2026-04-22 (analyst-free question set v2 gap mapped and expansion handover synced)
+Última consolidação: 2026-04-23 (analyst-free question set v2 WS4 closure synced)
 
 ## Estado factual consolidado
 - benchmark total: 268 perguntas
@@ -100,6 +100,19 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - criação de `handover/HANDOVER_NEXT_STEP_ANALYST_V2_EXPANSION.md`
 - decisão explícita: a próxima sessão deve ampliar capacidades por workstream reutilizável, começando por `WS4`
 
+### Oitava passagem pós-fecho
+- atualização de `generators/rank_partition_generator.py`
+- criação de `validation/revY/analyst_free_questions_v2_ws4_manual_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv`
+- criação de `validation/revY/analyst_free_questions_v2_ws4_notes.md`
+- atualização de `validation/revY/analyst_free_questions_v2_gap_matrix.csv`
+- fecho de `WS4 — rank derived / multi-partition` na linha fora do benchmark `analyst_free_questions_v2`
+- cobertura incremental confirmada por execução local em `6/6` para `B02`, `B08`, `B10`, `B12`, `B14`, `B18`
+- cobertura acumulada do lote `analyst_free_questions_v2` passa para `10/20`
+- gap remanescente do lote `analyst_free_questions_v2` passa para `10/20`
+- nota operacional explícita: `B12` não explicita `N` no texto canónico e foi tratado nesta passagem como lista ordenada por partição sem corte `TOP N`, sem promover esse detalhe a facto documental externo ao repositório
+
 ## Evidência canónica relevante
 - generators/period_compare_generator.py
 - generators/sqlserver_patterns.py
@@ -139,6 +152,10 @@ Se houver divergência entre conversa e repositório, prevalece o repositório c
 - validation/revY/analyst_free_questions_v2_notes.md
 - validation/revY/analyst_free_questions_v2_gap_matrix.csv
 - validation/revY/analyst_free_questions_v2_expansion_plan.md
+- validation/revY/analyst_free_questions_v2_ws4_manual_sql.sql
+- validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql
+- validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv
+- validation/revY/analyst_free_questions_v2_ws4_notes.md
 - handover/STABILIZATION_DECISION_MONTHLY_DIMENSION_REFACTOR.md
 - handover/HANDOVER_NEXT_STEP_ANALYST_V2_EXPANSION.md
 
@@ -152,7 +169,7 @@ Esse gap foi fechado benchmark-wide com validação por equivalência de resulta
 - `validation/revY/benchmark_residual_closure_validation.csv`
 
 ## Próxima prioridade
-1. ampliar capacidades para reduzir o gap `16/20` do lote `analyst_free_questions_v2`
-2. começar por `WS4` (`rank derived / multi-partition`)
+1. ampliar capacidades para reduzir o gap `10/20` do lote `analyst_free_questions_v2`
+2. `WS4` está fechado; o próximo alvo recomendado é `WS1` (`nested share / partition share`)
 3. preservar a distinção entre benchmark fechado e expansão fora do benchmark
 4. evitar reabertura de trabalho benchmark-wide já fechado sem nova evidência de regressão
