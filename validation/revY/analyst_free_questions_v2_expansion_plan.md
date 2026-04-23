@@ -1,14 +1,15 @@
 # analyst free questions v2 — expansion plan
 
 ## Objetivo
-Preparar uma próxima sessão de trabalho que amplie os geradores universais para responder ao lote `B01`–`B20` formulado em estilo de analista experiente, sem reabrir benchmark fechado.
+Preparar as próximas sessões de trabalho que ampliem os geradores universais para responder ao lote `B01`–`B20` formulado em estilo de analista experiente, sem reabrir benchmark fechado.
 
 ## Estado factual de partida
 - benchmark canónico fechado: `268/268`
 - backlog benchmark-wide: `0/268`
 - lote `analyst_free_questions_v2`: 20 perguntas fora do benchmark
-- cobertura atual por execução local: `4/20`
-- gap atual fora do benchmark neste lote: `16/20`
+- cobertura canónica atual por execução/comparação de resultados: `10/20`
+- gap atual fora do benchmark neste lote: `10/20`
+- `WS4` fechado canonicamente em `2026-04-23`
 
 ## Princípio orientador
 Expandir por **capacidades semânticas reutilizáveis** e não pergunta a pergunta.
@@ -52,18 +53,17 @@ Alvo técnico principal:
 - helpers temporais adicionais em `generators/sqlserver_patterns.py`
 
 ### WS4 — Rank within partition com métricas derivadas e multi-partição
-**Cobertura alvo:** `B02`, `B08`, `B10`, `B12`, `B14`, `B18`
+**Cobertura fechada:** `B02`, `B08`, `B10`, `B12`, `B14`, `B18`
 
-Capacidade a introduzir:
+Capacidade já sincronizada:
 - ranking sobre métrica yoy same-month derivada
 - ranking sobre delta de moving windows
 - ranking em partições múltiplas (`mes + organizacao`, `mes + marca`, etc.)
 - mixed-sign documents partitioned beyond month
-- novas métricas derivadas como `net_weight_per_unit`
+- métrica derivada `net_weight_per_unit`
 
 Alvo técnico principal:
 - `generators/rank_partition_generator.py`
-- possível extração incremental de helpers comuns em `generators/sqlserver_patterns.py`
 
 ### WS5 — Cancellation por dimensão indireta e bucket novo
 **Cobertura alvo:** `B07`, `B20`
@@ -90,18 +90,18 @@ Alvo técnico principal:
 - `generators/period_compare_generator.py`
 
 ## Ordem recomendada
-1. WS4 — rank derived / multi-partition
-2. WS1 — nested share
-3. WS3 — lifecycle parametrizável
-4. WS5 — cancellation indirect / quarter
-5. WS6 — avg-per-document + period compare extensions
-6. WS2 — pareto within partition
+1. WS1 — nested share
+2. WS3 — lifecycle parametrizável
+3. WS5 — cancellation indirect / quarter
+4. WS6 — avg-per-document + period compare extensions
+5. WS2 — pareto within partition
 
 ## Justificação da ordem
-- WS4 e WS1 fecham o maior volume de perguntas com maior reutilização transversal
-- WS3 cobre lifecycle real de analista sénior, hoje ainda estreito
-- WS5 e WS6 completam gaps dimensionais/temporais específicos
-- WS2 é conceptualmente isolado e pode entrar depois sem bloquear os restantes
+- `WS4` já ficou fechado e sincronizado na camada técnica canónica
+- `WS1` fecha o maior volume residual com forte reutilização transversal
+- `WS3` cobre lifecycle real de analista sénior, hoje ainda estreito
+- `WS5` e `WS6` completam gaps dimensionais/temporais específicos
+- `WS2` é conceptualmente isolado e pode entrar depois sem bloquear os restantes
 
 ## Artefactos que a próxima sessão deverá produzir
 - SQL manual esperado por pergunta nova suportada
