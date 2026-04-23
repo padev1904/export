@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2026-04-23 — analyst_free_questions_v2 WS4 canonical sync and reexecution
+- atualização de `generators/rank_partition_generator.py`
+- atualização de `handover/HANDOVER_CURRENT.md`
+- atualização de `handover/HANDOVER_NEXT_STEP_ANALYST_V2_EXPANSION.md`
+- atualização de `validation/revY/analyst_free_questions_v2_expansion_plan.md`
+- atualização de `validation/revY/analyst_free_questions_v2_gap_matrix.csv`
+- atualização de `validation/revY/analyst_free_questions_v2_ws4_notes.md`
+- atualização de `validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- sincronização canónica de `WS4` na camada técnica real do repositório
+- reexecução local na base aceite `training_data/documentation/f_invoice_sample.csv` a partir do código canónico gravado
+- equivalência confirmada em `6/6` para `B02`, `B08`, `B10`, `B12`, `B14`, `B18`
+- atualização do estado operacional de `analyst_free_questions_v2` para cobertura `10/20` e gap `10/20`
+- clarificação mantida: `B12` continua tratado como lista ordenada por partição sem corte `TOP N` explícito
+- esta linha permanece **fora do benchmark** e não altera o estado canónico `268/268`
+
 ## 2026-04-23 — analyst_free_questions_v2 WS4 local candidate validation
 - criação de `validation/revY/analyst_free_questions_v2_ws4_manual_sql.sql`
 - criação de `validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql`
