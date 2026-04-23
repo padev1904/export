@@ -135,10 +135,26 @@
 - validation/revY/analyst_free_questions_v2_ws1_generated_sql.sql — SQL gerado coerente com o código canónico sincronizado
 - validation/revY/analyst_free_questions_v2_ws1_equivalence_eval.csv — reexecução com o código canónico gravado
 - validation/revY/analyst_free_questions_v2_ws1_notes.md — notas finais de sincronização canónica de `WS1`
+- validation/revY/analyst_free_questions_v2_ws2_manual_sql.sql
+- validation/revY/analyst_free_questions_v2_ws2_generated_sql.sql — SQL gerado coerente com o código canónico sincronizado
+- validation/revY/analyst_free_questions_v2_ws2_equivalence_eval.csv — reexecução com o código canónico gravado
+- validation/revY/analyst_free_questions_v2_ws2_notes.md — notas finais de sincronização canónica de `WS2`
+- validation/revY/analyst_free_questions_v2_ws3_manual_sql.sql
+- validation/revY/analyst_free_questions_v2_ws3_generated_sql.sql — SQL gerado coerente com o código canónico sincronizado
+- validation/revY/analyst_free_questions_v2_ws3_equivalence_eval.csv — reexecução com o código canónico gravado
+- validation/revY/analyst_free_questions_v2_ws3_notes.md — notas finais de sincronização canónica de `WS3`
 - validation/revY/analyst_free_questions_v2_ws4_manual_sql.sql
 - validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql — SQL gerado coerente com o código canónico sincronizado
 - validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv — reexecução com o código canónico gravado
 - validation/revY/analyst_free_questions_v2_ws4_notes.md — notas finais de sincronização canónica de `WS4`
+- validation/revY/analyst_free_questions_v2_ws5_manual_sql.sql
+- validation/revY/analyst_free_questions_v2_ws5_generated_sql.sql — SQL gerado coerente com o código canónico sincronizado
+- validation/revY/analyst_free_questions_v2_ws5_equivalence_eval.csv — reexecução com o código canónico gravado
+- validation/revY/analyst_free_questions_v2_ws5_notes.md — notas finais de sincronização canónica de `WS5`
+- validation/revY/analyst_free_questions_v2_ws6_manual_sql.sql
+- validation/revY/analyst_free_questions_v2_ws6_generated_sql.sql — SQL gerado coerente com o código canónico sincronizado
+- validation/revY/analyst_free_questions_v2_ws6_equivalence_eval.csv — reexecução com o código canónico gravado
+- validation/revY/analyst_free_questions_v2_ws6_notes.md — notas finais de sincronização canónica de `WS6`
 
 ## Ponto de entrada em caso de fork
 1. handover/FORK_RECOVERY_PROTOCOL.md
