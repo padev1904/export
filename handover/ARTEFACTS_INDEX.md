@@ -131,6 +131,10 @@
 - validation/revY/analyst_free_questions_v2_notes.md
 - validation/revY/analyst_free_questions_v2_gap_matrix.csv
 - validation/revY/analyst_free_questions_v2_expansion_plan.md
+- validation/revY/analyst_free_questions_v2_ws1_manual_sql.sql
+- validation/revY/analyst_free_questions_v2_ws1_generated_sql.sql — SQL gerado coerente com o código canónico sincronizado
+- validation/revY/analyst_free_questions_v2_ws1_equivalence_eval.csv — reexecução com o código canónico gravado
+- validation/revY/analyst_free_questions_v2_ws1_notes.md — notas finais de sincronização canónica de `WS1`
 - validation/revY/analyst_free_questions_v2_ws4_manual_sql.sql
 - validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql — SQL gerado coerente com o código canónico sincronizado
 - validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv — reexecução com o código canónico gravado
