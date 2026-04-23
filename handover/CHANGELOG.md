@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2026-04-23 — analyst_free_questions_v2 WS4 closure
+- atualização de `generators/rank_partition_generator.py`
+- criação de `validation/revY/analyst_free_questions_v2_ws4_manual_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql`
+- criação de `validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv`
+- criação de `validation/revY/analyst_free_questions_v2_ws4_notes.md`
+- atualização de `validation/revY/analyst_free_questions_v2_gap_matrix.csv`
+- atualização de `handover/HANDOVER_CURRENT.md`
+- atualização de `handover/HANDOVER_NEXT_STEP_ANALYST_V2_EXPANSION.md`
+- atualização de `handover/ARTEFACTS_INDEX.md`
+- fecho de `WS4 — rank derived / multi-partition` na linha fora do benchmark `analyst_free_questions_v2`
+- validação por equivalência local em `6/6` para `B02`, `B08`, `B10`, `B12`, `B14`, `B18`
+- cobertura acumulada do lote `analyst_free_questions_v2` passa para `10/20`
+- gap remanescente do lote `analyst_free_questions_v2` passa para `10/20`
+- nota operacional explícita: `B12` não explicita `N` no texto canónico e foi tratado nesta passagem como lista ordenada por partição sem corte `TOP N`, sem promover esse detalhe a facto documental externo ao repositório
+
 ## 2026-04-22 — monthly generalization candidate set for post-revY temporal archetypes
 - criação de `validation/revY/monthly_generalization_candidate_cases.csv`
 - criação de `validation/revY/monthly_generalization_candidate_notes.md`
