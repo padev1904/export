@@ -1,0 +1,3 @@
+test_id,question,complexity,generated_rows,manual_rows,result_equivalent,evidence_dataset,execution_engine,scope,acceptance_basis
+B09,Qual o ticket médio por documento por grupo de contas de cliente e por mês nos últimos 6 meses?,muito elevada,6,6,1,training_data/documentation/f_invoice_sample.csv,sqlite_local_translated_from_tsql,out_of_benchmark,canonical_code_reexecuted_on_accepted_sample
+B15,Qual a variação percentual do valor líquido faturado por região entre 2025 e 2026 excluindo regiões onde ambos os períodos são zero?,muito elevada,59,59,1,training_data/documentation/f_invoice_sample.csv,sqlite_local_translated_from_tsql,out_of_benchmark,canonical_code_reexecuted_on_accepted_sample
