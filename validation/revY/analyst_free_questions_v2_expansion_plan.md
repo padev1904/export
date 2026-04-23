@@ -7,9 +7,10 @@ Preparar as próximas sessões de trabalho que ampliem os geradores universais p
 - benchmark canónico fechado: `268/268`
 - backlog benchmark-wide: `0/268`
 - lote `analyst_free_questions_v2`: 20 perguntas fora do benchmark
-- cobertura canónica atual por execução/comparação de resultados: `10/20`
-- gap atual fora do benchmark neste lote: `10/20`
+- cobertura canónica atual por execução/comparação de resultados: `13/20`
+- gap atual fora do benchmark neste lote: `7/20`
 - `WS4` fechado canonicamente em `2026-04-23`
+- `WS1` fechado canonicamente em `2026-04-23`
 
 ## Princípio orientador
 Expandir por **capacidades semânticas reutilizáveis** e não pergunta a pergunta.
@@ -17,9 +18,9 @@ Expandir por **capacidades semânticas reutilizáveis** e não pergunta a pergun
 ## Workstreams mínimos recomendados
 
 ### WS1 — Nested share / partition share
-**Cobertura alvo:** `B03`, `B11`, `B19`
+**Cobertura fechada:** `B03`, `B11`, `B19`
 
-Capacidade a introduzir:
+Capacidade já sincronizada:
 - quota de uma entidade dentro de uma partição explícita
 - suporte a bucket temporal mensal quando aplicável
 - suporte a janelas `current_year` e `last_12_months`
@@ -27,7 +28,6 @@ Capacidade a introduzir:
 
 Alvo técnico principal:
 - `generators/percentage_share_generator.py`
-- eventual helper novo em `generators/sqlserver_patterns.py`
 
 ### WS2 — Pareto dentro de partição
 **Cobertura alvo:** `B01`
@@ -90,15 +90,13 @@ Alvo técnico principal:
 - `generators/period_compare_generator.py`
 
 ## Ordem recomendada
-1. WS1 — nested share
-2. WS3 — lifecycle parametrizável
-3. WS5 — cancellation indirect / quarter
-4. WS6 — avg-per-document + period compare extensions
-5. WS2 — pareto within partition
+1. WS3 — lifecycle parametrizável
+2. WS5 — cancellation indirect / quarter
+3. WS6 — avg-per-document + period compare extensions
+4. WS2 — pareto within partition
 
 ## Justificação da ordem
-- `WS4` já ficou fechado e sincronizado na camada técnica canónica
-- `WS1` fecha o maior volume residual com forte reutilização transversal
+- `WS4` e `WS1` já ficaram fechados e sincronizados na camada técnica canónica
 - `WS3` cobre lifecycle real de analista sénior, hoje ainda estreito
 - `WS5` e `WS6` completam gaps dimensionais/temporais específicos
 - `WS2` é conceptualmente isolado e pode entrar depois sem bloquear os restantes
