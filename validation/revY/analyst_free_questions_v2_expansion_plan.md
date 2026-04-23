@@ -7,106 +7,53 @@ Preparar as próximas sessões de trabalho que ampliem os geradores universais p
 - benchmark canónico fechado: `268/268`
 - backlog benchmark-wide: `0/268`
 - lote `analyst_free_questions_v2`: 20 perguntas fora do benchmark
-- cobertura canónica atual por execução/comparação de resultados: `13/20`
-- gap atual fora do benchmark neste lote: `7/20`
-- `WS4` fechado canonicamente em `2026-04-23`
+- cobertura canónica atual por execução/comparação de resultados: `20/20`
+- gap atual fora do benchmark neste lote: `0/20`
 - `WS1` fechado canonicamente em `2026-04-23`
+- `WS2` fechado canonicamente em `2026-04-23`
+- `WS3` fechado canonicamente em `2026-04-23`
+- `WS4` fechado canonicamente em `2026-04-23`
+- `WS5` fechado canonicamente em `2026-04-23`
+- `WS6` fechado canonicamente em `2026-04-23`
 
 ## Princípio orientador
 Expandir por **capacidades semânticas reutilizáveis** e não pergunta a pergunta.
 
-## Workstreams mínimos recomendados
+## Estado dos workstreams
 
 ### WS1 — Nested share / partition share
 **Cobertura fechada:** `B03`, `B11`, `B19`
 
-Capacidade já sincronizada:
-- quota de uma entidade dentro de uma partição explícita
-- suporte a bucket temporal mensal quando aplicável
-- suporte a janelas `current_year` e `last_12_months`
-- suporte a métricas com `requires_additional`
-
-Alvo técnico principal:
-- `generators/percentage_share_generator.py`
-
 ### WS2 — Pareto dentro de partição
-**Cobertura alvo:** `B01`
-
-Capacidade a introduzir:
-- Pareto cumulativo por entidade dentro de uma partição
-- threshold local por partição
-- janela `last_12_months`
-
-Alvo técnico principal:
-- `generators/pareto_generator.py`
+**Cobertura fechada:** `B01`
 
 ### WS3 — Lifecycle segmentado com janelas parametrizáveis
-**Cobertura alvo:** `B05`, `B16`
-
-Capacidade a introduzir:
-- reativados/perdidos por dimensão
-- janelas configuráveis de atividade e inatividade
-- distinção explícita entre período-alvo e lookback
-
-Alvo técnico principal:
-- `generators/lifecycle_generator.py`
-- helpers temporais adicionais em `generators/sqlserver_patterns.py`
+**Cobertura fechada:** `B05`, `B16`
 
 ### WS4 — Rank within partition com métricas derivadas e multi-partição
 **Cobertura fechada:** `B02`, `B08`, `B10`, `B12`, `B14`, `B18`
 
-Capacidade já sincronizada:
-- ranking sobre métrica yoy same-month derivada
-- ranking sobre delta de moving windows
-- ranking em partições múltiplas (`mes + organizacao`, `mes + marca`, etc.)
-- mixed-sign documents partitioned beyond month
-- métrica derivada `net_weight_per_unit`
-
-Alvo técnico principal:
-- `generators/rank_partition_generator.py`
-
 ### WS5 — Cancellation por dimensão indireta e bucket novo
-**Cobertura alvo:** `B07`, `B20`
-
-Capacidade a introduzir:
-- cancelamento por dimensão indireta via produto (`marca`)
-- bucket trimestral
-- top-N de taxa de cancelamento por partição temporal trimestral
-
-Alvo técnico principal:
-- `generators/cancellation_generator.py`
-- helper trimestral em `generators/sqlserver_patterns.py`
+**Cobertura fechada:** `B07`, `B20`
 
 ### WS6 — Period compare / avg-per-document extensions
-**Cobertura alvo:** `B09`, `B15`
+**Cobertura fechada:** `B09`, `B15`
 
-Capacidade a introduzir:
-- ticket médio por documento com dimensão indireta + mês rolling
-- `period_compare` por `region`
-- filtro semântico para excluir grupos com ambos os períodos a zero
+## Conclusão operacional
+O lote `analyst_free_questions_v2` fica agora totalmente fechado por equivalência de resultado na base aceite, sem alterar o estado canónico do benchmark principal.
 
-Alvo técnico principal:
-- `generators/avg_per_document_generator.py`
-- `generators/period_compare_generator.py`
-
-## Ordem recomendada
-1. WS3 — lifecycle parametrizável
-2. WS5 — cancellation indirect / quarter
-3. WS6 — avg-per-document + period compare extensions
-4. WS2 — pareto within partition
-
-## Justificação da ordem
-- `WS4` e `WS1` já ficaram fechados e sincronizados na camada técnica canónica
-- `WS3` cobre lifecycle real de analista sénior, hoje ainda estreito
-- `WS5` e `WS6` completam gaps dimensionais/temporais específicos
-- `WS2` é conceptualmente isolado e pode entrar depois sem bloquear os restantes
+## Próximo uso recomendado
+- não reabrir `analyst_free_questions_v2` sem regressão documental explícita
+- preparar novo lote cego fora do benchmark
+- ou executar regressão dirigida adicional sobre a camada técnica canónica consolidada
 
 ## Artefactos que a próxima sessão deverá produzir
-- SQL manual esperado por pergunta nova suportada
+- novo lote fora do benchmark ou nova regressão dirigida
+- SQL manual esperado para os novos casos
 - SQL gerado pelo código real atualizado
 - matriz de equivalência por execução
-- notas curtas por workstream com capacidade nova introduzida
+- notas curtas do novo bloco
 - atualização de `HANDOVER_CURRENT.md`, `ARTEFACTS_INDEX.md` e `CHANGELOG.md`
 
 ## Regra crítica
-Não reabrir benchmark fechado. Toda esta expansão é **fora do benchmark** até nova decisão explícita em contrário.
+Não reabrir benchmark fechado. `analyst_free_questions_v2` fica agora fechado como linha canónica **fora do benchmark** até nova decisão explícita em contrário.
