@@ -1,0 +1,3 @@
+test_id,question,complexity,generated_rows,manual_rows,result_equivalent,evidence_dataset,execution_engine,scope,acceptance_basis
+B05,Que clientes foram reativados nos últimos 90 dias por organização de vendas após pelo menos 180 dias sem compras?,extrema,16,16,1,training_data/documentation/f_invoice_sample.csv,sqlite_local_translated_from_tsql,out_of_benchmark,canonical_code_reexecuted_on_accepted_sample
+B16,Quais são os clientes perdidos nos últimos 90 dias por canal de distribuição considerando que tinham compras nos 180 dias anteriores a esse período?,extrema,32,32,1,training_data/documentation/f_invoice_sample.csv,sqlite_local_translated_from_tsql,out_of_benchmark,canonical_code_reexecuted_on_accepted_sample
