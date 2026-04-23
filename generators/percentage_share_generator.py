@@ -1,16 +1,18 @@
 
 from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Optional, List
 from unicodedata import normalize
 
-CURRENT_DATE_INT = 20260420
-YEAR_START_2026 = 20260101
-YEAR_END_2026 = 20261231
-MONTH_CURRENT_START = 20260401
-MONTH_NEXT_START = 20260501
-LAST12M_START = 20250421
-LAST6M_START = 20251021
+from sqlserver_patterns import (
+    build_named_time_predicate,
+    current_month_start_date_sql,
+    dedupe_joins,
+    int_date_expr,
+    next_month_start_date_sql,
+    year_month_bucket_expr,
+)
 
 
 def norm(text: str) -> str:
@@ -25,17 +27,18 @@ class Spec:
     entity: Optional[str] = None
     partition: Optional[str] = None
     needs_additional: bool = False
-    time_scope: str = '2026'
+    time_scope: str = 'explicit_year'
+    year: int | None = 2026
     original_question: str = ''
 
 
 ENTITY_MAP = {
     'marca': {
-        'select': 'b.MarcaProduto',
-        'group': 'b.MarcaProduto',
+        'select': 'pb.TProductBrand',
+        'group': 'pb.TProductBrand',
         'joins': [
-            'JOIN D_Product p ON f.NIDProduct = p.NIDProduct',
-            'JOIN D_ProductBrand pb ON p.NIDProductBrand = pb.NIDProductBrand',
+            'JOIN dbo.D_Product p ON f.NIDProduct = p.NIDProduct',
+            'JOIN dbo.D_ProductBrand pb ON p.NIDProductBrand = pb.NIDProductBrand',
         ],
         'label': 'MarcaProduto',
     },
@@ -43,44 +46,44 @@ ENTITY_MAP = {
         'select': 'pf.TProductFamily',
         'group': 'pf.TProductFamily',
         'joins': [
-            'JOIN D_Product p ON f.NIDProduct = p.NIDProduct',
-            'JOIN D_ProductFamily pf ON p.NIDProductFamily = pf.NIDProductFamily',
+            'JOIN dbo.D_Product p ON f.NIDProduct = p.NIDProduct',
+            'JOIN dbo.D_ProductFamily pf ON p.NIDProductFamily = pf.NIDProductFamily',
         ],
         'label': 'FamiliaProduto',
     },
     'produto': {
         'select': 'p.TProduct',
         'group': 'p.TProduct',
-        'joins': ['JOIN D_Product p ON f.NIDProduct = p.NIDProduct'],
+        'joins': ['JOIN dbo.D_Product p ON f.NIDProduct = p.NIDProduct'],
         'label': 'Produto',
     },
     'organizacao_vendas': {
-        'select': 's.TSalesOrganization',
-        'group': 's.TSalesOrganization',
-        'joins': ['JOIN D_SalesOrganization s ON f.NIDSalesOrganization = s.NIDSalesOrganization'],
+        'select': 'so.TSalesOrganization',
+        'group': 'so.TSalesOrganization',
+        'joins': ['JOIN dbo.D_SalesOrganization so ON f.NIDSalesOrganization = so.NIDSalesOrganization'],
         'label': 'OrganizacaoVendas',
     },
     'canal': {
         'select': 'dc.TDistributionChannel',
         'group': 'dc.TDistributionChannel',
-        'joins': ['JOIN D_DistributionChannel dc ON f.NIDDistributionChannel = dc.NIDDistributionChannel'],
+        'joins': ['JOIN dbo.D_DistributionChannel dc ON f.NIDDistributionChannel = dc.NIDDistributionChannel'],
         'label': 'CanalDistribuicao',
     },
     'pais': {
-        'select': 'c.TCountry',
-        'group': 'c.TCountry',
-        'joins': ['JOIN D_Country c ON f.NIDCountry = c.NIDCountry'],
+        'select': 'co.TCountry',
+        'group': 'co.TCountry',
+        'joins': ['JOIN dbo.D_Country co ON f.NIDCountry = co.NIDCountry'],
         'label': 'Pais',
     },
     'regiao': {
         'select': 'r.TRegion',
         'group': 'r.TRegion',
-        'joins': ['JOIN D_Region r ON f.NIDRegion = r.NIDRegion'],
+        'joins': ['JOIN dbo.D_Region r ON f.NIDRegion = r.NIDRegion'],
         'label': 'Regiao',
     },
     'mes': {
-        'select': 'CAST(f.BillingDocumentDate / 100 AS INT)',
-        'group': 'CAST(f.BillingDocumentDate / 100 AS INT)',
+        'select': year_month_bucket_expr(),
+        'group': year_month_bucket_expr(),
         'joins': [],
         'label': 'Mes',
     },
@@ -90,11 +93,14 @@ ENTITY_MAP = {
 def classify(question: str) -> Spec:
     q = norm(question)
     needs_additional = ('margem bruta' in q) or ('vendas comerciais liquidas' in q) or ('net commercial sales' in q)
+    has_current_year = ('ano atual' in q) or ('ano corrente' in q) or ('este ano' in q)
+    has_last_12m = 'ultimos 12 meses' in q or 'ultimo ano movel' in q
+    has_month = ('por mes' in q) or ('mensal' in q)
 
     if 'quota' in q or 'percentagem' in q or 'peso' in q:
         if 'desconto promocional' in q:
-            if 'por mes' in q or 'mensal' in q:
-                return Spec('promo_over_billing', 'ratio', entity='mes', original_question=question)
+            if has_month:
+                return Spec('promo_over_billing', 'ratio', entity='mes', time_scope='last_6_months', year=None, original_question=question)
         if 'preco medio liquido por unidade' in q:
             if 'por marca' in q:
                 return Spec('net_price_per_unit', 'ratio', entity='marca', original_question=question)
@@ -118,29 +124,62 @@ def classify(question: str) -> Spec:
             return Spec('net_amount_share_partition', 'share_partition_2d', entity='organizacao_vendas', partition='mes', original_question=question)
         if 'valor liquido faturado de cada marca dentro da sua familia e por mes' in q:
             return Spec('net_amount_share_partition_2d', 'share_partition_2d_nested', entity='marca', partition='familia', original_question=question)
+        if (
+            ('quota de valor liquido faturado de cada organizacao de vendas' in q or 'percentagem do valor liquido faturado de cada organizacao de vendas' in q)
+            and 'dentro de cada canal de distribuicao' in q
+            and has_month
+            and has_current_year
+        ):
+            return Spec('net_amount_share_partition_2d', 'share_partition_2d_nested', entity='organizacao_vendas', partition='canal', time_scope='current_year', year=None, original_question=question)
+        if (
+            ('percentagem da margem bruta de cada marca' in q or 'quota da margem bruta de cada marca' in q)
+            and ('dentro da respetiva familia' in q or 'dentro da sua familia' in q)
+            and has_month
+            and has_current_year
+        ):
+            return Spec('gross_margin_share_partition_2d', 'share_partition_2d_nested', entity='marca', partition='familia', needs_additional=True, time_scope='current_year', year=None, original_question=question)
         if 'faturacao do mes atual pertence a cada canal' in q or 'mes atual pertence a cada canal de distribuicao' in q:
-            return Spec('net_amount_share', 'share', entity='canal', time_scope='current_month', original_question=question)
+            return Spec('net_amount_share', 'share', entity='canal', time_scope='current_month', year=None, original_question=question)
         if 'ultimos 12 meses por regiao' in q:
-            return Spec('net_amount_share', 'share', entity='regiao', time_scope='last12m', original_question=question)
+            return Spec('net_amount_share', 'share', entity='regiao', time_scope='last_12_months', year=None, original_question=question)
         if 'cada pais dentro de cada organizacao de vendas em 2026' in q:
             return Spec('net_amount_share_partition', 'share_partition', entity='pais', partition='organizacao_vendas', original_question=question)
+        if (
+            ('quota de faturacao de cada pais' in q or 'percentagem da faturacao de cada pais' in q or 'quota de valor liquido faturado de cada pais' in q)
+            and 'dentro de cada organizacao de vendas' in q
+            and has_last_12m
+        ):
+            return Spec('net_amount_share_partition', 'share_partition', entity='pais', partition='organizacao_vendas', time_scope='last_12_months', year=None, original_question=question)
     raise ValueError(f'Pergunta fora do gerador percentage_share: {question}')
 
 
 def base_filters(spec: Spec) -> List[str]:
-    filters = []
-    if spec.time_scope == '2026':
-        filters += [f'f.BillingDocumentDate >= {YEAR_START_2026}', f'f.BillingDocumentDate <= {YEAR_END_2026}']
+    filters: List[str] = []
+    if spec.time_scope in {'explicit_year', 'current_year', 'last_12_months', 'last_6_months'}:
+        filters.append(build_named_time_predicate(spec.time_scope, year=spec.year))
     elif spec.time_scope == 'current_month':
-        filters += [f'f.BillingDocumentDate >= {MONTH_CURRENT_START}', f'f.BillingDocumentDate < {MONTH_NEXT_START}']
-    elif spec.time_scope == 'last12m':
-        filters += [f'f.BillingDocumentDate >= {LAST12M_START}', f'f.BillingDocumentDate <= {CURRENT_DATE_INT}']
-    elif spec.time_scope == 'last6m':
-        filters += [f'f.BillingDocumentDate >= {LAST6M_START}', f'f.BillingDocumentDate <= {CURRENT_DATE_INT}']
+        filters += [
+            f'f.BillingDocumentDate >= {int_date_expr(current_month_start_date_sql())}',
+            f'f.BillingDocumentDate < {int_date_expr(next_month_start_date_sql())}',
+        ]
+    else:
+        raise ValueError(f'unsupported time scope: {spec.time_scope}')
     filters.append('f.BillingDocumentIsCancelled = 0')
     if spec.needs_additional:
         filters.append('f.IsItAnAdditionalCalculatedRecord = 1')
     return filters
+
+
+def measure_sql(spec: Spec) -> tuple[str, str]:
+    if spec.measure_kind in {'net_amount_share', 'net_amount_share_partition', 'net_amount_share_partition_2d'}:
+        return 'SUM(f.NetAmount)', 'ValorLiquidoFaturado'
+    if spec.measure_kind in {'gross_margin_share', 'gross_margin_share_partition', 'gross_margin_share_partition_2d'}:
+        return 'SUM(f.GrossMargin)', 'MargemBruta'
+    if spec.measure_kind == 'billing_quantity_share':
+        return 'SUM(f.BillingQuantity)', 'QuantidadeFaturada'
+    if spec.measure_kind == 'net_commercial_sales_share_partition':
+        return 'SUM(f.NetCommercialSales)', 'VendasComerciaisLiquidas'
+    raise ValueError(spec.measure_kind)
 
 
 def render_sql(spec: Spec) -> str:
@@ -153,7 +192,7 @@ def render_sql(spec: Spec) -> str:
 SELECT
     {ent['select']} AS {ent['label']},
     SUM(f.NetAmount) / NULLIF(SUM(f.BillingQuantity), 0) AS PrecoMedioLiquidoPorUnidade
-FROM F_Invoice f
+FROM dbo.F_Invoice f
     {joins}
 WHERE {filters}
 GROUP BY {ent['group']}
@@ -168,7 +207,7 @@ ORDER BY PrecoMedioLiquidoPorUnidade DESC, {ent['label']} ASC;
 SELECT
     {ent['select']} AS {ent['label']},
     SUM(f.ItemNetWeight) / NULLIF(SUM(f.BillingQuantity), 0) AS PesoLiquidoMedioPorUnidade
-FROM F_Invoice f
+FROM dbo.F_Invoice f
     {joins}
 WHERE {filters}
 GROUP BY {ent['group']}
@@ -177,56 +216,48 @@ ORDER BY PesoLiquidoMedioPorUnidade DESC, {ent['label']} ASC;
 """.strip()
         if spec.measure_kind == 'promo_over_billing':
             ent = ENTITY_MAP[spec.entity]
-            filters = '\n      AND '.join(base_filters(Spec(spec.measure_kind, spec.output_kind, entity='mes', time_scope='last6m', original_question=spec.original_question)))
+            filters = '\n      AND '.join(base_filters(spec))
             return f"""
 SELECT
     {ent['select']} AS {ent['label']},
     SUM(f.NetAmount) AS ValorLiquidoFaturado,
     SUM(f.ZDPRPromotional + f.ZCPRPromotionalCampaign + f.REA1PromotionalDiscount) AS DescontoPromocionalTotal,
     (SUM(f.ZDPRPromotional + f.ZCPRPromotionalCampaign + f.REA1PromotionalDiscount) * 100.0) / NULLIF(SUM(f.NetAmount), 0) AS PercentagemDescontoPromocional
-FROM F_Invoice f
+FROM dbo.F_Invoice f
 WHERE {filters}
 GROUP BY {ent['group']}
 ORDER BY {ent['label']} ASC;
 """.strip()
+
     if spec.output_kind == 'ratio_nested':
         ent = ENTITY_MAP[spec.entity]
         part = ENTITY_MAP[spec.partition]
-        joins = []
-        for j in part['joins'] + ent['joins']:
-            if j not in joins:
-                joins.append(j)
+        joins = dedupe_joins(part['joins'] + ent['joins'])
         filters = '\n      AND '.join(base_filters(spec))
         return f"""
 SELECT
     {part['select']} AS {part['label']},
     {ent['select']} AS {ent['label']},
     SUM(f.NetAmount) / NULLIF(SUM(f.BillingQuantity), 0) AS PrecoMedioLiquidoPorUnidade
-FROM F_Invoice f
+FROM dbo.F_Invoice f
     {'\n    '.join(joins)}
 WHERE {filters}
 GROUP BY {part['group']}, {ent['group']}
 HAVING SUM(f.BillingQuantity) <> 0
 ORDER BY {part['label']} ASC, PrecoMedioLiquidoPorUnidade DESC, {ent['label']} ASC;
 """.strip()
+
     if spec.output_kind == 'share':
         ent = ENTITY_MAP[spec.entity]
         joins = '\n    '.join(ent['joins'])
         filters = '\n      AND '.join(base_filters(spec))
-        measure_expr = 'f.NetAmount'
-        measure_alias = 'ValorLiquidoFaturado'
-        if spec.measure_kind == 'gross_margin_share':
-            measure_expr = 'f.GrossMargin'
-            measure_alias = 'MargemBruta'
-        elif spec.measure_kind == 'billing_quantity_share':
-            measure_expr = 'f.BillingQuantity'
-            measure_alias = 'QuantidadeFaturada'
+        measure_expr, measure_alias = measure_sql(spec)
         return f"""
 WITH base AS (
     SELECT
         {ent['select']} AS {ent['label']},
-        SUM({measure_expr}) AS {measure_alias}
-    FROM F_Invoice f
+        {measure_expr} AS {measure_alias}
+    FROM dbo.F_Invoice f
         {joins}
     WHERE {filters}
     GROUP BY {ent['group']}
@@ -238,29 +269,20 @@ SELECT
 FROM base
 ORDER BY Percentagem DESC, {ent['label']} ASC;
 """.strip()
+
     if spec.output_kind == 'share_partition':
         ent = ENTITY_MAP[spec.entity]
         part = ENTITY_MAP[spec.partition]
-        joins = []
-        for j in part['joins'] + ent['joins']:
-            if j not in joins:
-                joins.append(j)
+        joins = dedupe_joins(part['joins'] + ent['joins'])
         filters = '\n      AND '.join(base_filters(spec))
-        measure_expr = 'f.NetAmount'
-        measure_alias = 'ValorLiquidoFaturado'
-        if spec.measure_kind == 'gross_margin_share_partition':
-            measure_expr = 'f.GrossMargin'
-            measure_alias = 'MargemBruta'
-        elif spec.measure_kind == 'net_commercial_sales_share_partition':
-            measure_expr = 'f.NetCommercialSales'
-            measure_alias = 'VendasComerciaisLiquidas'
+        measure_expr, measure_alias = measure_sql(spec)
         return f"""
 WITH base AS (
     SELECT
         {part['select']} AS {part['label']},
         {ent['select']} AS {ent['label']},
-        SUM({measure_expr}) AS {measure_alias}
-    FROM F_Invoice f
+        {measure_expr} AS {measure_alias}
+    FROM dbo.F_Invoice f
         {'\n        '.join(joins)}
     WHERE {filters}
     GROUP BY {part['group']}, {ent['group']}
@@ -273,21 +295,20 @@ SELECT
 FROM base
 ORDER BY {part['label']} ASC, Percentagem DESC, {ent['label']} ASC;
 """.strip()
+
     if spec.output_kind == 'share_partition_2d':
         ent = ENTITY_MAP[spec.entity]
         part = ENTITY_MAP[spec.partition]
-        joins = []
-        for j in part['joins'] + ent['joins']:
-            if j not in joins:
-                joins.append(j)
+        joins = dedupe_joins(part['joins'] + ent['joins'])
         filters = '\n      AND '.join(base_filters(spec))
+        measure_expr, measure_alias = measure_sql(spec)
         return f"""
 WITH base AS (
     SELECT
         {part['select']} AS {part['label']},
         {ent['select']} AS {ent['label']},
-        SUM(f.NetAmount) AS ValorLiquidoFaturado
-    FROM F_Invoice f
+        {measure_expr} AS {measure_alias}
+    FROM dbo.F_Invoice f
         {'\n        '.join(joins)}
     WHERE {filters}
     GROUP BY {part['group']}, {ent['group']}
@@ -295,40 +316,40 @@ WITH base AS (
 SELECT
     {part['label']},
     {ent['label']},
-    ValorLiquidoFaturado,
-    (ValorLiquidoFaturado * 100.0) / NULLIF(SUM(ValorLiquidoFaturado) OVER (PARTITION BY {part['label']}), 0) AS Percentagem
+    {measure_alias},
+    ({measure_alias} * 100.0) / NULLIF(SUM({measure_alias}) OVER (PARTITION BY {part['label']}), 0) AS Percentagem
 FROM base
 ORDER BY {part['label']} ASC, Percentagem DESC, {ent['label']} ASC;
 """.strip()
+
     if spec.output_kind == 'share_partition_2d_nested':
         ent = ENTITY_MAP[spec.entity]
         part = ENTITY_MAP[spec.partition]
-        joins = []
-        for j in part['joins'] + ent['joins']:
-            if j not in joins:
-                joins.append(j)
+        joins = dedupe_joins(part['joins'] + ent['joins'])
         filters = '\n      AND '.join(base_filters(spec))
+        measure_expr, measure_alias = measure_sql(spec)
         return f"""
 WITH base AS (
     SELECT
-        CAST(f.BillingDocumentDate / 100 AS INT) AS Mes,
+        {ENTITY_MAP['mes']['select']} AS {ENTITY_MAP['mes']['label']},
         {part['select']} AS {part['label']},
         {ent['select']} AS {ent['label']},
-        SUM(f.NetAmount) AS ValorLiquidoFaturado
-    FROM F_Invoice f
+        {measure_expr} AS {measure_alias}
+    FROM dbo.F_Invoice f
         {'\n        '.join(joins)}
     WHERE {filters}
-    GROUP BY CAST(f.BillingDocumentDate / 100 AS INT), {part['group']}, {ent['group']}
+    GROUP BY {ENTITY_MAP['mes']['group']}, {part['group']}, {ent['group']}
 )
 SELECT
     Mes,
     {part['label']},
     {ent['label']},
-    ValorLiquidoFaturado,
-    (ValorLiquidoFaturado * 100.0) / NULLIF(SUM(ValorLiquidoFaturado) OVER (PARTITION BY Mes, {part['label']}), 0) AS Percentagem
+    {measure_alias},
+    ({measure_alias} * 100.0) / NULLIF(SUM({measure_alias}) OVER (PARTITION BY Mes, {part['label']}), 0) AS Percentagem
 FROM base
 ORDER BY Mes ASC, {part['label']} ASC, Percentagem DESC, {ent['label']} ASC;
 """.strip()
+
     raise ValueError(spec)
 
 
