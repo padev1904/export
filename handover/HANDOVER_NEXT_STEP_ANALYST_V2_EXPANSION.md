@@ -5,17 +5,13 @@ Existe um lote de 20 perguntas fora do benchmark (`B01`–`B20`) formulado em li
 
 ## Estado já confirmado
 - lote criado em `validation/revY/analyst_free_questions_v2.csv`
-- os 4 casos já suportados antes desta sessão mantêm-se válidos
-- esta sessão criou artefactos de validação local para `WS4`:
-  - `validation/revY/analyst_free_questions_v2_ws4_manual_sql.sql`
-  - `validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql`
-  - `validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv`
-  - `validation/revY/analyst_free_questions_v2_ws4_notes.md`
-- a validação local desta sessão confirmou equivalência `6/6` para `B02`, `B08`, `B10`, `B12`, `B14`, `B18`
-- o ficheiro canónico `generators/rank_partition_generator.py` não ficou ainda sincronizado nesta sessão
+- os 4 casos já suportados anteriormente mantêm-se válidos
+- `WS4` ficou agora sincronizado canonicamente em `generators/rank_partition_generator.py`
+- a reexecução com o código canónico gravado confirmou equivalência `6/6` para `B02`, `B08`, `B10`, `B12`, `B14`, `B18`
+- o estado operacional canónico do lote `analyst_free_questions_v2` passa a `10/20` cobertas e `10/20` em gap
 
 ## Objetivo da próxima sessão
-Sincronizar primeiro `WS4` em `generators/rank_partition_generator.py`, reexecutar a validação usando o código canónico gravado e só depois atualizar o estado operacional do lote `analyst_free_questions_v2`.
+Abrir `WS1` (`nested share / partition share`) em `generators/percentage_share_generator.py`, reexecutar a validação usando o código canónico gravado e só depois atualizar novamente o estado operacional do lote `analyst_free_questions_v2`.
 
 ## Entrada obrigatória
 1. `handover/FORK_RECOVERY_PROTOCOL.md`
@@ -28,10 +24,11 @@ Sincronizar primeiro `WS4` em `generators/rank_partition_generator.py`, reexecut
 8. `validation/revY/analyst_free_questions_v2_ws4_notes.md`
 
 ## Primeira subtarefa recomendada
-Sincronizar `WS4` em `generators/rank_partition_generator.py`, voltar a gerar SQL a partir do código canónico gravado e só então decidir se o gap operacional muda.
+Implementar `WS1` para cobrir `B03`, `B11` e `B19`, começando por quota por entidade dentro de partição explícita, com suporte a `current_year`, `last_12_months`, bucket mensal e métricas com `requires_additional`.
 
 ## Saída mínima esperada da próxima sessão
-- atualização de `generators/rank_partition_generator.py`
+- atualização de `generators/percentage_share_generator.py`
+- SQL manual esperado para `B03`, `B11`, `B19`
 - SQL gerado novamente a partir do código canónico já gravado
 - reexecução local e comparação por equivalência
 - atualização coerente de `HANDOVER_CURRENT.md`, `ARTEFACTS_INDEX.md`, `CHANGELOG.md` e `validation/revY/analyst_free_questions_v2_gap_matrix.csv`
