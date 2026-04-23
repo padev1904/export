@@ -1,22 +1,21 @@
 # HANDOVER NEXT STEP — analyst_free_questions_v2 expansion
 
 ## Contexto
-Existe um novo lote de 20 perguntas fora do benchmark (`B01`–`B20`) formulado em linguagem de analista sénior, sem partir do catálogo de famílias técnicas.
+Existe um lote de 20 perguntas fora do benchmark (`B01`–`B20`) formulado em linguagem de analista sénior, sem partir do catálogo de famílias técnicas.
 
 ## Estado já confirmado
 - lote criado em `validation/revY/analyst_free_questions_v2.csv`
-- cobertura por execução local confirmada em `10/20`
-- gap remanescente fora do benchmark neste lote: `10/20`
-- `WS4` fechado por equivalência local em:
-  - `B02`
-  - `B08`
-  - `B10`
-  - `B12`
-  - `B14`
-  - `B18`
+- os 4 casos já suportados antes desta sessão mantêm-se válidos
+- esta sessão criou artefactos de validação local para `WS4`:
+  - `validation/revY/analyst_free_questions_v2_ws4_manual_sql.sql`
+  - `validation/revY/analyst_free_questions_v2_ws4_generated_sql.sql`
+  - `validation/revY/analyst_free_questions_v2_ws4_equivalence_eval.csv`
+  - `validation/revY/analyst_free_questions_v2_ws4_notes.md`
+- a validação local desta sessão confirmou equivalência `6/6` para `B02`, `B08`, `B10`, `B12`, `B14`, `B18`
+- o ficheiro canónico `generators/rank_partition_generator.py` não ficou ainda sincronizado nesta sessão
 
 ## Objetivo da próxima sessão
-Ampliar a camada técnica canónica para responder progressivamente às 10 perguntas ainda bloqueadas, em blocos de capacidade reutilizável.
+Sincronizar primeiro `WS4` em `generators/rank_partition_generator.py`, reexecutar a validação usando o código canónico gravado e só depois atualizar o estado operacional do lote `analyst_free_questions_v2`.
 
 ## Entrada obrigatória
 1. `handover/FORK_RECOVERY_PROTOCOL.md`
@@ -29,14 +28,13 @@ Ampliar a camada técnica canónica para responder progressivamente às 10 pergu
 8. `validation/revY/analyst_free_questions_v2_ws4_notes.md`
 
 ## Primeira subtarefa recomendada
-Atacar `WS1` do plano de expansão (`nested share / partition share`), porque é agora o workstream remanescente com maior cobertura imediata e maior reutilização transversal.
+Sincronizar `WS4` em `generators/rank_partition_generator.py`, voltar a gerar SQL a partir do código canónico gravado e só então decidir se o gap operacional muda.
 
 ## Saída mínima esperada da próxima sessão
-- atualização do(s) gerador(es) visado(s)
-- SQL manual independente para as perguntas cobertas nessa sessão
-- SQL gerado pelo código real atualizado
-- execução local e comparação por equivalência
-- atualização de `HANDOVER_CURRENT.md`, `ARTEFACTS_INDEX.md` e `CHANGELOG.md`
+- atualização de `generators/rank_partition_generator.py`
+- SQL gerado novamente a partir do código canónico já gravado
+- reexecução local e comparação por equivalência
+- atualização coerente de `HANDOVER_CURRENT.md`, `ARTEFACTS_INDEX.md`, `CHANGELOG.md` e `validation/revY/analyst_free_questions_v2_gap_matrix.csv`
 
 ## Regra crítica
 Não reabrir benchmark fechado. Esta linha permanece fora do benchmark salvo decisão explícita em contrário.
